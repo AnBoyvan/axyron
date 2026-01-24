@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { OctagonAlertIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 
 import { InputField } from '@/components/form/input-field';
@@ -16,6 +17,7 @@ import { type SignUpSchema, signUpSchema } from '../../schemas/sign-up-schema';
 import { SocialAuth } from './social-auth';
 
 export const SignUpForm = () => {
+	const t = useTranslations();
 	const router = useRouter();
 
 	const [error, setError] = useState<string | null>(null);
@@ -60,9 +62,9 @@ export const SignUpForm = () => {
 			<form onSubmit={form.handleSubmit(onSubmit)} className="p-6 md:p-8">
 				<div className="flex flex-col gap-6">
 					<div className="flex flex-col items-center text-center">
-						<h1 className="font-bold text-2xl">Let&apos;s get started</h1>
+						<h1 className="font-bold text-2xl">{t('auth.sign_up_title')}</h1>
 						<p className="text-balance text-muted-foreground">
-							Create to your account
+							{t('auth.sign_up_description')}
 						</p>
 					</div>
 					<div className="grid gap-3">
@@ -101,11 +103,11 @@ export const SignUpForm = () => {
 						</Alert>
 					)}
 					<Button type="submit" disabled={isPending} className="w-full">
-						Sign up
+						{t('auth.sign_up')}
 					</Button>
 					<div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-border after:border-t">
 						<span className="relative z-10 bg-card px-2 text-muted-foreground">
-							or continue with
+							{t('auth.continue_with')}
 						</span>
 					</div>
 					<SocialAuth
@@ -114,9 +116,12 @@ export const SignUpForm = () => {
 						setIsPending={setIsPending}
 					/>
 					<div className="text-center text-sm">
-						Already have an account?{' '}
-						<Link href="/sign-in" className="underline underline-offset-4">
-							Sign in
+						{t('auth.have_account')}
+						<Link
+							href="/sign-in"
+							className="underline underline-offset-4 hover:text-primary"
+						>
+							{t('auth.sign_in')}
 						</Link>
 					</div>
 				</div>

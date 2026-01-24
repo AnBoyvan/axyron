@@ -101,7 +101,10 @@ export const SignInForm = () => {
 					/>
 					<div className="text-center text-sm">
 						{t('auth.dont_have_account')}
-						<Link href="/sign-up" className="underline underline-offset-4">
+						<Link
+							href="/sign-up"
+							className="underline underline-offset-4 hover:text-primary"
+						>
 							{t('auth.sign_up')}
 						</Link>
 					</div>

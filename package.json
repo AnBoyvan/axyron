@@ -41,6 +41,7 @@
 		"drizzle-orm": "^0.45.1",
 		"globals": "^17.1.0",
 		"lucide-react": "^0.563.0",
+		"nanoid": "^5.1.6",
 		"negotiator": "^1.0.0",
 		"next": "16.1.4",
 		"next-intl": "^4.7.0",
