@@ -1,3 +1,22 @@
 {
-	"general": { "hello": "Hello world!" }
+	"general": {
+		"app_name": "Axyron",
+		"privacy": "Privacy Policy",
+		"terms": "Terms of Service",
+		"locale": {
+			"current": "en",
+			"uk": "UA",
+			"en": "EN",
+			"label": "Language",
+			"uk_full": "Ukrainian",
+			"en_full": "English",
+			"locale": "enUS"
+		},
+		"theme": {
+			"label": "Theme",
+			"light": "Light",
+			"dark": "Dark",
+			"system": "System"
+		}
+	}
 }

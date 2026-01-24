@@ -7,4 +7,6 @@ declare module 'next-intl' {
 		Messages: typeof messages;
 		Formats: typeof formats;
 	}
+
+	type TranslationKey = NestedKeyOf<Messages>;
 }

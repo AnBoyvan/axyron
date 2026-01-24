@@ -5,6 +5,8 @@ import './globals.css';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, getMessages } from 'next-intl/server';
 
+import { Providers } from './providers';
+
 const inter = Inter({
 	variable: '--font-inter',
 	subsets: ['latin', 'cyrillic'],
@@ -35,7 +37,7 @@ export default async function RootLayout({
 				className={`${inter.className} ${inter.variable} ${goldman.variable} antialiased`}
 			>
 				<NextIntlClientProvider messages={messages}>
-					{children}
+					<Providers>{children}</Providers>
 				</NextIntlClientProvider>
 			</body>
 		</html>

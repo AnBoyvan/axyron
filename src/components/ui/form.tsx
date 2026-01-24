@@ -5,6 +5,12 @@ import * as React from 'react';
 import type * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
 import {
+	MessageKeys,
+	Messages,
+	type TranslationKey,
+	useTranslations,
+} from 'next-intl';
+import {
 	Controller,
 	type ControllerProps,
 	type FieldPath,
@@ -139,11 +145,18 @@ function FormDescription({ className, ...props }: React.ComponentProps<'p'>) {
 
 function FormMessage({ className, ...props }: React.ComponentProps<'p'>) {
 	const { error, formMessageId } = useFormField();
+	const t = useTranslations();
+
 	const body = error ? String(error?.message ?? '') : props.children;
 
 	if (!body) {
 		return null;
 	}
+
+	const message =
+		typeof body === 'string' && body.includes('.')
+			? t(body as TranslationKey)
+			: body;
 
 	return (
 		<p
@@ -152,7 +165,7 @@ function FormMessage({ className, ...props }: React.ComponentProps<'p'>) {
 			className={cn('text-destructive text-sm', className)}
 			{...props}
 		>
-			{body}
+			{message}
 		</p>
 	);
 }
