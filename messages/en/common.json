@@ -1,5 +1,11 @@
 {
 	"common": {
-		"and": " and "
+		"access_denied": "Access denied",
+		"and": " and ",
+		"descripton": "Description",
+		"name": "Name",
+		"new": "New",
+		"organization": "Organization",
+		"organizations": "Organizations"
 	}
 }

@@ -1,0 +1,10 @@
+{
+	"orgs": {
+		"descr_placeholder": "Add description of your organization",
+		"name_placeholder": "Enter a name of your organization",
+		"name_required": "Organization name is required",
+		"new_org": "New organization",
+		"new_org_descr": "Create a new organization",
+		"not_found": "Organization not found"
+	}
+}

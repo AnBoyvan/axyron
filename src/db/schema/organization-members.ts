@@ -6,6 +6,8 @@ import {
 	text,
 	timestamp,
 } from 'drizzle-orm/pg-core';
+import { createSelectSchema } from 'drizzle-zod';
+import type z from 'zod';
 
 import { memberRole } from './enums';
 import { organizations } from './organizations';
@@ -21,7 +23,13 @@ export const organizationMembers = pgTable(
 			.notNull()
 			.references(() => organizations.id, { onDelete: 'cascade' }),
 		role: memberRole('role').notNull().default('member'),
+		inviteCode: text('invite_code').notNull().unique(),
+		invitedBy: text('invited_by').references(() => user.id, {
+			onDelete: 'no action',
+		}),
 		canInvite: boolean('can_invite').notNull().default(false),
+		canRemoveMember: boolean('can_remove_member').notNull().default(false),
+		canUpdate: boolean('can_update').notNull().default(true),
 		canCreateProject: boolean('can_create_project').notNull().default(false),
 		canCreateTask: boolean('can_create_task').notNull().default(false),
 		canCreateMeeting: boolean('can_create_meeting').notNull().default(false),
@@ -51,5 +59,12 @@ export const organizationMemberRelations = relations(
 			fields: [organizationMembers.organizationId],
 			references: [organizations.id],
 		}),
+		invitedBy: one(user, {
+			fields: [organizationMembers.invitedBy],
+			references: [user.id],
+		}),
 	}),
 );
+
+export const orgMemberSelectSchema = createSelectSchema(organizationMembers);
+export type OrgMemberSelectSchema = z.infer<typeof orgMemberSelectSchema>;
