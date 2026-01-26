@@ -12,27 +12,7 @@ import {
 	SidebarSeparator,
 } from '@/components/ui/sidebar';
 
-import { UserOrgsList, UserOrgsListSkeleton } from './user-orgs-list';
-
-export const UserSidebar = () => {
-	const t = useTranslations();
-	return (
-		<Sidebar>
-			<SidebarHeader className="text-sidebar-primary">
-				<Link href="/" className="flex items-center justify-center gap-2 px-2">
-					<Image src="/logo.svg" height={24} width={24} alt="SynthMeet" />
-					<p className="font-goldman font-semibold text-3xl">
-						{t('general.app_name')}
-					</p>
-				</Link>
-			</SidebarHeader>
-			<SidebarSeparator />
-			<SidebarContent>
-				<UserOrgsList />
-			</SidebarContent>
-		</Sidebar>
-	);
-};
+import { UserOrgsListSkeleton } from './user-orgs-list';
 
 export const UserSidebarSuspense = () => {
 	const t = useTranslations();

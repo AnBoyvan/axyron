@@ -7,7 +7,7 @@ import { updateRule } from '@/features/organizations/procedures/update-rule';
 
 import { createTRPCRouter } from '../init';
 
-export const agentsRouter = createTRPCRouter({
+export const organizationsRouter = createTRPCRouter({
 	create,
 	getMany,
 	getById,

@@ -2,10 +2,22 @@
 	"common": {
 		"access_denied": "Access denied",
 		"and": " and ",
+		"dashboard": "Dashboard",
 		"descripton": "Description",
+		"meeting": "Meeting",
+		"meetings": "Meetings",
+		"member": "Member",
+		"members": "Members",
 		"name": "Name",
 		"new": "New",
 		"organization": "Organization",
-		"organizations": "Organizations"
+		"organizations": "Organizations",
+		"project": "Project",
+		"projects": "Projects",
+		"schedule": "Schedule",
+		"smth_wrong": "Something went wrong",
+		"task": "Task",
+		"tasks": "Tasks",
+		"try_later": "Please try again later"
 	}
 }

@@ -1,6 +1,7 @@
 {
 	"orgs": {
 		"descr_placeholder": "Add description of your organization",
+		"failed_load_many": "Failed to load organizations",
 		"name_placeholder": "Enter a name of your organization",
 		"name_required": "Organization name is required",
 		"new_org": "New organization",

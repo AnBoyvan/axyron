@@ -9,4 +9,6 @@ declare module 'next-intl' {
 	}
 
 	type TranslationKey = NestedKeyOf<Messages>;
+
+	type Translator = ReturnType<typeof useTranslations>;
 }

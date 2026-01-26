@@ -1,8 +1,6 @@
 {
 	"general": {
 		"app_name": "Axyron",
-		"privacy": "Privacy Policy",
-		"terms": "Terms of Service",
 		"locale": {
 			"current": "en",
 			"uk": "UA",
@@ -17,6 +15,8 @@
 			"light": "Light",
 			"dark": "Dark",
 			"system": "System"
-		}
+		},
+		"privacy": "Privacy Policy",
+		"terms": "Terms of Service"
 	}
 }
