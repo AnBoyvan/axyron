@@ -16,6 +16,7 @@ import {
 	SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
 import type { Organization } from '@/features/organizations/types';
+import { OrgAvatar } from '@/features/organizations/ui/components/org-avatar';
 
 import { userOrgNav } from '../../configs/user-org-nav';
 
@@ -31,6 +32,7 @@ export const UserOrgListItem = ({ org }: UserOrgListItem) => {
 			<SidebarMenuItem>
 				<CollapsibleTrigger asChild>
 					<SidebarMenuButton tooltip={org.name}>
+						<OrgAvatar size="xs" name={org.name} imageUrl={org.image} />
 						<span>{org.name}</span>
 						<ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
 					</SidebarMenuButton>

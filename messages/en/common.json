@@ -2,6 +2,7 @@
 	"common": {
 		"access_denied": "Access denied",
 		"and": " and ",
+		"calendar": "Calendar",
 		"dashboard": "Dashboard",
 		"descripton": "Description",
 		"meeting": "Meeting",

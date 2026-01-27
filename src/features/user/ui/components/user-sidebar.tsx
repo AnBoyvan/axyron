@@ -3,15 +3,20 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { LoaderIcon, SplineIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import {
 	Sidebar,
 	SidebarContent,
+	SidebarFooter,
 	SidebarHeader,
 	SidebarSeparator,
 } from '@/components/ui/sidebar';
+import { Skeleton } from '@/components/ui/skeleton';
 
+import { UserButton } from './user-button';
+import { UserNav } from './user-nav';
 import { UserOrgsList, UserOrgsListSkeleton } from './user-orgs-list';
 
 export const UserSidebar = () => {
@@ -28,8 +33,12 @@ export const UserSidebar = () => {
 			</SidebarHeader>
 			<SidebarSeparator />
 			<SidebarContent>
+				<UserNav />
 				<UserOrgsList />
 			</SidebarContent>
+			<SidebarFooter>
+				<UserButton />
+			</SidebarFooter>
 		</Sidebar>
 	);
 };
@@ -48,8 +57,12 @@ export const UserSidebarSuspense = () => {
 			</SidebarHeader>
 			<SidebarSeparator />
 			<SidebarContent>
+				<UserNav />
 				<UserOrgsListSkeleton />
 			</SidebarContent>
+			<SidebarFooter>
+				<UserButton />
+			</SidebarFooter>
 		</Sidebar>
 	);
 };

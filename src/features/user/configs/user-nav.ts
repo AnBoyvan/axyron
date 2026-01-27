@@ -2,43 +2,43 @@ import {
 	CalendarDaysIcon,
 	ClipboardListIcon,
 	LayoutDashboardIcon,
+	ListTodoIcon,
 	type LucideIcon,
-	UsersIcon,
 } from 'lucide-react';
 import type { TranslationKey } from 'next-intl';
 import type { IconType } from 'react-icons/lib';
 import { PiVideoConferenceLight } from 'react-icons/pi';
 
-type UserOrgNavItem = {
+type UserNavItem = {
 	label: TranslationKey;
 	link: string;
 	icon: LucideIcon | IconType;
 };
 
-export const userOrgNav: UserOrgNavItem[] = [
+export const userNav: UserNavItem[] = [
 	{
 		label: 'common.dashboard',
-		link: '',
+		link: '/',
 		icon: LayoutDashboardIcon,
 	},
 	{
 		label: 'common.calendar',
-		link: '/calendar',
+		link: '/user/calendar',
 		icon: CalendarDaysIcon,
 	},
 	{
 		label: 'common.projects',
-		link: '/projects',
+		link: '/user/projects',
 		icon: ClipboardListIcon,
 	},
 	{
 		label: 'common.meetings',
-		link: '/meetings',
+		link: '/user/meetings',
 		icon: PiVideoConferenceLight,
 	},
 	{
-		label: 'common.members',
-		link: '/members',
-		icon: UsersIcon,
+		label: 'users.my_tasks',
+		link: '/user/members',
+		icon: ListTodoIcon,
 	},
 ];
