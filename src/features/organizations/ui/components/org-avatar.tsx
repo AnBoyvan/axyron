@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils/cn';
 const avatarVariants = cva('', {
 	variants: {
 		size: {
-			default: 'h-9 w-9',
+			default: 'h-8 w-8',
 			xs: 'h-4 w-4',
 			sm: 'h-6 w-6',
 			lg: 'h-10 w-10',
@@ -21,11 +21,11 @@ const avatarVariants = cva('', {
 const avatarFallbackVariants = cva('', {
 	variants: {
 		size: {
-			default: 'text-2xl',
-			xs: 'text-[10px]',
-			sm: 'text-base',
-			lg: 'text-2xl',
-			xl: 'text-6xl',
+			default: 'text-2xl rounded-xl',
+			xs: 'text-[10px] rounded',
+			sm: 'text-base rounded-lg',
+			lg: 'text-2xl rounded-xl',
+			xl: 'text-6xl rounded-2xl',
 		},
 	},
 	defaultVariants: {
@@ -58,7 +58,7 @@ export const OrgAvatar = ({
 			<AvatarFallback
 				className={cn(
 					avatarFallbackVariants({ size }),
-					'items-center justify-center rounded-md bg-accent-foreground font-medium text-accent uppercase',
+					'items-center justify-center bg-accent-foreground font-medium text-accent uppercase',
 				)}
 			>
 				{avatarFallback}

@@ -1,9 +1,7 @@
 import { Suspense } from 'react';
 
-import { ErrorBoundary } from 'react-error-boundary';
-
-import { ErrorState } from '@/components/shared/error-state';
-import { SidebarProvider } from '@/components/ui/sidebar';
+import { CustomErrorBoundary } from '@/components/shared/custom-error-boundary';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import {
 	UserSidebar,
 	UserSidebarSuspense,
@@ -21,18 +19,13 @@ const UserLayout = ({ children }: UserLayoutProps) => {
 		<HydrateClient>
 			<SidebarProvider>
 				<Suspense fallback={<UserSidebarSuspense />}>
-					<ErrorBoundary
-						fallback={
-							<ErrorState
-								title={'orgs.failed_load_many'}
-								description={'common.try_later'}
-							/>
-						}
-					>
+					<CustomErrorBoundary fallback={'orgs.failed_load_many'}>
 						<UserSidebar />
-					</ErrorBoundary>
+					</CustomErrorBoundary>
 				</Suspense>
-				<main className="flex h-screen w-screen flex-col">{children}</main>
+				<SidebarInset>
+					<main className="flex h-screen w-screen flex-col">{children}</main>
+				</SidebarInset>
 			</SidebarProvider>
 		</HydrateClient>
 	);

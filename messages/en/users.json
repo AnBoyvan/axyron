@@ -1,5 +1,6 @@
 {
 	"users": {
+		"my_dashboard": "My dashboard",
 		"my_tasks": "My tasks",
 		"personal": "Personal",
 		"profile": "Profile"

@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { LoaderIcon, SplineIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import {
@@ -13,7 +12,6 @@ import {
 	SidebarHeader,
 	SidebarSeparator,
 } from '@/components/ui/sidebar';
-import { Skeleton } from '@/components/ui/skeleton';
 
 import { UserButton } from './user-button';
 import { UserNav } from './user-nav';
@@ -23,7 +21,7 @@ export const UserSidebar = () => {
 	const t = useTranslations();
 	return (
 		<Sidebar>
-			<SidebarHeader className="text-sidebar-primary">
+			<SidebarHeader className="h-16 justify-center text-sidebar-primary">
 				<Link href="/" className="flex items-center justify-center gap-2 px-2">
 					<Image src="/logo.svg" height={24} width={24} alt="SynthMeet" />
 					<p className="font-goldman font-semibold text-3xl">
@@ -36,6 +34,7 @@ export const UserSidebar = () => {
 				<UserNav />
 				<UserOrgsList />
 			</SidebarContent>
+			<SidebarSeparator />
 			<SidebarFooter>
 				<UserButton />
 			</SidebarFooter>
@@ -47,7 +46,7 @@ export const UserSidebarSuspense = () => {
 	const t = useTranslations();
 	return (
 		<Sidebar>
-			<SidebarHeader className="text-sidebar-primary">
+			<SidebarHeader className="h-16 justify-center text-sidebar-primary">
 				<Link href="/" className="flex items-center justify-center gap-2 px-2">
 					<Image src="/logo.svg" height={24} width={24} alt="SynthMeet" />
 					<p className="font-goldman font-semibold text-3xl">
@@ -60,6 +59,7 @@ export const UserSidebarSuspense = () => {
 				<UserNav />
 				<UserOrgsListSkeleton />
 			</SidebarContent>
+			<SidebarSeparator />
 			<SidebarFooter>
 				<UserButton />
 			</SidebarFooter>

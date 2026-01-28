@@ -1,16 +1,37 @@
-import { SidebarProvider } from '@/components/ui/sidebar';
-import { OrgSidebar } from '@/features/organizations/ui/components/org-sidebar';
+import { Suspense } from 'react';
+
+import { CustomErrorBoundary } from '@/components/shared/custom-error-boundary';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import {
+	OrgSidebar,
+	OrgSidebarSuspense,
+} from '@/features/organizations/ui/components/org-sidebar';
+import { HydrateClient, prefetch, trpc } from '@/trpc/server';
 
 interface OrgLayoutProps {
 	children: React.ReactNode;
+	params: Promise<{ orgId: string }>;
 }
 
-const OrgLayout = ({ children }: OrgLayoutProps) => {
+const OrgLayout = async ({ children, params }: OrgLayoutProps) => {
+	const { orgId } = await params;
+
+	prefetch(trpc.organizations.getById.queryOptions({ id: orgId }));
+	prefetch(trpc.organizations.getMany.queryOptions());
+
 	return (
-		<SidebarProvider>
-			<OrgSidebar />
-			<main className="flex h-screen w-screen flex-col">{children}</main>
-		</SidebarProvider>
+		<HydrateClient>
+			<SidebarProvider>
+				<Suspense fallback={<OrgSidebarSuspense orgId={orgId} />}>
+					<CustomErrorBoundary fallback={'orgs.failed_load_one'}>
+						<OrgSidebar orgId={orgId} />
+					</CustomErrorBoundary>
+				</Suspense>
+				<SidebarInset>
+					<main className="flex h-screen flex-col">{children}</main>
+				</SidebarInset>
+			</SidebarProvider>
+		</HydrateClient>
 	);
 };
 
