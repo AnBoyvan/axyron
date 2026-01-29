@@ -17,7 +17,7 @@ import {
 	SidebarSeparator,
 } from '@/components/ui/sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
-import { UserButton } from '@/features/user/ui/components/user-button';
+import { UserButton } from '@/features/users/ui/components/user-button';
 import { useTRPC } from '@/trpc/client';
 
 import { OrgNav } from '../../configs/org-nav';
@@ -40,8 +40,6 @@ export const OrgSidebar = ({ orgId }: OrgSidebarProps) => {
 			<SidebarHeader>
 				<OrgsSwitcher org={data} />
 			</SidebarHeader>
-			<SidebarSeparator />
-
 			<SidebarContent>
 				<SidebarGroup>
 					{OrgNav.map(item => (
@@ -71,7 +69,7 @@ export const OrgSidebarSuspense = ({ orgId }: OrgSidebarProps) => {
 			<SidebarHeader>
 				<SidebarMenu>
 					<SidebarMenuItem>
-						<SidebarMenuButton size="lg">
+						<SidebarMenuButton size="lg" className="p-1.5">
 							<Skeleton className="size-8 min-w-8 rounded-xl" />
 							<div className="flex h-full flex-col gap-1 py-1">
 								<Skeleton className="h-3 w-28" />

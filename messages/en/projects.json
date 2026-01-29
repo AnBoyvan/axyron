@@ -1,3 +1,6 @@
 {
-	"projects": {}
+	"projects": {
+		"name_required": "Project name is required",
+		"not_found": "Project not found"
+	}
 }

@@ -44,6 +44,7 @@ export const actionType = pgEnum('action_type', [
 	'due_date',
 	'archived',
 	'restored',
+	'visibility',
 ]);
 
 export const acceptStatus = pgEnum('accept_status', [

@@ -43,7 +43,7 @@ export const OrgsSwitcher = ({ org }: OrgsSwitcherProps) => {
 					<DropdownMenuTrigger asChild>
 						<SidebarMenuButton
 							size="lg"
-							className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+							className="p-1.5 data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
 						>
 							<OrgAvatar name={org.name} imageUrl={org.image} />
 							<div className="grid flex-1 text-left text-sm leading-tight">

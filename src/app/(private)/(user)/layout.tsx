@@ -5,7 +5,7 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import {
 	UserSidebar,
 	UserSidebarSuspense,
-} from '@/features/user/ui/components/user-sidebar';
+} from '@/features/users/ui/components/user-sidebar';
 import { HydrateClient, prefetch, trpc } from '@/trpc/server';
 
 interface UserLayoutProps {
