@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+import { integer, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 import { nanoid } from 'nanoid';
 
 import { meetingComments } from './meeting-comments';
@@ -18,6 +18,7 @@ export const meetings = pgTable('meetings', {
 		.notNull()
 		.references(() => user.id, { onDelete: 'cascade' }),
 	startTime: timestamp('start_time', { withTimezone: true }).notNull(),
+	duration: integer('duration').notNull(),
 	organizationId: text('organization_id')
 		.notNull()
 		.references(() => organizations.id, {

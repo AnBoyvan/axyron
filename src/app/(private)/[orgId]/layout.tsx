@@ -4,7 +4,7 @@ import { CustomErrorBoundary } from '@/components/shared/custom-error-boundary';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import {
 	OrgSidebar,
-	OrgSidebarSuspense,
+	OrgSidebarSkeleton,
 } from '@/features/organizations/ui/components/org-sidebar';
 import { HydrateClient, prefetch, trpc } from '@/trpc/server';
 
@@ -22,7 +22,7 @@ const OrgLayout = async ({ children, params }: OrgLayoutProps) => {
 	return (
 		<HydrateClient>
 			<SidebarProvider>
-				<Suspense fallback={<OrgSidebarSuspense orgId={orgId} />}>
+				<Suspense fallback={<OrgSidebarSkeleton orgId={orgId} />}>
 					<CustomErrorBoundary fallback={'orgs.failed_load_one'}>
 						<OrgSidebar orgId={orgId} />
 					</CustomErrorBoundary>

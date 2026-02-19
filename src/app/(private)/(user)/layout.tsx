@@ -4,7 +4,7 @@ import { CustomErrorBoundary } from '@/components/shared/custom-error-boundary';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import {
 	UserSidebar,
-	UserSidebarSuspense,
+	UserSidebarSkeleton,
 } from '@/features/users/ui/components/user-sidebar';
 import { HydrateClient, prefetch, trpc } from '@/trpc/server';
 
@@ -18,13 +18,13 @@ const UserLayout = ({ children }: UserLayoutProps) => {
 	return (
 		<HydrateClient>
 			<SidebarProvider>
-				<Suspense fallback={<UserSidebarSuspense />}>
+				<Suspense fallback={<UserSidebarSkeleton />}>
 					<CustomErrorBoundary fallback={'orgs.failed_load_many'}>
 						<UserSidebar />
 					</CustomErrorBoundary>
 				</Suspense>
 				<SidebarInset>
-					<main className="flex h-screen w-screen flex-col">{children}</main>
+					<main className="flex h-screen flex-col">{children}</main>
 				</SidebarInset>
 			</SidebarProvider>
 		</HydrateClient>

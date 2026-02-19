@@ -2,6 +2,9 @@
 	"users": {
 		"my_dashboard": "My dashboard",
 		"my_tasks": "My tasks",
+		"name": "Name",
+		"name_placeholder": "John Doe",
+		"name_required": "Name is required",
 		"personal": "Personal",
 		"profile": "Profile"
 	}

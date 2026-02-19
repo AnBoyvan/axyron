@@ -42,7 +42,7 @@ export const UserSidebar = () => {
 	);
 };
 
-export const UserSidebarSuspense = () => {
+export const UserSidebarSkeleton = () => {
 	const t = useTranslations();
 	return (
 		<Sidebar>

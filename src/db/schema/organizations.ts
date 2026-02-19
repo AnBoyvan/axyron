@@ -18,7 +18,6 @@ export const organizations = pgTable('organizations', {
 	description: text('description'),
 	canInvite: boolean('can_invite').notNull().default(true),
 	canCreateProject: boolean('can_create_project').notNull().default(true),
-	canCreateTask: boolean('can_create_task').notNull().default(true),
 	canCreateMeeting: boolean('can_create_meeting').notNull().default(true),
 	createdAt: timestamp('created_at', { withTimezone: true })
 		.notNull()

@@ -12,10 +12,9 @@ export const getOrgPermissions = ({ org, member }: GetOrgPermissionsProps) => {
 	return {
 		isAdmin,
 		update: isAdmin || member.canUpdate,
-		invite: isAdmin || org.canInvite || member.canInvite,
 		removeMember: isAdmin || member.canRemoveMember,
+		invite: isAdmin || org.canInvite || member.canInvite,
 		createProject: isAdmin || org.canCreateProject || member.canCreateProject,
-		createTask: isAdmin || org.canCreateTask || member.canCreateTask,
 		createMeeting: isAdmin || org.canCreateMeeting || member.canCreateMeeting,
 	};
 };

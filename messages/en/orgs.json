@@ -3,6 +3,7 @@
 		"descr_placeholder": "Add description of your organization",
 		"failed_load_many": "Failed to load organizations",
 		"failed_load_one": "Failed to load organization",
+		"invite_not_found": "This invitation link is no longer valid. Please request a new invitation.",
 		"name_placeholder": "Enter a name of your organization",
 		"name_required": "Organization name is required",
 		"new_org": "New organization",

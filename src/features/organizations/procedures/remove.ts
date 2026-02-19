@@ -1,5 +1,5 @@
 import { TRPCError } from '@trpc/server';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, getTableColumns } from 'drizzle-orm';
 import z from 'zod';
 
 import { db } from '@/db';
@@ -8,26 +8,34 @@ import { organizations } from '@/db/schema/organizations';
 import { protectedProcedure } from '@/trpc/init';
 
 export const remove = protectedProcedure
-	.input(
-		z.object({
-			id: z.string(),
-		}),
-	)
+	.input(z.object({ id: z.string() }))
 	.mutation(async ({ ctx, input }) => {
 		const userId = ctx.auth.user.id;
 
-		const [existingMember] = await db
-			.select()
-			.from(organizationMembers)
-			.where(
+		const [row] = await db
+			.select({
+				org: getTableColumns(organizations),
+				memberRole: organizationMembers.role,
+			})
+			.from(organizations)
+			.innerJoin(
+				organizationMembers,
 				and(
+					eq(organizationMembers.organizationId, organizations.id),
 					eq(organizationMembers.userId, userId),
-					eq(organizationMembers.organizationId, input.id),
 				),
 			)
+			.where(eq(organizations.id, input.id))
 			.limit(1);
 
-		if (!existingMember || existingMember.role !== 'admin') {
+		if (!row) {
+			throw new TRPCError({
+				code: 'NOT_FOUND',
+				message: 'orgs.not_found',
+			});
+		}
+
+		if (row.memberRole !== 'admin') {
 			throw new TRPCError({
 				code: 'FORBIDDEN',
 				message: 'common.access_denied',
@@ -38,13 +46,6 @@ export const remove = protectedProcedure
 			.delete(organizations)
 			.where(eq(organizations.id, input.id))
 			.returning();
-
-		if (!removedOrg) {
-			throw new TRPCError({
-				code: 'NOT_FOUND',
-				message: 'orgs.not_found',
-			});
-		}
 
 		return {
 			id: removedOrg.id,

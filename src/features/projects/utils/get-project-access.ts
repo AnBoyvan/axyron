@@ -4,12 +4,11 @@ import { and, eq } from 'drizzle-orm';
 import { db } from '@/db';
 import { organizationMembers } from '@/db/schema/organization-members';
 import { projectMembers } from '@/db/schema/project-members';
+import { projects } from '@/db/schema/projects';
 
 type GetProjectAccessProps = {
 	userId: string;
 	projectId: string;
-	visibility: 'private' | 'public';
-	orgId: string;
 };
 
 type ProjectAccess = {
@@ -18,48 +17,74 @@ type ProjectAccess = {
 	isOrgAdmin: boolean;
 	canInvite: boolean;
 	canCreateTask: boolean;
+	project: {
+		id: string;
+		name: string;
+		description: string | null;
+		visibility: 'private' | 'public';
+		organizationId: string;
+		archived: boolean;
+		status: 'pending' | 'active' | 'closed';
+	};
 };
 
 export const getProjectAccess = async ({
-	orgId,
 	projectId,
-	visibility,
 	userId,
 }: GetProjectAccessProps): Promise<ProjectAccess> => {
-	const [existingOrgMember] = await db
-		.select()
-		.from(organizationMembers)
-		.where(
+	const [row] = await db
+		.select({
+			project: {
+				id: projects.id,
+				name: projects.name,
+				description: projects.description,
+				visibility: projects.visibility,
+				organizationId: projects.organizationId,
+				archived: projects.archived,
+				status: projects.status,
+			},
+			orgMemberRole: organizationMembers.role,
+			projectMemberRole: projectMembers.role,
+			projectMemberCanInvite: projectMembers.canInvite,
+			projectMemberCanCreateTask: projectMembers.canCreateTask,
+		})
+		.from(projects)
+		.leftJoin(
+			organizationMembers,
 			and(
+				eq(organizationMembers.organizationId, projects.organizationId),
 				eq(organizationMembers.userId, userId),
-				eq(organizationMembers.organizationId, orgId),
 			),
 		)
+		.leftJoin(
+			projectMembers,
+			and(
+				eq(projectMembers.projectId, projects.id),
+				eq(projectMembers.userId, userId),
+			),
+		)
+		.where(eq(projects.id, projectId))
 		.limit(1);
 
-	if (!existingOrgMember) {
+	if (!row) {
+		throw new TRPCError({
+			code: 'NOT_FOUND',
+			message: 'projects.not_found',
+		});
+	}
+
+	if (!row.orgMemberRole) {
 		throw new TRPCError({
 			code: 'FORBIDDEN',
 			message: 'projects.not_found',
 		});
 	}
 
-	const [existingProjectMember] = await db
-		.select()
-		.from(projectMembers)
-		.where(
-			and(
-				eq(projectMembers.userId, userId),
-				eq(projectMembers.projectId, projectId),
-			),
-		)
-		.limit(1);
+	const isMember = Boolean(row.projectMemberRole);
+	const isProjectAdmin = row.projectMemberRole === 'admin';
+	const isOrgAdmin = row.orgMemberRole === 'admin';
 
-	const isMember = Boolean(existingProjectMember);
-	const isProjectAdmin = Boolean(existingProjectMember?.role === 'admin');
-	const isOrgAdmin = existingOrgMember.role === 'admin';
-
-	if (visibility === 'private' && !isMember && !isOrgAdmin) {
+	if (row.project.visibility === 'private' && !isMember && !isOrgAdmin) {
 		throw new TRPCError({
 			code: 'FORBIDDEN',
 			message: 'projects.not_found',
@@ -67,14 +92,13 @@ export const getProjectAccess = async ({
 	}
 
 	return {
+		project: row.project,
+		isMember,
 		isProjectAdmin,
 		isOrgAdmin,
-		isMember,
-		canCreateTask:
-			isOrgAdmin ||
-			isProjectAdmin ||
-			Boolean(existingProjectMember?.canCreateTask),
 		canInvite:
-			isOrgAdmin || isProjectAdmin || Boolean(existingProjectMember?.canInvite),
+			isOrgAdmin || isProjectAdmin || Boolean(row.projectMemberCanInvite),
+		canCreateTask:
+			isOrgAdmin || isProjectAdmin || Boolean(row.projectMemberCanCreateTask),
 	};
 };

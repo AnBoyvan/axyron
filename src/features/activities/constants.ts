@@ -1,0 +1,3 @@
+export const MAX_ACTIVITIES_LIMIT = 100;
+
+export const DEFAULT_ACTIVITIES_LIMIT = 20;

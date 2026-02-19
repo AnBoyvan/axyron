@@ -3,6 +3,7 @@ import { pgTable, primaryKey, text, timestamp } from 'drizzle-orm/pg-core';
 
 import { acceptStatus } from './enums';
 import { meetings } from './meetings';
+import { organizations } from './organizations';
 import { user } from './user';
 
 export const meetingMembers = pgTable(
@@ -14,6 +15,11 @@ export const meetingMembers = pgTable(
 		meetingId: text('meeting_id')
 			.notNull()
 			.references(() => meetings.id, { onDelete: 'cascade' }),
+		organizationId: text('organization_id')
+			.notNull()
+			.references(() => organizations.id, {
+				onDelete: 'cascade',
+			}),
 		status: acceptStatus('status').notNull(),
 		createdAt: timestamp('created_at', { withTimezone: true })
 			.defaultNow()
@@ -36,6 +42,10 @@ export const meetingMemberRelations = relations(meetingMembers, ({ one }) => ({
 		references: [user.id],
 	}),
 	meeting: one(meetings, {
+		fields: [meetingMembers.meetingId],
+		references: [meetings.id],
+	}),
+	organization: one(meetings, {
 		fields: [meetingMembers.meetingId],
 		references: [meetings.id],
 	}),

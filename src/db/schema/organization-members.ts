@@ -31,7 +31,6 @@ export const organizationMembers = pgTable(
 		canRemoveMember: boolean('can_remove_member').notNull().default(false),
 		canUpdate: boolean('can_update').notNull().default(true),
 		canCreateProject: boolean('can_create_project').notNull().default(false),
-		canCreateTask: boolean('can_create_task').notNull().default(false),
 		canCreateMeeting: boolean('can_create_meeting').notNull().default(false),
 		createdAt: timestamp('created_at', { withTimezone: true })
 			.defaultNow()

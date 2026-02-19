@@ -20,18 +20,15 @@ export const create = protectedProcedure
 			})
 			.returning();
 
-		const inviteCode = nanoid();
-
 		await db.insert(organizationMembers).values({
 			userId,
 			organizationId: createdOrg.id,
 			role: 'admin',
-			inviteCode,
+			inviteCode: nanoid(),
 			invitedBy: userId,
 			canInvite: true,
 			canRemoveMember: true,
 			canUpdate: false,
-			canCreateTask: true,
 			canCreateProject: true,
 			canCreateMeeting: true,
 		});

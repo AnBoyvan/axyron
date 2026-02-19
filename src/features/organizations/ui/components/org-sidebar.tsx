@@ -44,7 +44,7 @@ export const OrgSidebar = ({ orgId }: OrgSidebarProps) => {
 				<SidebarGroup>
 					{OrgNav.map(item => (
 						<SidebarMenuItem key={item.label}>
-							<SidebarMenuButton asChild>
+							<SidebarMenuButton asChild tooltip={t(item.label)}>
 								<Link href={`/${orgId}/${item.link}`}>
 									<item.icon />
 									<span>{t(item.label)}</span>
@@ -62,7 +62,7 @@ export const OrgSidebar = ({ orgId }: OrgSidebarProps) => {
 	);
 };
 
-export const OrgSidebarSuspense = ({ orgId }: OrgSidebarProps) => {
+export const OrgSidebarSkeleton = ({ orgId }: OrgSidebarProps) => {
 	const t = useTranslations();
 	return (
 		<Sidebar collapsible="icon">

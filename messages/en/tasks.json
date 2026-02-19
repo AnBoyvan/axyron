@@ -1,3 +1,10 @@
 {
-	"tasks": {}
+	"tasks": {
+		"comment_not_found": "Comment not found",
+		"not_found": "Task not found",
+		"reaction_not_found": "Reaction not found",
+		"subtask_not_found": "Subtask not found",
+		"title_required": "Title is required",
+		"update_admin_only": "Only admin can complete or cancel this task"
+	}
 }

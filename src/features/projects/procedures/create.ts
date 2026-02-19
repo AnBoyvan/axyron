@@ -1,5 +1,6 @@
 import { TRPCError } from '@trpc/server';
 import { and, eq, getTableColumns } from 'drizzle-orm';
+import z from 'zod';
 
 import { db } from '@/db';
 import { activities } from '@/db/schema/activities';
@@ -12,9 +13,10 @@ import { protectedProcedure } from '@/trpc/init';
 import { createProjectSchema } from '../schemas/create-project-schema';
 
 export const create = protectedProcedure
-	.input(createProjectSchema)
+	.input(z.object({ organizationId: z.string(), data: createProjectSchema }))
 	.mutation(async ({ ctx, input }) => {
 		const userId = ctx.auth.user.id;
+		const { organizationId, data } = input;
 
 		const [existingMember] = await db
 			.select({
@@ -29,7 +31,7 @@ export const create = protectedProcedure
 			.where(
 				and(
 					eq(organizationMembers.userId, userId),
-					eq(organizationMembers.organizationId, input.organizationId),
+					eq(organizationMembers.organizationId, organizationId),
 				),
 			)
 			.limit(1);
@@ -49,10 +51,10 @@ export const create = protectedProcedure
 		const [createdProject] = await db
 			.insert(projects)
 			.values({
-				name: input.name,
-				description: input.description,
-				organizationId: input.organizationId,
-				visibility: input.visibility,
+				name: data.name,
+				description: data.description,
+				organizationId,
+				visibility: data.visibility,
 			})
 			.returning();
 

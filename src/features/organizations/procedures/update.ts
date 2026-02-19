@@ -1,5 +1,5 @@
 import { TRPCError } from '@trpc/server';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, sql } from 'drizzle-orm';
 import z from 'zod';
 
 import { db } from '@/db';
@@ -11,43 +11,37 @@ import { updateOrgSchema } from '../schemas/update-org-schema';
 import { getOrgPermissions } from '../utils/get-org-permission';
 
 export const update = protectedProcedure
-	.input(
-		z.object({
-			id: z.string(),
-			data: updateOrgSchema,
-		}),
-	)
+	.input(z.object({ id: z.string(), data: updateOrgSchema }))
 	.mutation(async ({ ctx, input }) => {
 		const userId = ctx.auth.user.id;
 
-		const [existingMember] = await db
+		const [row] = await db
 			.select({
 				org: organizations,
 				member: organizationMembers,
 			})
-			.from(organizationMembers)
+			.from(organizations)
 			.innerJoin(
-				organizations,
-				eq(organizations.id, organizationMembers.organizationId),
-			)
-			.where(
+				organizationMembers,
 				and(
+					eq(organizationMembers.organizationId, organizations.id),
 					eq(organizationMembers.userId, userId),
-					eq(organizationMembers.organizationId, input.id),
 				),
 			)
+			.where(eq(organizations.id, input.id))
 			.limit(1);
 
-		if (!existingMember) {
+		if (!row) {
 			throw new TRPCError({
-				code: 'FORBIDDEN',
-				message: 'common.access_denied',
+				code: 'NOT_FOUND',
+				message: 'orgs.not_found',
 			});
 		}
 
-		const { org, member } = existingMember;
-
-		const permissions = getOrgPermissions({ org, member });
+		const permissions = getOrgPermissions({
+			org: row.org,
+			member: row.member,
+		});
 
 		if (!permissions.update) {
 			throw new TRPCError({
@@ -56,26 +50,19 @@ export const update = protectedProcedure
 			});
 		}
 
-		const [updatedOrg] = await db
+		await db
 			.update(organizations)
 			.set({
 				...input.data,
+				updatedAt: sql`now()`,
 			})
-			.where(eq(organizations.id, input.id))
-			.returning();
-
-		if (!updatedOrg) {
-			throw new TRPCError({
-				code: 'NOT_FOUND',
-				message: 'orgs.not_found',
-			});
-		}
+			.where(eq(organizations.id, input.id));
 
 		return {
-			id: updatedOrg.id,
-			name: updatedOrg.name,
-			description: updatedOrg.description,
-			image: updatedOrg.image,
+			id: row.org.id,
+			name: input.data.name ?? row.org.name,
+			description: input.data.description ?? row.org.description,
+			image: row.org.image,
 			permissions,
 		};
 	});

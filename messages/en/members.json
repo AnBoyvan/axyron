@@ -1,3 +1,9 @@
 {
-	"members": {}
+	"members": {
+		"admin_cannot_leave": "Administrators must transfer their role before leaving.",
+		"already_exists": "You are already a member",
+		"cannot_remove_self": "You cannot remove yourself",
+		"cannot_change_own_role": "You cannot change your role. Ask another admin",
+		"not_found": "Member not found"
+	}
 }

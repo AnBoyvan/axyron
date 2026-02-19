@@ -1,0 +1,26 @@
+import { eq } from 'drizzle-orm';
+
+import { db } from '@/db';
+import { user } from '@/db/schema/user';
+import { protectedProcedure } from '@/trpc/init';
+
+export const getProfile = protectedProcedure.query(async ({ ctx }) => {
+	const userId = ctx.auth.user.id;
+
+	const [profile] = await db
+		.select({
+			id: user.id,
+			name: user.name,
+			phone: user.phone,
+			position: user.position,
+			email: user.email,
+			emailVerified: user.emailVerified,
+			image: user.image,
+			createdAt: user.createdAt,
+		})
+		.from(user)
+		.where(eq(user.id, userId))
+		.limit(1);
+
+	return profile;
+});

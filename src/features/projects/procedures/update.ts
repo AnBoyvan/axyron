@@ -15,25 +15,12 @@ export const update = protectedProcedure
 	.mutation(async ({ ctx, input }) => {
 		const userId = ctx.auth.user.id;
 
-		const [existingProject] = await db
-			.select()
-			.from(projects)
-			.where(eq(projects.id, input.id))
-			.limit(1);
-
-		if (!existingProject) {
-			throw new TRPCError({
-				code: 'NOT_FOUND',
-				message: 'projects.not_found',
-			});
-		}
-
-		const permissions = await getProjectAccess({
-			projectId: existingProject.id,
-			orgId: existingProject.organizationId,
-			visibility: existingProject.visibility,
-			userId,
-		});
+		const { project: existingProject, ...permissions } = await getProjectAccess(
+			{
+				projectId: input.id,
+				userId,
+			},
+		);
 
 		if (!permissions.isProjectAdmin && !permissions.isOrgAdmin) {
 			throw new TRPCError({
@@ -51,11 +38,13 @@ export const update = protectedProcedure
 			.where(eq(projects.id, input.id))
 			.returning();
 
+		const newActivities: (typeof activities.$inferInsert)[] = [];
+
 		if (
 			input.data.name !== undefined &&
 			existingProject.name !== input.data.name
 		) {
-			await db.insert(activities).values({
+			newActivities.push({
 				projectId: updatedProject.id,
 				authorId: userId,
 				entityId: updatedProject.id,
@@ -72,7 +61,7 @@ export const update = protectedProcedure
 			input.data.status !== undefined &&
 			existingProject.status !== input.data.status
 		) {
-			await db.insert(activities).values({
+			newActivities.push({
 				projectId: updatedProject.id,
 				authorId: userId,
 				entityId: updatedProject.id,
@@ -89,7 +78,7 @@ export const update = protectedProcedure
 			input.data.visibility !== undefined &&
 			existingProject.visibility !== input.data.visibility
 		) {
-			await db.insert(activities).values({
+			newActivities.push({
 				projectId: updatedProject.id,
 				authorId: userId,
 				entityId: updatedProject.id,
@@ -106,7 +95,7 @@ export const update = protectedProcedure
 			input.data.archived !== undefined &&
 			existingProject.archived !== input.data.archived
 		) {
-			await db.insert(activities).values({
+			newActivities.push({
 				projectId: updatedProject.id,
 				authorId: userId,
 				entityId: updatedProject.id,
@@ -117,6 +106,10 @@ export const update = protectedProcedure
 					to: updatedProject.archived,
 				},
 			});
+		}
+
+		if (newActivities.length > 0) {
+			await db.insert(activities).values(newActivities);
 		}
 
 		return updatedProject;

@@ -1,5 +1,5 @@
 import { TRPCError } from '@trpc/server';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, getTableColumns } from 'drizzle-orm';
 import z from 'zod';
 
 import { db } from '@/db';
@@ -14,31 +14,23 @@ export const getById = protectedProcedure
 	.query(async ({ ctx, input }) => {
 		const userId = ctx.auth.user.id;
 
-		const [existingMember] = await db
-			.select()
-			.from(organizationMembers)
-			.where(
+		const [row] = await db
+			.select({
+				org: getTableColumns(organizations),
+				member: getTableColumns(organizationMembers),
+			})
+			.from(organizations)
+			.innerJoin(
+				organizationMembers,
 				and(
+					eq(organizationMembers.organizationId, organizations.id),
 					eq(organizationMembers.userId, userId),
-					eq(organizationMembers.organizationId, input.id),
 				),
 			)
-			.limit(1);
-
-		if (!existingMember) {
-			throw new TRPCError({
-				code: 'FORBIDDEN',
-				message: 'common.access_denied',
-			});
-		}
-
-		const [existingOrg] = await db
-			.select()
-			.from(organizations)
 			.where(eq(organizations.id, input.id))
 			.limit(1);
 
-		if (!existingOrg) {
+		if (!row) {
 			throw new TRPCError({
 				code: 'NOT_FOUND',
 				message: 'orgs.not_found',
@@ -46,15 +38,15 @@ export const getById = protectedProcedure
 		}
 
 		const permissions = getOrgPermissions({
-			org: existingOrg,
-			member: existingMember,
+			org: row.org,
+			member: row.member,
 		});
 
 		return {
-			id: existingOrg.id,
-			name: existingOrg.name,
-			description: existingOrg.description,
-			image: existingOrg.image,
+			id: row.org.id,
+			name: row.org.name,
+			description: row.org.description,
+			image: row.org.image,
 			permissions,
 		};
 	});

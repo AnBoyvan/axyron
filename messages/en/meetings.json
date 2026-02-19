@@ -1,3 +1,9 @@
 {
-	"members": {}
+	"meetings": {
+		"already_accepted": "Already accepted",
+		"already_rejected": "Already rejected",
+		"invite_not_found": "Invite not found",
+		"not_found": "Meeting not found",
+		"not_member": "Access denied. You are not member of this meeting"
+	}
 }

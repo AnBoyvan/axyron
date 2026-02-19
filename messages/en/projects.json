@@ -1,6 +1,25 @@
 {
 	"projects": {
+		"descripton_placeholder": "Describe the goal of this project…",
+		"name_placeholder": "Enter name of new project",
 		"name_required": "Project name is required",
-		"not_found": "Project not found"
+		"new_title": "New Project",
+		"new_description": "Create a new project to organize work, assign responsibilities, and track progress within your organization.",
+		"no_projects": "No projects yet.",
+		"not_found": "Project not found",
+		"private": "Private",
+		"private_description": "Only project members and organization admins can see this project",
+		"private_tooltip": "Private project",
+		"public": "Public",
+		"public_description": "All organization members can see this project",
+		"public_tooltip": "Public project",
+		"search_placeholder": "Enter project name...",
+		"statuses": {
+			"active": "Active",
+			"closed": "Closed",
+			"pending": "Pending"
+		},
+		"updated": "Project updated",
+		"visibility": "Visibility"
 	}
 }

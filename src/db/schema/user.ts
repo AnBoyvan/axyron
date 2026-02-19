@@ -13,7 +13,7 @@ import { tasks } from './tasks';
 
 export const user = pgTable('user', {
 	id: text('id').primaryKey(),
-	name: text('name').notNull(),
+	name: text('name').notNull().default('User'),
 	position: text('position'),
 	phone: text('phone'),
 	email: text('email').notNull().unique(),

@@ -1,5 +1,5 @@
 import { TRPCError } from '@trpc/server';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, sql } from 'drizzle-orm';
 import z from 'zod';
 
 import { db } from '@/db';
@@ -10,47 +10,44 @@ import { protectedProcedure } from '@/trpc/init';
 import { updateOrgRuleSchema } from '../schemas/update-org-rule-schema';
 
 export const updateRule = protectedProcedure
-	.input(
-		z.object({
-			id: z.string(),
-			data: updateOrgRuleSchema,
-		}),
-	)
+	.input(z.object({ id: z.string(), data: updateOrgRuleSchema }))
 	.mutation(async ({ ctx, input }) => {
 		const userId = ctx.auth.user.id;
 
-		const [existingMember] = await db
-			.select()
-			.from(organizationMembers)
-			.where(
+		const [row] = await db
+			.select({ memberRole: organizationMembers.role })
+			.from(organizations)
+			.innerJoin(
+				organizationMembers,
 				and(
+					eq(organizationMembers.organizationId, organizations.id),
 					eq(organizationMembers.userId, userId),
-					eq(organizationMembers.organizationId, input.id),
 				),
 			)
+			.where(eq(organizations.id, input.id))
 			.limit(1);
 
-		if (!existingMember || existingMember.role !== 'admin') {
+		if (!row) {
+			throw new TRPCError({
+				code: 'NOT_FOUND',
+				message: 'orgs.not_found',
+			});
+		}
+
+		if (row.memberRole !== 'admin') {
 			throw new TRPCError({
 				code: 'FORBIDDEN',
 				message: 'common.access_denied',
 			});
 		}
 
-		const [updatedOrg] = await db
+		await db
 			.update(organizations)
 			.set({
 				[input.data.rule]: input.data.value,
+				updatedAt: sql`now()`,
 			})
-			.where(eq(organizations.id, input.id))
-			.returning();
-
-		if (!updatedOrg) {
-			throw new TRPCError({
-				code: 'NOT_FOUND',
-				message: 'orgs.not_found',
-			});
-		}
+			.where(eq(organizations.id, input.id));
 
 		return { message: 'Success' };
 	});

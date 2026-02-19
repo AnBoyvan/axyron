@@ -1,18 +1,38 @@
+import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
+
 import { PageLayout } from '@/components/shared/page-layout';
 import { OrgProjectsView } from '@/features/projects/ui/views/org-projects-view';
+import { auth } from '@/lib/auth/auth';
+import { HydrateClient, prefetch, trpc } from '@/trpc/server';
 
-interface OrgProjectsPageProps {
+interface OPageProps {
 	params: Promise<{ orgId: string }>;
 }
 
-const OrgProjectsPage = async ({ params }: OrgProjectsPageProps) => {
+const OPage = async ({ params }: OPageProps) => {
+	const session = await auth.api.getSession({
+		headers: await headers(),
+	});
+
+	if (!session) {
+		redirect('/sign-in');
+	}
+
 	const { orgId } = await params;
 
+	prefetch(trpc.organizations.getById.queryOptions({ id: orgId }));
+	prefetch(
+		trpc.projects.getByOrganization.queryOptions({ organizationId: orgId }),
+	);
+
 	return (
-		<PageLayout title="common.projects">
-			<OrgProjectsView orgId={orgId} />
-		</PageLayout>
+		<HydrateClient>
+			<PageLayout title="common.projects">
+				<OrgProjectsView orgId={orgId} />
+			</PageLayout>
+		</HydrateClient>
 	);
 };
 
-export default OrgProjectsPage;
+export default OPage;

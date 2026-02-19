@@ -45,6 +45,7 @@ export const UserButton = () => {
 			fetchOptions: { onSuccess: () => router.push('/') },
 		});
 	};
+
 	if (isPending || !data?.user) {
 		return (
 			<div className="flex h-12 w-full items-center justify-between gap-2 overflow-hidden px-2">
