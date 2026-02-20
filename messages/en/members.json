@@ -1,5 +1,6 @@
 {
 	"members": {
+		"admin_tooltip": " (admin)",
 		"admin_cannot_leave": "Administrators must transfer their role before leaving.",
 		"already_exists": "You are already a member",
 		"cannot_remove_self": "You cannot remove yourself",

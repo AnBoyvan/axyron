@@ -1,5 +1,5 @@
 import { TRPCError } from '@trpc/server';
-import { and, desc, eq, lt, or, sql } from 'drizzle-orm';
+import { and, desc, eq, isNotNull, lt, or, sql } from 'drizzle-orm';
 import { z } from 'zod';
 
 import { db } from '@/db';
@@ -63,7 +63,55 @@ export const getByTask = protectedProcedure
 			);
 		}
 
+		const repliesCte = db.$with('replies_cte').as(
+			db
+				.select({
+					parentId: comments.parentId,
+					replies: sql<
+						{
+							id: string;
+							content: string;
+							edited: boolean;
+							createdAt: Date;
+							updatedAt: Date;
+							author: {
+								id: string;
+								name: string;
+								email: string;
+								image: string | null;
+								position: string | null;
+							};
+						}[]
+					>`
+        json_agg(
+          jsonb_build_object(
+            'id', c.id,
+            'content', c.content,
+            'edited', c.edited,
+            'createdAt', c.created_at,
+            'updatedAt', c.updated_at,
+            'author', jsonb_build_object(
+              'id', u.id,
+              'name', u.name,
+              'email', u.email,
+              'image', u.image,
+              'position', u.position
+            )
+          )
+          order by c.created_at asc
+        )
+      `,
+				})
+				.from(sql`comments c`)
+				.innerJoin(user, eq(user.id, sql`c.user_id`))
+				.where(
+					and(eq(sql`c.task_id`, input.taskId), isNotNull(sql`c.parent_id`)),
+				)
+				.groupBy(sql`c.parent_id`),
+		);
+
 		const data = await db
+			.with(repliesCte)
 			.select({
 				comment: comments,
 				author: {
@@ -73,6 +121,22 @@ export const getByTask = protectedProcedure
 					image: user.image,
 					position: user.position,
 				},
+				replies: sql<
+					{
+						id: string;
+						content: string;
+						edited: boolean;
+						createdAt: Date;
+						updatedAt: Date;
+						author: {
+							id: string;
+							name: string;
+							email: string;
+							image: string | null;
+							position: string | null;
+						};
+					}[]
+				>`coalesce(${repliesCte.replies}, '[]'::json)`,
 				reactions: sql<
 					{
 						emoji: string;
@@ -80,32 +144,39 @@ export const getByTask = protectedProcedure
 						userReacted: boolean;
 					}[]
 				>`
-          coalesce(
-            (
-              select json_agg(
-                jsonb_build_object(
-                  'emoji', r.emoji,
-                  'count', r.reaction_count,
-                  'userReacted', r.user_reacted
-                )
-              )
-              from (
-                select 
-                  cr.emoji,
-                  count(*)::int as reaction_count,
-                  bool_or(cr.user_id = ${userId}) as user_reacted
-                from comment_reactions cr
-                where cr.comment_id = ${comments.id}
-                group by cr.emoji
-              ) r
-            ),
-            '[]'::json
+      coalesce(
+        (
+          select json_agg(
+            jsonb_build_object(
+              'emoji', r.emoji,
+              'count', r.reaction_count,
+              'userReacted', r.user_reacted
+            )
           )
-        `,
+          from (
+            select 
+              cr.emoji,
+              count(*)::int as reaction_count,
+              bool_or(cr.user_id = ${userId}) as user_reacted
+            from comment_reactions cr
+            where cr.comment_id = ${comments.id}
+            group by cr.emoji
+          ) r
+        ),
+        '[]'::json
+      )
+    `,
 			})
 			.from(comments)
 			.innerJoin(user, eq(user.id, comments.userId))
-			.where(and(...conditions))
+			.leftJoin(repliesCte, eq(comments.id, repliesCte.parentId))
+			.where(
+				and(
+					eq(comments.taskId, input.taskId),
+					sql`${comments.parentId} is null`,
+					...conditions.slice(1),
+				),
+			)
 			.orderBy(desc(comments.createdAt), desc(comments.id))
 			.limit(input.limit + 1);
 

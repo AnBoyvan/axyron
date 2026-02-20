@@ -74,7 +74,7 @@ export const UserButton = () => {
 				</DrawerTrigger>
 				<DrawerContent>
 					<DrawerHeader className="flex-col items-center justify-center gap-3">
-						<UserAvatar size="lg" name={data.user.name} />
+						<UserAvatar name={data.user.name} />
 						<div className="flex flex-col gap-1.5">
 							<DrawerTitle>{data.user.name}</DrawerTitle>
 							<DrawerDescription>{data.user.email}</DrawerDescription>

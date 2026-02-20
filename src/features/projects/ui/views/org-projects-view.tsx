@@ -9,6 +9,7 @@ import {
 	OrgProjectsHeaderSkeleton,
 } from '../components/org-projects-header';
 import { OrgProjectsList } from '../components/org-projects-list';
+import { ProjectCardSkeleton } from '../components/project-card';
 
 interface OrgProjectsViewProps {
 	orgId: string;
@@ -18,7 +19,7 @@ export const OrgProjectsView = ({ orgId }: OrgProjectsViewProps) => {
 	const [search, setSearch] = useState('');
 
 	return (
-		<div className="flex flex-col gap-4 lg:gap-8">
+		<div className="flex flex-1 flex-col gap-4 lg:gap-8">
 			<CustomErrorBoundary fallback={<OrgProjectsHeaderSkeleton />}>
 				<OrgProjectsHeader
 					orgId={orgId}
@@ -26,7 +27,7 @@ export const OrgProjectsView = ({ orgId }: OrgProjectsViewProps) => {
 					setSearch={setSearch}
 				/>
 			</CustomErrorBoundary>
-			<CustomErrorBoundary fallback={<div>loading...</div>}>
+			<CustomErrorBoundary fallback={<ProjectCardSkeleton />}>
 				<OrgProjectsList orgId={orgId} search={search} />
 			</CustomErrorBoundary>
 		</div>

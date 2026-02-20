@@ -6,11 +6,11 @@ import { OrgProjectsView } from '@/features/projects/ui/views/org-projects-view'
 import { auth } from '@/lib/auth/auth';
 import { HydrateClient, prefetch, trpc } from '@/trpc/server';
 
-interface OPageProps {
+interface PageProps {
 	params: Promise<{ orgId: string }>;
 }
 
-const OPage = async ({ params }: OPageProps) => {
+const Page = async ({ params }: PageProps) => {
 	const session = await auth.api.getSession({
 		headers: await headers(),
 	});
@@ -35,4 +35,4 @@ const OPage = async ({ params }: OPageProps) => {
 	);
 };
 
-export default OPage;
+export default Page;
