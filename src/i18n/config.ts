@@ -1,3 +1,4 @@
+import { enUS, uk } from 'date-fns/locale';
 import type { Locale } from 'next-intl';
 
 import actions from '@/messages/en/actions.json';
@@ -29,3 +30,8 @@ export const locales = ['en', 'uk'] as const;
 export const LOCALE_COOKIE_NAME = 'NEXT_LOCALE';
 
 export const defaultLocale: Locale = 'en';
+
+export const fnsLocale = {
+	uk: uk,
+	en: enUS,
+};

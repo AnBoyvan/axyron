@@ -23,22 +23,22 @@ export const userNav: UserNavItem[] = [
 	},
 	{
 		label: 'common.calendar',
-		link: '/user/calendar',
+		link: '/calendar',
 		icon: CalendarDaysIcon,
 	},
 	{
 		label: 'common.projects',
-		link: '/user/projects',
+		link: '/projects',
 		icon: ClipboardListIcon,
 	},
 	{
 		label: 'common.meetings',
-		link: '/user/meetings',
+		link: '/meetings',
 		icon: PiVideoConferenceLight,
 	},
 	{
 		label: 'users.my_tasks',
-		link: '/user/members',
+		link: '/tasks',
 		icon: ListTodoIcon,
 	},
 ];

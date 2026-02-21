@@ -1,19 +1,14 @@
-import { useRouter } from 'next/navigation';
-
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 
 import { InputField } from '@/components/form/input-field';
 import { TextareaField } from '@/components/form/textarea-field';
 import { ResponsiveDialog } from '@/components/shared/responsive-dialog';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-import { getMessage } from '@/lib/utils/get-message';
-import { useTRPC } from '@/trpc/client';
 
+import { useCreateOrg } from '../../hooks/use-create-org';
 import { useCreateOrgDialog } from '../../hooks/use-create-org-dialog';
 import {
 	type CreateOrgSchema,
@@ -22,9 +17,6 @@ import {
 
 export const CreateOrgDialog = () => {
 	const t = useTranslations();
-	const router = useRouter();
-	const trpc = useTRPC();
-	const queryClient = useQueryClient();
 	const { isOpen, onClose } = useCreateOrgDialog();
 
 	const form = useForm<CreateOrgSchema>({
@@ -35,24 +27,15 @@ export const CreateOrgDialog = () => {
 		},
 	});
 
-	const createOrg = useMutation(
-		trpc.organizations.create.mutationOptions({
-			onSuccess: async data => {
-				await queryClient.invalidateQueries(
-					trpc.organizations.getMany.queryOptions(),
-				);
-				onClose();
-				form.reset();
-				router.push(`/${data.id}`);
-			},
-			onError: error => {
-				toast.error(getMessage(error.message, t));
-			},
-		}),
-	);
+	const createOrg = useCreateOrg();
 
 	const onSubmit = (values: CreateOrgSchema) => {
-		createOrg.mutate(values);
+		createOrg.mutate(values, {
+			onSuccess: () => {
+				form.reset();
+				onClose();
+			},
+		});
 	};
 
 	return (

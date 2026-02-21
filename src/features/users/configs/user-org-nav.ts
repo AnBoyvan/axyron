@@ -18,7 +18,7 @@ type UserOrgNavItem = {
 export const userOrgNav: UserOrgNavItem[] = [
 	{
 		label: 'common.dashboard',
-		link: '',
+		link: 'dashboard',
 		icon: LayoutDashboardIcon,
 	},
 	{

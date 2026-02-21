@@ -42,7 +42,7 @@ export const UserOrgListItem = ({ org }: UserOrgListItem) => {
 						{userOrgNav.map(item => (
 							<SidebarMenuSubItem key={item.label}>
 								<SidebarMenuSubButton asChild>
-									<Link href={`/${org.id}/${item.link}`}>
+									<Link href={`/org/${org.id}/${item.link}`}>
 										<item.icon />
 										<span>{t(item.label)}</span>
 									</Link>

@@ -1,8 +1,25 @@
 {
 	"tasks": {
 		"comment_not_found": "Comment not found",
+		"new": "New",
 		"not_found": "Task not found",
+		"priority": {
+			"all": "All priorities",
+			"low": "Low",
+			"medium": "Medium",
+			"high": "High",
+			"critical": "Critical"
+		},
 		"reaction_not_found": "Reaction not found",
+		"statuses": {
+			"all": "All statuses",
+			"pending": "Pending",
+			"in_progress": "In progress",
+			"in_review": "In review",
+			"completed": "Completed",
+			"cancelled": "Cancelled",
+			"overdue": "Overdue"
+		},
 		"subtask_not_found": "Subtask not found",
 		"title_required": "Title is required",
 		"update_admin_only": "Only admin can complete or cancel this task"

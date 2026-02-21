@@ -1,11 +1,14 @@
 {
 	"common": {
 		"access_denied": "Access denied",
+		"all": "All",
+		"analytics": "Analytics",
 		"and": " and ",
 		"calendar": "Calendar",
 		"created": "created",
 		"dashboard": "Dashboard",
 		"descripton": "Description",
+		"due_date": "Due Date",
 		"meeting": "Meeting",
 		"meetings": "Meetings",
 		"member": "Member",
@@ -14,6 +17,7 @@
 		"new": "New",
 		"organization": "Organization",
 		"organizations": "Organizations",
+		"overview": "Overview",
 		"progress": "Progress",
 		"project": "Project",
 		"projects": "Projects",

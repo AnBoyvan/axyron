@@ -6,24 +6,37 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from '@/components/ui/tooltip';
-import type { Project } from '@/features/projects/types';
+import type { ProjectVisibilityType } from '@/features/projects/types';
+import { cn } from '@/lib/utils/cn';
 
-interface ProjectCardVisibilityProps {
-	visibility: Project['visibility'];
+interface ProjectVisibilityProps {
+	visibility: ProjectVisibilityType;
+	isLarge?: boolean;
 }
 
-export const ProjectCardVisibility = ({
+export const ProjectVisibility = ({
 	visibility,
-}: ProjectCardVisibilityProps) => {
+	isLarge,
+}: ProjectVisibilityProps) => {
 	const t = useTranslations();
 
 	return (
 		<Tooltip>
 			<TooltipTrigger>
 				{visibility === 'public' ? (
-					<Globe2Icon className="size-4 text-muted-foreground" />
+					<Globe2Icon
+						className={cn(
+							isLarge ? 'size-5' : 'size-4',
+							'text-muted-foreground',
+						)}
+					/>
 				) : (
-					<LockKeyholeIcon className="size-4 text-muted-foreground" />
+					<LockKeyholeIcon
+						className={cn(
+							isLarge ? 'size-5' : 'size-4',
+							'text-muted-foreground',
+						)}
+					/>
 				)}
 			</TooltipTrigger>
 			<TooltipContent>

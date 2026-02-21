@@ -13,5 +13,14 @@ export type ProjectMemberDTO = {
 
 export type ProjectById = inferRouterOutputs<AppRouter>['projects']['getById'];
 
+export type ProjectPermissions =
+	inferRouterOutputs<AppRouter>['projects']['getById']['permissions'];
+
+export type ProjectStatusType =
+	inferRouterOutputs<AppRouter>['projects']['getById']['status'];
+
+export type ProjectVisibilityType =
+	inferRouterOutputs<AppRouter>['projects']['getById']['visibility'];
+
 export type Project =
 	inferRouterOutputs<AppRouter>['projects']['getByOrganization'][number];

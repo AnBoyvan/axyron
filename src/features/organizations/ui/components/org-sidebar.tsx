@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
@@ -8,7 +9,6 @@ import { useTranslations } from 'next-intl';
 import {
 	Sidebar,
 	SidebarContent,
-	SidebarFooter,
 	SidebarGroup,
 	SidebarHeader,
 	SidebarMenu,
@@ -17,10 +17,10 @@ import {
 	SidebarSeparator,
 } from '@/components/ui/sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
-import { UserButton } from '@/features/users/ui/components/user-button';
+import { cn } from '@/lib/utils/cn';
 import { useTRPC } from '@/trpc/client';
 
-import { OrgNav } from '../../configs/org-nav';
+import { orgNav } from '../../configs/org-nav';
 import { OrgsSwitcher } from './orgs-switcher';
 
 interface OrgSidebarProps {
@@ -30,34 +30,49 @@ interface OrgSidebarProps {
 export const OrgSidebar = ({ orgId }: OrgSidebarProps) => {
 	const t = useTranslations();
 	const trpc = useTRPC();
+	const pathname = usePathname();
 
 	const { data } = useSuspenseQuery(
 		trpc.organizations.getById.queryOptions({ id: orgId }),
 	);
 
+	const segments = pathname.split('/').filter(Boolean);
+	const activeSection = segments[2] ?? null;
+
+	const isActive = (link: string) => {
+		if (!link) return segments.length === 1;
+		return activeSection === link;
+	};
+
 	return (
 		<Sidebar collapsible="icon">
-			<SidebarHeader>
+			<SidebarHeader className="py-0.5">
 				<OrgsSwitcher org={data} />
 			</SidebarHeader>
 			<SidebarContent>
 				<SidebarGroup>
-					{OrgNav.map(item => (
-						<SidebarMenuItem key={item.label}>
-							<SidebarMenuButton asChild tooltip={t(item.label)}>
-								<Link href={`/${orgId}/${item.link}`}>
-									<item.icon />
-									<span>{t(item.label)}</span>
-								</Link>
-							</SidebarMenuButton>
-						</SidebarMenuItem>
-					))}
+					{orgNav.map(item => {
+						if (item.adminOnly && !data.permissions.isAdmin) {
+							return;
+						}
+
+						return (
+							<SidebarMenuItem key={item.label}>
+								<SidebarMenuButton
+									asChild
+									tooltip={t(item.label)}
+									isActive={isActive(item.link)}
+								>
+									<Link href={`/org/${orgId}/${item.link}`}>
+										<item.icon />
+										<span>{t(item.label)}</span>
+									</Link>
+								</SidebarMenuButton>
+							</SidebarMenuItem>
+						);
+					})}
 				</SidebarGroup>
 			</SidebarContent>
-			<SidebarSeparator />
-			<SidebarFooter>
-				<UserButton />
-			</SidebarFooter>
 		</Sidebar>
 	);
 };
@@ -82,8 +97,11 @@ export const OrgSidebarSkeleton = ({ orgId }: OrgSidebarProps) => {
 			<SidebarSeparator />
 			<SidebarContent>
 				<SidebarGroup>
-					{OrgNav.map(item => (
-						<SidebarMenuItem key={item.label}>
+					{orgNav.map(item => (
+						<SidebarMenuItem
+							key={item.label}
+							className={cn(item.adminOnly && 'hidden')}
+						>
 							<SidebarMenuButton asChild>
 								<Link href={`/${orgId}/${item.link}`}>
 									<item.icon />
@@ -94,10 +112,6 @@ export const OrgSidebarSkeleton = ({ orgId }: OrgSidebarProps) => {
 					))}
 				</SidebarGroup>
 			</SidebarContent>
-			<SidebarSeparator />
-			<SidebarFooter>
-				<UserButton />
-			</SidebarFooter>
 		</Sidebar>
 	);
 };

@@ -1,15 +1,20 @@
 import { useTranslations } from 'next-intl';
 
 import { Badge } from '@/components/ui/badge';
-import type { Project } from '@/features/projects/types';
+import type { ProjectStatusType } from '@/features/projects/types';
 import { cn } from '@/lib/utils/cn';
 
 interface ProjectStatusProps {
 	isArchived?: boolean;
-	status: Project['status'];
+	status: ProjectStatusType;
+	className?: string;
 }
 
-export const ProjectStatus = ({ isArchived, status }: ProjectStatusProps) => {
+export const ProjectStatus = ({
+	isArchived,
+	status,
+	className,
+}: ProjectStatusProps) => {
 	const t = useTranslations();
 
 	const statusTheme = {
@@ -23,10 +28,7 @@ export const ProjectStatus = ({ isArchived, status }: ProjectStatusProps) => {
 
 	if (isArchived) {
 		return (
-			<Badge
-				variant="outline"
-				className="ml-auto bg-muted text-muted-foreground"
-			>
+			<Badge variant="outline" className={cn('bg-muted text-muted-foreground')}>
 				Archived
 			</Badge>
 		);
@@ -36,8 +38,9 @@ export const ProjectStatus = ({ isArchived, status }: ProjectStatusProps) => {
 		<Badge
 			variant="outline"
 			className={cn(
-				'ml-auto bg-muted text-muted-foreground',
+				'bg-muted text-muted-foreground',
 				statusTheme[status],
+				className,
 			)}
 		>
 			{t(`projects.statuses.${status}`)}

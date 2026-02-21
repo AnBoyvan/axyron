@@ -12,10 +12,10 @@ import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 
 import type { Project } from '../../../types';
+import { ProjectStatus } from '../project-status';
+import { ProjectVisibility } from '../project-visibility';
 import { ProjectCardMember } from './project-card-members';
 import { ProjectCardProgress } from './project-card-progress';
-import { ProjectCardVisibility } from './project-card-visibility';
-import { ProjectStatus } from './project-status';
 
 interface ProjectCardProps {
 	project: Project;
@@ -25,19 +25,18 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
 	return (
 		<Link
 			prefetch
-			href={`/${project.organizationId}/projects/${project.id}`}
+			href={`/org/${project.organizationId}/projects/${project.id}`}
 			className="h-full"
 		>
 			<Card className="h-full cursor-pointer gap-4 py-4 transition-colors hover:border-primary">
 				<CardHeader className="px-4">
 					<div className="flex items-center gap-4 overflow-hidden">
-						<ProjectCardVisibility visibility={project.visibility} />
-						<CardTitle className="truncate">
-							{project.name} asdads a asds asd asd asd asd as dasd
-						</CardTitle>
+						<ProjectVisibility visibility={project.visibility} />
+						<CardTitle className="truncate">{project.name}</CardTitle>
 						<ProjectStatus
 							isArchived={project.archived}
 							status={project.status}
+							className="ml-auto"
 						/>
 					</div>
 					<CardDescription className="line-clamp-2">

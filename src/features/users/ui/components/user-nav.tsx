@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import { useTranslations } from 'next-intl';
 
@@ -13,6 +14,7 @@ import { userNav } from '../../configs/user-nav';
 
 export const UserNav = () => {
 	const t = useTranslations();
+	const pathname = usePathname();
 
 	return (
 		<SidebarGroup>
@@ -21,8 +23,12 @@ export const UserNav = () => {
 			</SidebarGroupLabel>
 			{userNav.map(item => (
 				<SidebarMenuItem key={item.label}>
-					<SidebarMenuButton asChild tooltip={item.label}>
-						<Link href={item.link}>
+					<SidebarMenuButton
+						asChild
+						tooltip={item.label}
+						isActive={item.link === pathname}
+					>
+						<Link href={`/user${item.link}`}>
 							<item.icon />
 							<span>{t(item.label)}</span>
 						</Link>

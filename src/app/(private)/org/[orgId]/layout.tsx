@@ -1,11 +1,13 @@
 import { Suspense } from 'react';
 
 import { CustomErrorBoundary } from '@/components/shared/custom-error-boundary';
+import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import {
 	OrgSidebar,
 	OrgSidebarSkeleton,
 } from '@/features/organizations/ui/components/org-sidebar';
+import { UserNavbar } from '@/features/users/ui/components/user-navbar';
 import { HydrateClient, prefetch, trpc } from '@/trpc/server';
 
 interface OrgLayoutProps {
@@ -28,7 +30,11 @@ const OrgLayout = async ({ children, params }: OrgLayoutProps) => {
 					</CustomErrorBoundary>
 				</Suspense>
 				<SidebarInset>
-					<main className="flex h-screen flex-col">{children}</main>
+					<main className="flex h-screen flex-col">
+						<UserNavbar />
+						<Separator />
+						<div className="flex flex-1 flex-col p-4 lg:p-8">{children}</div>
+					</main>
 				</SidebarInset>
 			</SidebarProvider>
 		</HydrateClient>

@@ -1,7 +1,6 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { PageLayout } from '@/components/shared/page-layout';
 import { OrgProjectsView } from '@/features/projects/ui/views/org-projects-view';
 import { auth } from '@/lib/auth/auth';
 import { HydrateClient, prefetch, trpc } from '@/trpc/server';
@@ -28,9 +27,7 @@ const Page = async ({ params }: PageProps) => {
 
 	return (
 		<HydrateClient>
-			<PageLayout title="common.projects">
-				<OrgProjectsView orgId={orgId} />
-			</PageLayout>
+			<OrgProjectsView orgId={orgId} />
 		</HydrateClient>
 	);
 };

@@ -17,10 +17,10 @@ type OrgNavItem = {
 	adminOnly: boolean;
 };
 
-export const OrgNav: OrgNavItem[] = [
+export const orgNav: OrgNavItem[] = [
 	{
 		label: 'common.dashboard',
-		link: '',
+		link: 'dashboard',
 		icon: LayoutDashboardIcon,
 		adminOnly: false,
 	},

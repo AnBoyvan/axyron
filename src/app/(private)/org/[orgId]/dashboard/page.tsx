@@ -1,7 +1,6 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { PageLayout } from '@/components/shared/page-layout';
 import { OrgDashboardView } from '@/features/organizations/ui/views/org-dashboard-view';
 import { auth } from '@/lib/auth/auth';
 
@@ -20,11 +19,7 @@ const Page = async ({ params }: OPageProps) => {
 
 	const { orgId } = await params;
 
-	return (
-		<PageLayout title="common.dashboard">
-			<OrgDashboardView orgId={orgId} />
-		</PageLayout>
-	);
+	return <OrgDashboardView orgId={orgId} />;
 };
 
 export default Page;

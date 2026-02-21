@@ -7,34 +7,23 @@ import { toast } from 'sonner';
 import { getMessage } from '@/lib/utils/get-message';
 import { useTRPC } from '@/trpc/client';
 
-export const useCreateProject = () => {
+export const useCreateOrg = () => {
 	const t = useTranslations();
 	const trpc = useTRPC();
 	const queryClient = useQueryClient();
 	const router = useRouter();
 
 	return useMutation(
-		trpc.projects.create.mutationOptions({
+		trpc.organizations.create.mutationOptions({
 			onSuccess: async data => {
 				await queryClient.invalidateQueries({
-					queryKey: trpc.projects.getByOrganization.queryKey({
-						organizationId: data.organizationId,
-					}),
+					queryKey: trpc.organizations.getMany.queryKey(),
 				});
 
-				//  await queryClient.invalidateQueries({
-				//   queryKey: trpc.projects.getByUser.queryKey()
-				// }) // TODO:
-
-				toast.success(
-					`${t('common.project')} ${data.name} ${t('common.created')}`,
-				);
-
-				router.push(`org/${data.organizationId}/projects/${data.id}`);
+				router.push(`/org/${data.id}`);
 			},
 			onError: error => {
-				const message = getMessage(error.message, t);
-				toast.error(message);
+				toast.error(getMessage(error.message, t));
 			},
 		}),
 	);

@@ -19,7 +19,7 @@ export const tasksRouter = createTRPCRouter({
 	// update,
 	// remove,
 	// getById,
-	// getByProject,
+	getByProject,
 	// getByUser,
 	// addSubtask,
 	// updateSubtask,

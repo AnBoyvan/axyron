@@ -16,6 +16,7 @@ import {
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
+	useSidebar,
 } from '@/components/ui/sidebar';
 import { useTRPC } from '@/trpc/client';
 
@@ -31,6 +32,7 @@ export const OrgsSwitcher = ({ org }: OrgsSwitcherProps) => {
 	const t = useTranslations();
 	const trpc = useTRPC();
 	const { onOpen } = useCreateOrgDialog();
+	const { state } = useSidebar();
 
 	const { data } = useSuspenseQuery(trpc.organizations.getMany.queryOptions());
 
@@ -41,18 +43,23 @@ export const OrgsSwitcher = ({ org }: OrgsSwitcherProps) => {
 			<SidebarMenuItem>
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
-						<SidebarMenuButton
-							size="lg"
-							className="p-1.5 data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-						>
-							<OrgAvatar name={org.name} imageUrl={org.image} />
-							<div className="grid flex-1 text-left text-sm leading-tight">
-								<span className="truncate font-medium">{org.name}</span>
-								<span className="truncate text-muted-foreground text-xs">
-									Free
-								</span>
-							</div>
-							<ChevronsUpDown className="ml-auto" />
+						<SidebarMenuButton size="lg" className="h-[52px] py-1.5">
+							{state === 'collapsed' ? (
+								<div className="flex size-8 items-center justify-center">
+									<OrgAvatar name={org.name} imageUrl={org.image} size="sm" />
+								</div>
+							) : (
+								<>
+									<OrgAvatar name={org.name} imageUrl={org.image} />
+									<div className="grid flex-1 text-left text-sidebar-foreground text-sm leading-tight">
+										<span className="truncate font-medium">{org.name}</span>
+										<span className="truncate text-muted-foreground text-xs">
+											Free
+										</span>
+									</div>
+									<ChevronsUpDown className="ml-auto" />
+								</>
+							)}
 						</SidebarMenuButton>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent
@@ -65,7 +72,7 @@ export const OrgsSwitcher = ({ org }: OrgsSwitcherProps) => {
 						</DropdownMenuLabel>
 						{filteredData.map(item => (
 							<DropdownMenuItem asChild key={item.id} className="gap-2 p-2">
-								<Link href={`/${item.id}`} className="">
+								<Link href={`/org/${item.id}`} className="">
 									<OrgAvatar name={item.name} imageUrl={item.image} size="sm" />
 									{item.name}
 								</Link>
