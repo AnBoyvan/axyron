@@ -13,25 +13,26 @@ export const taskPriority: Record<TaskPrority, TaskPriorityOption> = {
 	low: {
 		value: TaskPrority.low,
 		label: 'tasks.priority.low',
-		badge: '',
-		cirkle: 'bg-neutral-500',
+		badge:
+			'border-neutral-500 text-neutral-500 dark:border-neutral-400 dark:text-neutral-400',
+		cirkle: 'bg-neutral-500 dark:bg-neutral-400',
 	},
 	medium: {
 		value: TaskPrority.medium,
 		label: 'tasks.priority.medium',
-		badge: '',
+		badge: 'border-green-500 text-green-500',
 		cirkle: 'bg-green-500',
 	},
 	high: {
 		value: TaskPrority.high,
 		label: 'tasks.priority.high',
-		badge: '',
+		badge: 'border-orange-500 text-orange-500',
 		cirkle: 'bg-orange-500',
 	},
 	critical: {
 		value: TaskPrority.critical,
 		label: 'tasks.priority.critical',
-		badge: '',
+		badge: 'border-red-500 text-red-500',
 		cirkle: 'bg-red-500',
 	},
 };

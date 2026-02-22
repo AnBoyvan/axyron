@@ -1,4 +1,4 @@
-import { eq, sql } from 'drizzle-orm';
+import { desc, eq, sql } from 'drizzle-orm';
 import { alias } from 'drizzle-orm/pg-core';
 import z from 'zod';
 
@@ -79,7 +79,7 @@ export const getByProject = protectedProcedure
 			.leftJoin(subtasks, eq(subtasks.taskId, tasks.id))
 			.where(eq(tasks.projectId, input.projectId))
 			.groupBy(tasks.id)
-			.orderBy(tasks.createdAt);
+			.orderBy(desc(tasks.createdAt), desc(tasks.id));
 
 		return {
 			tasks: projectTasks.map(row => ({
@@ -88,6 +88,7 @@ export const getByProject = protectedProcedure
 					status: row.task.status,
 					dueDate: row.task.dueDate,
 				}),
+				link: `/org/${row.task.organizationId}/projects/${row.task.projectId}/tasks/${row.task.id}`,
 				assignees: row.assigned,
 				subtasks: row.subtasks,
 			})),

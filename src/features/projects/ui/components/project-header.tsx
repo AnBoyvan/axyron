@@ -40,7 +40,7 @@ export const ProjectHeader = ({
 					<ProjectStatus isArchived={isArchived} status={status} />
 				</div>
 			</div>
-			<ButtonGroup className="grid w-full grid-cols-4">
+			<ButtonGroup className="grid w-full grid-cols-3">
 				{projectTabs.map(item => (
 					<Button
 						key={item.value}

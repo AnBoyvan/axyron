@@ -7,6 +7,7 @@
 		"new_title": "Create a new task",
 		"new_description": "Add the details below to create a task.",
 		"no": "No",
+		"no_tasks": "No tasks to display",
 		"not_found": "Task not found",
 		"priority": {
 			"all": "All priorities",

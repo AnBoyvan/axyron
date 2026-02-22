@@ -29,7 +29,7 @@ export const TasksFilter = ({
 	const [{ search, status, assignee, priority, dueDateTo }, setFilters] =
 		useTasksFilters();
 
-	const [open, setOpen] = useState(false); // TODO:task form
+	const [open, setOpen] = useState(false);
 
 	return (
 		<div className="flex flex-col gap-4">

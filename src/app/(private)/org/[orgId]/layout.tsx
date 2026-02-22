@@ -29,12 +29,12 @@ const OrgLayout = async ({ children, params }: OrgLayoutProps) => {
 						<OrgSidebar orgId={orgId} />
 					</CustomErrorBoundary>
 				</Suspense>
-				<SidebarInset>
-					<main className="flex h-screen flex-col">
-						<UserNavbar />
-						<Separator />
-						<div className="flex flex-1 flex-col p-4 lg:p-8">{children}</div>
-					</main>
+				<SidebarInset className="">
+					{/* <div className="flex h-screen flex-1 flex-col overflow-hidden"> */}
+					<UserNavbar />
+					<Separator />
+					<div className="flex flex-1 flex-col p-4 lg:p-8">{children}</div>
+					{/* </div> */}
 				</SidebarInset>
 			</SidebarProvider>
 		</HydrateClient>

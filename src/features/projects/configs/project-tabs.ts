@@ -28,12 +28,12 @@ export const projectTabs: ProjectTab[] = [
 		label: 'common.overview',
 		icon: InfoIcon,
 	},
-	{
-		value: 'members',
-		link: 'members',
-		label: 'common.members',
-		icon: UsersIcon,
-	},
+	// {
+	// 	value: 'members',
+	// 	link: 'members',
+	// 	label: 'common.members',
+	// 	icon: UsersIcon,
+	// },
 	{
 		value: 'analytics',
 		link: 'analytics',

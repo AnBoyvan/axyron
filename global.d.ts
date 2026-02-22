@@ -1,3 +1,5 @@
+import type { createTranslator, Messages } from 'next-intl';
+
 import type { locales, messages } from '@/i18n/config';
 import type { formats } from '@/i18n/request';
 
@@ -10,5 +12,5 @@ declare module 'next-intl' {
 
 	type TranslationKey = NestedKeyOf<Messages>;
 
-	type Translator = ReturnType<typeof useTranslations>;
+	type Translator = ReturnType<typeof createTranslator>;
 }

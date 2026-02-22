@@ -54,7 +54,7 @@ export const taskStatuses: Record<TaskStatusEnum, TaskStatusOption> = {
 		value: TaskStatusEnum.overdue,
 		label: 'tasks.statuses.overdue',
 		icon: CircleAlertIcon,
-		iconStyle: 'text-red-600 dark:text-red-400',
+		iconStyle: 'text-red-600 dark:text-red-500',
 	},
 };
 
