@@ -15,7 +15,7 @@ export const TasksDueDateFilter = ({
 		<DatePicker
 			value={value}
 			onChange={onChange}
-			placeholder={'common.due_date'}
+			placeholder={'common.due_date_to'}
 			showReset
 			className="text-muted-foreground"
 		/>

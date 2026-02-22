@@ -1,6 +1,7 @@
 {
 	"actions": {
 		"add": "Add",
+		"assign": "Assign",
 		"cancel": "Cancel",
 		"create": "Create",
 		"reset": "Reset"

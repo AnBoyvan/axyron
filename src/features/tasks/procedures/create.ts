@@ -1,5 +1,6 @@
 import { TRPCError } from '@trpc/server';
 import { eq } from 'drizzle-orm';
+import z from 'zod';
 
 import { db } from '@/db';
 import { activities } from '@/db/schema/activities';
@@ -12,9 +13,15 @@ import { protectedProcedure } from '@/trpc/init';
 import { createTaskSchema } from '../schemas/create-task-schema';
 
 export const create = protectedProcedure
-	.input(createTaskSchema)
+	.input(
+		z.object({
+			projectId: z.string(),
+			data: createTaskSchema,
+		}),
+	)
 	.mutation(async ({ ctx, input }) => {
 		const userId = ctx.auth.user.id;
+		const { projectId, data } = input;
 
 		const { project, canCreateTask } = await getProjectAccess({
 			projectId: input.projectId,
@@ -28,31 +35,30 @@ export const create = protectedProcedure
 			});
 		}
 
-		// Створюємо задачу
 		const [createdTask] = await db
 			.insert(tasks)
 			.values({
-				title: input.title,
-				description: input.description,
-				projectId: input.projectId,
+				title: data.title,
+				description: data.description,
+				projectId: projectId,
 				organizationId: project.organizationId,
 				createdBy: userId,
-				priority: input.priority,
-				status: input.status,
-				startDate: input.startDate ? new Date(input.startDate) : null,
-				dueDate: input.dueDate ? new Date(input.dueDate) : null,
-				needReview: input.needReview,
+				priority: data.priority,
+				status: 'pending',
+				startDate: data.startDate ? new Date(data.startDate) : null,
+				dueDate: data.dueDate ? new Date(data.dueDate) : null,
+				needReview: data.needReview,
 			})
 			.returning();
 
-		if (input.assigneeIds && input.assigneeIds.length > 0) {
+		if (data.assigneeIds && data.assigneeIds.length > 0) {
 			const projectMemberIds = await db
 				.select({ userId: projectMembers.userId })
 				.from(projectMembers)
-				.where(eq(projectMembers.projectId, input.projectId));
+				.where(eq(projectMembers.projectId, projectId));
 
 			const userIds = projectMemberIds.map(m => m.userId);
-			const validIds = input.assigneeIds.filter(id => userIds.includes(id));
+			const validIds = data.assigneeIds.filter(id => userIds.includes(id));
 
 			await db.insert(assignees).values(
 				validIds.map(assigneeId => ({
@@ -63,7 +69,7 @@ export const create = protectedProcedure
 
 			await db.insert(activities).values(
 				validIds.map(assigneeId => ({
-					projectId: input.projectId,
+					projectId: projectId,
 					taskId: createdTask.id,
 					authorId: userId,
 					entityId: assigneeId,
@@ -74,7 +80,7 @@ export const create = protectedProcedure
 		}
 
 		await db.insert(activities).values({
-			projectId: input.projectId,
+			projectId: projectId,
 			taskId: createdTask.id,
 			authorId: userId,
 			entityId: createdTask.id,

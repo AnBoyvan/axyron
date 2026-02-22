@@ -15,7 +15,7 @@ import { updateSubtask } from '@/features/tasks/procedures/update-subtask';
 import { createTRPCRouter } from '../init';
 // TODO:
 export const tasksRouter = createTRPCRouter({
-	// create,
+	create,
 	// update,
 	// remove,
 	// getById,

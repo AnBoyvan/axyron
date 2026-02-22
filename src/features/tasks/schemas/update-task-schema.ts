@@ -7,8 +7,8 @@ export const updateTaskSchema = z.object({
 	status: z
 		.enum(['pending', 'in_progress', 'in_review', 'completed', 'cancelled'])
 		.default('pending'),
-	startDate: z.iso.datetime().optional(),
-	dueDate: z.iso.datetime().optional(),
+	startDate: z.date().optional().nullable(),
+	dueDate: z.date().optional().nullable(),
 	needReview: z.boolean().default(false),
 });
 

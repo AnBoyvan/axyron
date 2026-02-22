@@ -1,7 +1,12 @@
 {
 	"tasks": {
 		"comment_not_found": "Comment not found",
+		"descripton_placeholder": "Add a description...",
+		"need_review": "Requires admin approval",
 		"new": "New",
+		"new_title": "Create a new task",
+		"new_description": "Add the details below to create a task.",
+		"no": "No",
 		"not_found": "Task not found",
 		"priority": {
 			"all": "All priorities",
@@ -10,6 +15,7 @@
 			"high": "High",
 			"critical": "Critical"
 		},
+		"priority_title": "Priority",
 		"reaction_not_found": "Reaction not found",
 		"statuses": {
 			"all": "All statuses",
@@ -21,7 +27,10 @@
 			"overdue": "Overdue"
 		},
 		"subtask_not_found": "Subtask not found",
+		"title_title": "Title",
+		"title_placeholder": "Enter task title",
 		"title_required": "Title is required",
-		"update_admin_only": "Only admin can complete or cancel this task"
+		"update_admin_only": "Only admin can complete or cancel this task",
+		"yes": "Yes"
 	}
 }

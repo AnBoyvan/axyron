@@ -6,6 +6,7 @@
 		"already_exists": "You are already a member",
 		"cannot_remove_self": "You cannot remove yourself",
 		"cannot_change_own_role": "You cannot change your role. Ask another admin",
+		"no_available_members": "There are no more members to add.",
 		"not_found": "Member not found"
 	}
 }

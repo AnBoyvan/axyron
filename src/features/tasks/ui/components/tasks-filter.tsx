@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils/cn';
 
 import { useTasksFilters } from '../../hooks/use-tasks-filter';
+import { NewTaskDialog } from './new-task-dialog';
 import { TasksAssigneeFilter } from './tasks-assignee-filter';
 import { TasksDueDateFilter } from './tasks-due-date-filter';
 import { TasksPriorityFilter } from './tasks-priority-filter';
@@ -38,10 +39,17 @@ export const TasksFilter = ({
 					onChange={value => setFilters({ search: value })}
 				/>
 				{canCreate && (
-					<Button onClick={() => setOpen(true)}>
-						<PlusIcon />
-						{t('tasks.new')}
-					</Button>
+					<>
+						<NewTaskDialog
+							projectId={projectId}
+							open={open}
+							onOpenChange={setOpen}
+						/>
+						<Button onClick={() => setOpen(true)}>
+							<PlusIcon />
+							{t('tasks.new')}
+						</Button>
+					</>
 				)}
 			</div>
 			<div className={cn('grid grid-cols-2 gap-4 lg:grid-cols-4', className)}>
