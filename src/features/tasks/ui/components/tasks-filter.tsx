@@ -3,8 +3,12 @@ import { useState } from 'react';
 import { PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import { SearchFilter } from '@/components/shared/search-filter';
+import {
+	SearchFilter,
+	SearchFilterSkeleton,
+} from '@/components/shared/search-filter';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils/cn';
 
 import { useTasksFilters } from '../../hooks/use-tasks-filter';
@@ -70,6 +74,19 @@ export const TasksFilter = ({
 					value={dueDateTo}
 					onChange={value => setFilters({ dueDateTo: value })}
 				/>
+			</div>
+		</div>
+	);
+};
+
+export const TasksFilterSkeleton = () => {
+	return (
+		<div className="flex flex-col gap-4">
+			<SearchFilterSkeleton />
+			<div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+				{Array.from({ length: 4 }).map((_, idx) => (
+					<Skeleton key={idx} className="h-9 w-full" />
+				))}
 			</div>
 		</div>
 	);

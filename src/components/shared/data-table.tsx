@@ -20,24 +20,32 @@ import {
 } from '@/components/ui/table';
 import { cn } from '@/lib/utils/cn';
 
-import { TaskTablePagination } from './data-table-pagination';
+import { Skeleton } from '../ui/skeleton';
+import {
+	DataTablePaginationSkeleton,
+	TaskTablePagination,
+} from './data-table-pagination';
 
 interface DataTableProps<TData extends { link?: string }, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
 	placeholder: string;
+	defaultPageSize: number;
+	pageSizeVariants: number[];
 }
 
 export function DataTable<TData extends { link?: string }, TValue>({
 	columns,
 	data,
 	placeholder,
+	defaultPageSize,
+	pageSizeVariants,
 }: DataTableProps<TData, TValue>) {
 	const router = useRouter();
 
 	const [pagination, setPagination] = useState<PaginationState>({
 		pageIndex: 0,
-		pageSize: 25,
+		pageSize: defaultPageSize,
 	});
 
 	const table = useReactTable({
@@ -116,7 +124,28 @@ export function DataTable<TData extends { link?: string }, TValue>({
 					</TableBody>
 				</Table>
 			</div>
-			<TaskTablePagination table={table} />
+			<TaskTablePagination table={table} pageSizeVariants={pageSizeVariants} />
 		</div>
 	);
 }
+
+export const DataTableSkeleton = ({
+	defaultPageSize,
+}: {
+	defaultPageSize: number;
+}) => {
+	return (
+		<div>
+			<div className="flex flex-col overflow-hidden rounded-md border">
+				<Skeleton className="h-10 w-full rounded-none" />
+				{Array.from({ length: defaultPageSize }).map((_, idx) => (
+					<Skeleton
+						key={idx}
+						className="h-[41px] w-full rounded-none border-t bg-accent/50"
+					/>
+				))}
+			</div>
+			<DataTablePaginationSkeleton />
+		</div>
+	);
+};

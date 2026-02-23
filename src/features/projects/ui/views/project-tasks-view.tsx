@@ -1,8 +1,13 @@
 'use client';
 
+import { Suspense } from 'react';
+
 import { CustomErrorBoundary } from '@/components/shared/custom-error-boundary';
 
-import { ProjectTasks } from '../components/project-tasks';
+import {
+	ProjectTasks,
+	ProjectTasksSkeleton,
+} from '../components/project-tasks';
 
 interface ProjectTasksViewProps {
 	projectId: string;
@@ -10,8 +15,10 @@ interface ProjectTasksViewProps {
 
 export const ProjectTasksView = ({ projectId }: ProjectTasksViewProps) => {
 	return (
-		<CustomErrorBoundary fallback={<div />}>
-			<ProjectTasks projectId={projectId} />
-		</CustomErrorBoundary>
+		<Suspense fallback={<ProjectTasksSkeleton />}>
+			<CustomErrorBoundary>
+				<ProjectTasks projectId={projectId} />
+			</CustomErrorBoundary>
+		</Suspense>
 	);
 };

@@ -2,14 +2,21 @@ import { useMemo } from 'react';
 
 import { useLocale, useTranslations } from 'next-intl';
 
-import { DataTable } from '@/components/shared/data-table';
+import { DataTable, DataTableSkeleton } from '@/components/shared/data-table';
 import { projectTasksColumns } from '@/features/tasks/configs/project-tasks-columns';
+import {
+	DEFAULT_TASKS_TABLE_PAGE_SIZE,
+	TASKS_TABLE_PAGE_SIZES,
+} from '@/features/tasks/constants';
 import { useTasksByProject } from '@/features/tasks/hooks/use-tasks-by-projects';
 import { useTasksFilters } from '@/features/tasks/hooks/use-tasks-filter';
-import { TasksFilter } from '@/features/tasks/ui/components/tasks-filter';
+import {
+	TasksFilter,
+	TasksFilterSkeleton,
+} from '@/features/tasks/ui/components/tasks-filter';
 import { getFilteredTasks } from '@/features/tasks/utils/get-filtered-tasks';
 
-import { ProjectHeader } from './project-header';
+import { ProjectHeader, ProjectHeaderSkeleton } from './project-header';
 
 interface ProjectTasksProps {
 	projectId: string;
@@ -49,8 +56,20 @@ export const ProjectTasks = ({ projectId }: ProjectTasksProps) => {
 			<DataTable
 				data={filteredTasks}
 				columns={columns}
+				defaultPageSize={DEFAULT_TASKS_TABLE_PAGE_SIZE}
 				placeholder={t('tasks.no_tasks')}
+				pageSizeVariants={TASKS_TABLE_PAGE_SIZES}
 			/>
+		</div>
+	);
+};
+
+export const ProjectTasksSkeleton = () => {
+	return (
+		<div className="flex flex-1 flex-col gap-4 lg:gap-8">
+			<ProjectHeaderSkeleton tab="tasks" />
+			<TasksFilterSkeleton />
+			<DataTableSkeleton defaultPageSize={DEFAULT_TASKS_TABLE_PAGE_SIZE} />
 		</div>
 	);
 };

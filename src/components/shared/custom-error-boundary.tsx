@@ -9,13 +9,13 @@ import { ErrorState } from './error-state';
 
 interface CustomErrorBoundaryProps {
 	children: React.ReactNode;
-	fallback: TranslationKey;
 	description?: TranslationKey;
+	fallback?: TranslationKey;
 }
 
 export const CustomErrorBoundary = ({
 	children,
-	fallback,
+	fallback = 'common.smth_wrong',
 	description,
 }: CustomErrorBoundaryProps) => {
 	return (

@@ -15,13 +15,16 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '../ui/select';
+import { Skeleton } from '../ui/skeleton';
 
 interface TaskTablePaginationProps<TData> {
 	table: Table<TData>;
+	pageSizeVariants: number[];
 }
 
 export function TaskTablePagination<TData>({
 	table,
+	pageSizeVariants,
 }: TaskTablePaginationProps<TData>) {
 	const t = useTranslations();
 
@@ -38,11 +41,11 @@ export function TaskTablePagination<TData>({
 						table.setPageSize(Number(value));
 					}}
 				>
-					<SelectTrigger className="h-8 w-[70px]">
+					<SelectTrigger className="h-9 w-[70px]">
 						<SelectValue placeholder={table.getState().pagination.pageSize} />
 					</SelectTrigger>
 					<SelectContent side="top">
-						{[5, 10, 25, 50].map(pageSize => (
+						{pageSizeVariants.map(pageSize => (
 							<SelectItem key={pageSize} value={`${pageSize}`}>
 								{pageSize}
 							</SelectItem>
@@ -90,3 +93,36 @@ export function TaskTablePagination<TData>({
 		</div>
 	);
 }
+
+export const DataTablePaginationSkeleton = () => {
+	const t = useTranslations();
+
+	return (
+		<div className="mt-4 flex w-full flex-wrap justify-between gap-x-8 gap-y-4">
+			<div className="flex items-center space-x-2">
+				<p className="font-medium text-sm">{t('common.page_per')}</p>
+				<Skeleton className="h-9 w-[70px]" />
+			</div>
+			<div className="flex items-center justify-center space-x-2">
+				<Button variant="outline" size="icon" disabled>
+					<ChevronsLeftIcon />
+				</Button>
+				<Button variant="outline" size="icon" disabled>
+					<ChevronLeftIcon />
+				</Button>
+				<div className="flex w-28 items-center justify-center font-medium text-sm">
+					{`${t('common.page')} `}
+					<Skeleton className="mx-1 h-3.5 w-3" />
+					{`${t('common.of')}`}
+					<Skeleton className="mx-1 h-3.5 w-3" />
+				</div>
+				<Button variant="outline" size="icon" disabled>
+					<ChevronRightIcon />
+				</Button>
+				<Button variant="outline" size="icon" disabled>
+					<ChevronsRightIcon />
+				</Button>
+			</div>
+		</div>
+	);
+};

@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
+import { Skeleton } from '@/components/ui/skeleton';
 
 import { type ProjectTab, projectTabs } from '../../configs/project-tabs';
 import type { ProjectStatusType, ProjectVisibilityType } from '../../types';
@@ -51,6 +52,36 @@ export const ProjectHeader = ({
 							<item.icon />
 							<span className="hidden lg:block">{t(item.label)}</span>
 						</Link>
+					</Button>
+				))}
+			</ButtonGroup>
+		</div>
+	);
+};
+
+export const ProjectHeaderSkeleton = ({
+	tab,
+}: {
+	tab: ProjectTab['value'];
+}) => {
+	const t = useTranslations();
+
+	return (
+		<div className="flex flex-col gap-4">
+			<div className="flex h-7 items-center gap-4">
+				<Skeleton className="size-5 rounded-full" />
+				<Skeleton className="h-6 w-40" />
+				<Skeleton className="ml-auto h-6 w-16 rounded-full" />
+			</div>
+			<ButtonGroup className="grid w-full grid-cols-3">
+				{projectTabs.map(item => (
+					<Button
+						key={item.value}
+						disabled
+						variant={item.value === tab ? 'default' : 'outline'}
+					>
+						<item.icon />
+						<span className="hidden lg:block">{t(item.label)}</span>
 					</Button>
 				))}
 			</ButtonGroup>

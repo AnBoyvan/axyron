@@ -1,9 +1,10 @@
-import { and, count, eq, lt, sql } from 'drizzle-orm';
+import { and, eq, getTableColumns, lt, sql } from 'drizzle-orm';
 import z from 'zod';
 
 import { db } from '@/db';
 import { projectMembers } from '@/db/schema/project-members';
 import { tasks } from '@/db/schema/tasks';
+import { user } from '@/db/schema/user';
 import { protectedProcedure } from '@/trpc/init';
 
 import { getProjectAccess } from '../utils/get-project-access';
@@ -54,15 +55,21 @@ export const getById = protectedProcedure
 			.where(eq(tasks.projectId, project.id))
 			.limit(1);
 
-		const [members] = await db
-			.select({ count: count() })
+		const members = await db
+			.select({
+				...getTableColumns(projectMembers),
+				name: user.name,
+				image: user.image,
+				email: user.email,
+			})
 			.from(projectMembers)
+			.innerJoin(user, eq(user.id, projectMembers.userId))
 			.where(eq(projectMembers.projectId, project.id));
 
 		return {
 			...project,
 			tasks: taskStats,
 			permissions,
-			membersCount: members.count,
+			members,
 		};
 	});

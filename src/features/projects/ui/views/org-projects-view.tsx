@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 
 import { CustomErrorBoundary } from '@/components/shared/custom-error-boundary';
 
@@ -20,16 +20,20 @@ export const OrgProjectsView = ({ orgId }: OrgProjectsViewProps) => {
 
 	return (
 		<div className="flex flex-1 flex-col gap-4 lg:gap-8">
-			<CustomErrorBoundary fallback={<OrgProjectsHeaderSkeleton />}>
-				<OrgProjectsHeader
-					orgId={orgId}
-					search={search}
-					setSearch={setSearch}
-				/>
-			</CustomErrorBoundary>
-			<CustomErrorBoundary fallback={<ProjectCardSkeleton />}>
-				<OrgProjectsList orgId={orgId} search={search} />
-			</CustomErrorBoundary>
+			<Suspense fallback={<OrgProjectsHeaderSkeleton />}>
+				<CustomErrorBoundary>
+					<OrgProjectsHeader
+						orgId={orgId}
+						search={search}
+						setSearch={setSearch}
+					/>
+				</CustomErrorBoundary>
+			</Suspense>
+			<Suspense fallback={<ProjectCardSkeleton />}>
+				<CustomErrorBoundary>
+					<OrgProjectsList orgId={orgId} search={search} />
+				</CustomErrorBoundary>
+			</Suspense>
 		</div>
 	);
 };
