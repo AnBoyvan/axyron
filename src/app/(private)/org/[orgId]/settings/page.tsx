@@ -2,7 +2,6 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { Developing } from '@/components/shared/developing';
-import { OrgDashboardView } from '@/features/organizations/ui/views/org-dashboard-view';
 import { auth } from '@/lib/auth/auth';
 
 interface PageProps {

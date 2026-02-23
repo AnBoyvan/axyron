@@ -2,11 +2,11 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { Developing } from '@/components/shared/developing';
-import { OrgDashboardView } from '@/features/organizations/ui/views/org-dashboard-view';
 import { auth } from '@/lib/auth/auth';
+import { HydrateClient, prefetch, trpc } from '@/trpc/server';
 
 interface PageProps {
-	params: Promise<{ orgId: string }>;
+	params: Promise<{ taskId: string }>;
 }
 
 const Page = async ({ params }: PageProps) => {
@@ -18,7 +18,7 @@ const Page = async ({ params }: PageProps) => {
 		redirect('/sign-in');
 	}
 
-	const { orgId } = await params;
+	const { taskId } = await params;
 
 	return <Developing />;
 };

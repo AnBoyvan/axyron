@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { useProjectsByOrg } from '../../hooks/use-projects-by-org';
-import { ProjectCard } from './project-card';
+import { ProjectCard, ProjectCardSkeleton } from './project-card';
 
 interface OrgProjectsListProps {
 	orgId: string;
@@ -40,5 +40,15 @@ export const OrgProjectsList = ({ orgId, search }: OrgProjectsListProps) => {
 				</div>
 			)}
 		</>
+	);
+};
+
+export const OrgProjectsListSkeleton = () => {
+	return (
+		<div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8 2xl:grid-cols-3">
+			{Array.from({ length: 5 }).map((_, idx) => (
+				<ProjectCardSkeleton key={idx} />
+			))}
+		</div>
 	);
 };

@@ -2,14 +2,9 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { Developing } from '@/components/shared/developing';
-import { OrgDashboardView } from '@/features/organizations/ui/views/org-dashboard-view';
 import { auth } from '@/lib/auth/auth';
 
-interface PageProps {
-	params: Promise<{ orgId: string }>;
-}
-
-const Page = async ({ params }: PageProps) => {
+const Page = async () => {
 	const session = await auth.api.getSession({
 		headers: await headers(),
 	});
@@ -17,8 +12,6 @@ const Page = async ({ params }: PageProps) => {
 	if (!session) {
 		redirect('/sign-in');
 	}
-
-	const { orgId } = await params;
 
 	return <Developing />;
 };

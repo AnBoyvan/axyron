@@ -8,8 +8,10 @@ import {
 	OrgProjectsHeader,
 	OrgProjectsHeaderSkeleton,
 } from '../components/org-projects-header';
-import { OrgProjectsList } from '../components/org-projects-list';
-import { ProjectCardSkeleton } from '../components/project-card';
+import {
+	OrgProjectsList,
+	OrgProjectsListSkeleton,
+} from '../components/org-projects-list';
 
 interface OrgProjectsViewProps {
 	orgId: string;
@@ -29,7 +31,7 @@ export const OrgProjectsView = ({ orgId }: OrgProjectsViewProps) => {
 					/>
 				</CustomErrorBoundary>
 			</Suspense>
-			<Suspense fallback={<ProjectCardSkeleton />}>
+			<Suspense fallback={<OrgProjectsListSkeleton />}>
 				<CustomErrorBoundary>
 					<OrgProjectsList orgId={orgId} search={search} />
 				</CustomErrorBoundary>

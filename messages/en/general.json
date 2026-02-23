@@ -1,6 +1,7 @@
 {
 	"general": {
 		"app_name": "Axyron",
+		"in_development": "This page is under development.",
 		"locale": {
 			"current": "en",
 			"uk": "UA",

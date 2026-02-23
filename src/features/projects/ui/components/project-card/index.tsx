@@ -61,40 +61,33 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
 
 export const ProjectCardSkeleton = () => {
 	return (
-		<>
-			{Array.from({ length: 5 }).map((_, idx) => (
-				<Card
-					key={idx}
-					className="h-[220px] cursor-pointer gap-4 py-4 transition-colors hover:border-primary"
-				>
-					<CardHeader className="px-4">
-						<div className="flex items-center gap-4 overflow-hidden">
-							<Skeleton className="size-4 rounded-full" />
-							<Skeleton className="h-4 w-40" />
-							<Skeleton className="ml-auto h-5 w-16 rounded-full" />
-						</div>
-						<CardDescription className="flex flex-col gap-2 py-1">
-							<Skeleton className="h-3.5 w-full" />
-							<Skeleton className="h-3.5 w-40" />
-						</CardDescription>
-					</CardHeader>
-					<CardContent className="mt-auto flex flex-col gap-2 px-4">
-						<div className="flex justify-between">
-							<Skeleton className="h-5 w-16" />
-							<Skeleton className="h-5 w-8" />
-						</div>
-						<Skeleton className="h-2 w-full" />
-					</CardContent>
-					<div className="px-4">
-						<Separator />
-					</div>
-					<CardFooter className="flex-wrap gap-2">
-						{Array.from({ length: 5 }).map((_, idx) => (
-							<Skeleton key={idx} className="size-8 rounded-full" />
-						))}
-					</CardFooter>
-				</Card>
-			))}
-		</>
+		<Card className="h-[220px] cursor-pointer gap-4 py-4 transition-colors hover:border-primary">
+			<CardHeader className="px-4">
+				<div className="flex items-center gap-4 overflow-hidden">
+					<Skeleton className="size-4 rounded-full" />
+					<Skeleton className="h-4 w-40" />
+					<Skeleton className="ml-auto h-5 w-16 rounded-full" />
+				</div>
+				<CardDescription className="flex flex-col gap-2 py-1">
+					<Skeleton className="h-3.5 w-full" />
+					<Skeleton className="h-3.5 w-40" />
+				</CardDescription>
+			</CardHeader>
+			<CardContent className="mt-auto flex flex-col gap-2 px-4">
+				<div className="flex justify-between">
+					<Skeleton className="h-5 w-16" />
+					<Skeleton className="h-5 w-8" />
+				</div>
+				<Skeleton className="h-2 w-full" />
+			</CardContent>
+			<div className="px-4">
+				<Separator />
+			</div>
+			<CardFooter className="flex-wrap gap-2">
+				{Array.from({ length: 5 }).map((_, idx) => (
+					<Skeleton key={idx} className="size-8 rounded-full" />
+				))}
+			</CardFooter>
+		</Card>
 	);
 };
