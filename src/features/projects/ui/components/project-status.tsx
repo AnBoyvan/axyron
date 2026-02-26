@@ -23,13 +23,13 @@ export const ProjectStatus = ({
 		closed:
 			'text-red-700 border-red-700 bg-red-500/5 dark:text-red-400 dark:border-red-400',
 		pending:
-			'text-sky-700 border-sky-700 bg-sky-500/5 dark:text-sky-400 dark:border-sky-400',
+			'text-sky-700 border-sky-700 bg-sky-500/5 dark:text-sky-400 dark:border-sky-400 border-dashed',
 	};
 
 	if (isArchived) {
 		return (
 			<Badge variant="outline" className={cn('bg-muted text-muted-foreground')}>
-				Archived
+				{t('projects.archived')}
 			</Badge>
 		);
 	}

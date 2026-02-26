@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 import z from 'zod';
 
 import { db } from '@/db';
@@ -30,7 +30,8 @@ export const getMembers = protectedProcedure
 			})
 			.from(projectMembers)
 			.innerJoin(user, eq(user.id, projectMembers.userId))
-			.where(eq(projectMembers.projectId, input.projectId));
+			.where(eq(projectMembers.projectId, input.projectId))
+			.orderBy(desc(user.name), desc(projectMembers.userId));
 
 		return members;
 	});

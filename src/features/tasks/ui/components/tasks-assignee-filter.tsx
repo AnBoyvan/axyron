@@ -9,7 +9,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
-import { useMembersForTask } from '@/features/projects/hooks/use-members-for-task';
+import { useProjectMembersForTask } from '@/features/projects/hooks/use-project-members-for-task';
 
 import type { TasksFilters } from '../../hooks/use-tasks-filter';
 
@@ -26,7 +26,7 @@ export const TasksAssigneeFilter = ({
 }: TasksAssigneeFilterProps) => {
 	const t = useTranslations();
 
-	const { data } = useMembersForTask(projectId);
+	const { data } = useProjectMembersForTask(projectId);
 
 	const onAssigneeChange = (userId: string) => {
 		onChange(userId === 'all' ? null : (userId as TasksFilters['assignee']));

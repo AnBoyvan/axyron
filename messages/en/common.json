@@ -8,6 +8,7 @@
 		"assignees": "Assignees",
 		"calendar": "Calendar",
 		"created": "created",
+		"danger_zone": "Danger Zone",
 		"dashboard": "Dashboard",
 		"descripton": "Description",
 		"due_date": "Due Date",
@@ -36,6 +37,7 @@
 		"smth_wrong": "Something went wrong",
 		"start_date": "Start Date",
 		"status": "Status",
+		"sure": "Are you sure?",
 		"task": "Task",
 		"tasks": "Tasks",
 		"try_later": "Please try again later"

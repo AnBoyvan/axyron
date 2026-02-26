@@ -14,14 +14,18 @@ const avatarVariants = cva('', {
 	variants: {
 		size: {
 			default: 'h-8 w-8',
-			// xs: 'h-4 w-4',
 			sm: 'h-6 w-6',
 			lg: 'h-10 w-10',
-			// xl: 'h-20 w-20',
+			xl: 'h-12 w-12',
+		},
+		form: {
+			default: 'rounded-full',
+			square: 'rounded-md',
 		},
 	},
 	defaultVariants: {
 		size: 'default',
+		form: 'default',
 	},
 });
 
@@ -32,11 +36,16 @@ const avatarFallbackVariants = cva('', {
 			// xs: 'text-[10px]',
 			sm: 'text-base',
 			lg: 'text-2xl',
-			// xl: 'text-6xl',
+			xl: 'text-4xl',
+		},
+		form: {
+			default: 'rounded-full',
+			square: 'rounded-md',
 		},
 	},
 	defaultVariants: {
 		size: 'default',
+		form: 'default',
 	},
 });
 
@@ -54,6 +63,7 @@ export const UserAvatar = ({
 	className,
 	onClick,
 	size,
+	form,
 	isAdmin,
 }: UserAvatarProps) => {
 	const avatarFallback = name.charAt(0).toUpperCase();
@@ -62,18 +72,21 @@ export const UserAvatar = ({
 
 	return (
 		<Avatar
-			className={cn(avatarVariants({ size, className }), 'overflow-visible')}
+			className={cn(
+				avatarVariants({ size, className, form }),
+				'overflow-visible',
+			)}
 			onClick={onClick}
 		>
 			<AvatarImage
 				src={imageUrl ?? ''}
 				alt={name}
-				className={cn('rounded-full')} // TODO: profile image not round
+				className={cn(avatarVariants({ form, size }))}
 			/>
 			<AvatarFallback
 				style={{ color: text, backgroundColor: background }}
 				className={cn(
-					avatarFallbackVariants({ size }),
+					avatarFallbackVariants({ size, form }),
 					'items-center justify-center font-medium uppercase',
 				)}
 			>

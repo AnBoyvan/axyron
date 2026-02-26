@@ -1,12 +1,22 @@
 {
 	"members": {
+		"add_members_allow": "Allow adding members",
+		"add_members_allowed": "Allowed to add members",
+		"add_members_deny": "Disallow adding members",
+		"add_members_denied": "Not allowed to add members",
+		"added_members": "{count} members added",
+		"admin": "Administrator",
+		"admin_add": "Grant admin access",
+		"admin_revoke": "Revoke admin access",
 		"all": "All members",
 		"admin_tooltip": " (admin)",
 		"admin_cannot_leave": "Administrators must transfer their role before leaving.",
 		"already_exists": "You are already a member",
-		"cannot_remove_self": "You cannot remove yourself",
 		"cannot_change_own_role": "You cannot change your role. Ask another admin",
+		"cannot_remove_self": "You cannot remove yourself",
+		"last_admin_protected": "At least one administrator is required.",
 		"no_available_members": "There are no more members to add.",
-		"not_found": "Member not found"
+		"not_found": "Member not found",
+		"remove": "Remove member"
 	}
 }

@@ -8,12 +8,12 @@ import {
 	DialogTitle,
 } from '../ui/dialog';
 import {
-	Drawer,
-	DrawerContent,
-	DrawerDescription,
-	DrawerHeader,
-	DrawerTitle,
-} from '../ui/drawer';
+	Sheet,
+	SheetContent,
+	SheetDescription,
+	SheetHeader,
+	SheetTitle,
+} from '../ui/sheet';
 
 interface ResponsiveDialogProps {
 	title: string;
@@ -34,15 +34,15 @@ export const ResponsiveDialog = ({
 
 	if (isMobile) {
 		return (
-			<Drawer open={open} onOpenChange={onOpenChange}>
-				<DrawerContent>
-					<DrawerHeader>
-						<DrawerTitle>{title}</DrawerTitle>
-						<DrawerDescription>{description}</DrawerDescription>
-					</DrawerHeader>
+			<Sheet open={open} onOpenChange={onOpenChange}>
+				<SheetContent className="w-full gap-0 overflow-auto">
+					<SheetHeader>
+						<SheetTitle>{title}</SheetTitle>
+						<SheetDescription>{description}</SheetDescription>
+					</SheetHeader>
 					<div className="p-4">{children}</div>
-				</DrawerContent>
-			</Drawer>
+				</SheetContent>
+			</Sheet>
 		);
 	}
 

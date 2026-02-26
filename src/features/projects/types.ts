@@ -23,4 +23,4 @@ export type ProjectVisibilityType =
 	inferRouterOutputs<AppRouter>['projects']['getById']['visibility'];
 
 export type Project =
-	inferRouterOutputs<AppRouter>['projects']['getByOrganization'][number];
+	inferRouterOutputs<AppRouter>['projects']['getByOrganization']['projects'][number];

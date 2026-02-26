@@ -8,6 +8,7 @@ import { projectMembers } from '@/db/schema/project-members';
 import { protectedProcedure } from '@/trpc/init';
 
 import { getProjectAccess } from '../utils/get-project-access';
+import { isLastProjectAdmin } from '../utils/is-last-project-admin';
 
 export const removeMember = protectedProcedure
 	.input(z.object({ projectId: z.string(), userId: z.string() }))
@@ -26,6 +27,11 @@ export const removeMember = protectedProcedure
 			});
 		}
 
+		await isLastProjectAdmin({
+			userId: input.userId,
+			projectId: input.projectId,
+		});
+
 		const [removedMember] = await db
 			.delete(projectMembers)
 			.where(
@@ -35,13 +41,6 @@ export const removeMember = protectedProcedure
 				),
 			)
 			.returning();
-
-		if (!removedMember) {
-			throw new TRPCError({
-				code: 'NOT_FOUND',
-				message: 'members.not_found',
-			});
-		}
 
 		await db.insert(activities).values({
 			projectId: input.projectId,

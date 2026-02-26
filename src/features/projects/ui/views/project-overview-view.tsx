@@ -4,7 +4,10 @@ import { Suspense } from 'react';
 
 import { CustomErrorBoundary } from '@/components/shared/custom-error-boundary';
 
-import { ProjectOverview } from '../components/projects-overview';
+import {
+	ProjectOverviewSection,
+	ProjectOverviewSectionSkeleton,
+} from '../sections/project-overview-section';
 
 interface ProjectOverviewViewProps {
 	projectId: string;
@@ -14,9 +17,9 @@ export const ProjectOverviewView = ({
 	projectId,
 }: ProjectOverviewViewProps) => {
 	return (
-		<Suspense fallback={<div>loading...</div>}>
+		<Suspense fallback={<ProjectOverviewSectionSkeleton />}>
 			<CustomErrorBoundary>
-				<ProjectOverview projectId={projectId} />
+				<ProjectOverviewSection projectId={projectId} />
 			</CustomErrorBoundary>
 		</Suspense>
 	);

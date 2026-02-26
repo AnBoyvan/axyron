@@ -1,5 +1,5 @@
 import { TRPCError } from '@trpc/server';
-import { and, eq, getTableColumns } from 'drizzle-orm';
+import { and, desc, eq, getTableColumns } from 'drizzle-orm';
 import z from 'zod';
 
 import { db } from '@/db';
@@ -44,7 +44,8 @@ export const getMembers = protectedProcedure
 			})
 			.from(organizationMembers)
 			.innerJoin(user, eq(user.id, organizationMembers.userId))
-			.where(eq(organizationMembers.organizationId, input.organizationId));
+			.where(eq(organizationMembers.organizationId, input.organizationId))
+			.orderBy(desc(user.name), desc(organizationMembers.userId));
 
 		return members;
 	});

@@ -5,29 +5,31 @@ import { toast } from 'sonner';
 import { getMessage } from '@/lib/utils/get-message';
 import { useTRPC } from '@/trpc/client';
 
-export const useUpdateProject = () => {
+export const useAddProjectMembers = () => {
 	const t = useTranslations();
 	const trpc = useTRPC();
 	const queryClient = useQueryClient();
 
 	return useMutation(
-		trpc.projects.update.mutationOptions({
+		trpc.projects.addMembers.mutationOptions({
 			onSuccess: async data => {
 				await queryClient.invalidateQueries({
-					queryKey: trpc.projects.getById.queryKey({ id: data.id }),
+					queryKey: trpc.projects.getById.queryKey({ id: data.projectId }),
 				});
 
 				await queryClient.invalidateQueries({
-					queryKey: trpc.projects.getByOrganization.queryKey({
-						organizationId: data.organizationId,
+					queryKey: trpc.projects.getMembers.queryKey({
+						projectId: data.projectId,
 					}),
 				});
 
-				//  await queryClient.invalidateQueries({
-				//   queryKey: trpc.projects.getByUser.queryKey()
-				// }) // TODO:
+				await queryClient.invalidateQueries({
+					queryKey: trpc.tasks.getByProject.queryKey({
+						projectId: data.projectId,
+					}),
+				});
 
-				toast.success(t('projects.updated'));
+				toast.success(t('members.added_members', { count: data.added }));
 			},
 			onError: error => {
 				const message = getMessage(error.message, t);

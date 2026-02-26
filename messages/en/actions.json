@@ -1,9 +1,16 @@
 {
 	"actions": {
 		"add": "Add",
+		"archive": "Archive",
 		"assign": "Assign",
 		"cancel": "Cancel",
+		"confirm": "Confirm",
 		"create": "Create",
-		"reset": "Reset"
+		"edit": "Edit",
+		"leave": "Leave",
+		"remove": "Remove",
+		"reset": "Reset",
+		"restore": "Restore",
+		"save": "Save"
 	}
 }

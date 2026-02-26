@@ -24,6 +24,6 @@ export const organizationsRouter = createTRPCRouter({
 	// updateMember,
 	getById,
 	getMany,
-	// getMembers,
+	getMembers,
 	// acceptInvite,
 });

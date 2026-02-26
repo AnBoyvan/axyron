@@ -61,7 +61,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
 
 export const ProjectCardSkeleton = () => {
 	return (
-		<Card className="h-[220px] cursor-pointer gap-4 py-4 transition-colors hover:border-primary">
+		<Card className="h-[220px] gap-4 py-4">
 			<CardHeader className="px-4">
 				<div className="flex items-center gap-4 overflow-hidden">
 					<Skeleton className="size-4 rounded-full" />

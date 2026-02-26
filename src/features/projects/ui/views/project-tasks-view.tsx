@@ -5,9 +5,9 @@ import { Suspense } from 'react';
 import { CustomErrorBoundary } from '@/components/shared/custom-error-boundary';
 
 import {
-	ProjectTasks,
-	ProjectTasksSkeleton,
-} from '../components/project-tasks';
+	ProjectTasksSection,
+	ProjectTasksSectionSkeleton,
+} from '../sections/project-tasks-section';
 
 interface ProjectTasksViewProps {
 	projectId: string;
@@ -15,9 +15,9 @@ interface ProjectTasksViewProps {
 
 export const ProjectTasksView = ({ projectId }: ProjectTasksViewProps) => {
 	return (
-		<Suspense fallback={<ProjectTasksSkeleton />}>
+		<Suspense fallback={<ProjectTasksSectionSkeleton />}>
 			<CustomErrorBoundary>
-				<ProjectTasks projectId={projectId} />
+				<ProjectTasksSection projectId={projectId} />
 			</CustomErrorBoundary>
 		</Suspense>
 	);

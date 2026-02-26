@@ -52,6 +52,7 @@ export const addMembers = protectedProcedure
 		);
 
 		return {
+			projectId: input.id,
 			message: 'Success',
 			added: newMembers.length,
 		};

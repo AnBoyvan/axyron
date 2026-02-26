@@ -8,13 +8,16 @@ import { projectMembers } from '@/db/schema/project-members';
 import { protectedProcedure } from '@/trpc/init';
 
 import { getProjectAccess } from '../utils/get-project-access';
+import { isLastProjectAdmin } from '../utils/is-last-project-admin';
 
 export const updateMember = protectedProcedure
 	.input(
 		z.object({
 			projectId: z.string(),
 			userId: z.string(),
-			role: z.enum(['admin', 'member']),
+			role: z.enum(['admin', 'member']).optional(),
+			canInvite: z.boolean().optional(),
+			canCreateTasks: z.boolean().optional(),
 		}),
 	)
 	.mutation(async ({ ctx, input }) => {
@@ -39,10 +42,19 @@ export const updateMember = protectedProcedure
 			});
 		}
 
+		if (input.role === 'member') {
+			await isLastProjectAdmin({
+				userId: input.userId,
+				projectId: input.projectId,
+			});
+		}
+
 		const [updated] = await db
 			.update(projectMembers)
 			.set({
 				role: input.role,
+				canInvite: input.canInvite,
+				canCreateTask: input.canCreateTasks,
 				updatedAt: sql`now()`,
 			})
 			.where(
@@ -60,16 +72,18 @@ export const updateMember = protectedProcedure
 			});
 		}
 
-		await db.insert(activities).values({
-			projectId: input.projectId,
-			authorId: userId,
-			entityId: updated.userId,
-			entityType: 'user',
-			action: 'status',
-			meta: {
-				role: input.role,
-			},
-		});
+		if (input.role) {
+			await db.insert(activities).values({
+				projectId: input.projectId,
+				authorId: userId,
+				entityId: updated.userId,
+				entityType: 'user',
+				action: 'status',
+				meta: {
+					role: input.role,
+				},
+			});
+		}
 
 		return updated;
 	});

@@ -1,7 +1,7 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { OrgProjectsView } from '@/features/projects/ui/views/org-projects-view';
+import { ProjectsView } from '@/features/organizations/ui/views/projects-view';
 import { auth } from '@/lib/auth/auth';
 import { HydrateClient, prefetch, trpc } from '@/trpc/server';
 
@@ -20,14 +20,13 @@ const Page = async ({ params }: PageProps) => {
 
 	const { orgId } = await params;
 
-	prefetch(trpc.organizations.getById.queryOptions({ id: orgId }));
 	prefetch(
 		trpc.projects.getByOrganization.queryOptions({ organizationId: orgId }),
 	);
 
 	return (
 		<HydrateClient>
-			<OrgProjectsView orgId={orgId} />
+			<ProjectsView orgId={orgId} />
 		</HydrateClient>
 	);
 };

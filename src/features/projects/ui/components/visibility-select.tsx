@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
-interface InputFieldProps<T extends FieldValues> {
+interface VisibilitySelectProps<T extends FieldValues> {
 	control: Control<T>;
 	name: Path<T>;
 	label?: string;
@@ -31,7 +31,7 @@ export const VisibilitySelect = <T extends FieldValues>({
 	name,
 	label,
 	disabled,
-}: InputFieldProps<T>) => {
+}: VisibilitySelectProps<T>) => {
 	const t = useTranslations();
 
 	return (
@@ -48,7 +48,7 @@ export const VisibilitySelect = <T extends FieldValues>({
 							disabled={disabled}
 							className="flex flex-col gap-2 md:flex-row"
 						>
-							<FieldLabel htmlFor="public">
+							<FieldLabel htmlFor="public" className="bg-popover">
 								<Field orientation="horizontal">
 									<FieldContent>
 										<div className="flex items-center gap-2">
@@ -65,7 +65,7 @@ export const VisibilitySelect = <T extends FieldValues>({
 									/>
 								</Field>
 							</FieldLabel>
-							<FieldLabel htmlFor="private">
+							<FieldLabel htmlFor="private" className="bg-popover">
 								<Field orientation="horizontal">
 									<FieldContent>
 										<FieldTitle>{t('projects.private')}</FieldTitle>

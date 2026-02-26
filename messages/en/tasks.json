@@ -2,6 +2,10 @@
 	"tasks": {
 		"comment_not_found": "Comment not found",
 		"descripton_placeholder": "Add a description...",
+		"manage_tasks_allow": "Allow task editing",
+		"manage_tasks_allowed": "Can create and edit tasks",
+		"manage_tasks_deny": "Disallow task editing",
+		"manage_tasks_denied": "Cannot create or edit tasks",
 		"need_review": "Requires admin approval",
 		"new": "New",
 		"new_title": "Create a new task",

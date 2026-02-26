@@ -16,13 +16,18 @@ import {
 } from '@/features/tasks/ui/components/tasks-filter';
 import { getFilteredTasks } from '@/features/tasks/utils/get-filtered-tasks';
 
-import { ProjectHeader, ProjectHeaderSkeleton } from './project-header';
+import {
+	ProjectHeader,
+	ProjectHeaderSkeleton,
+} from '../components/project-header';
 
-interface ProjectTasksProps {
+interface ProjectTasksSectionProps {
 	projectId: string;
 }
 
-export const ProjectTasks = ({ projectId }: ProjectTasksProps) => {
+export const ProjectTasksSection = ({
+	projectId,
+}: ProjectTasksSectionProps) => {
 	const t = useTranslations();
 	const locale = useLocale();
 	const [filters] = useTasksFilters();
@@ -64,7 +69,7 @@ export const ProjectTasks = ({ projectId }: ProjectTasksProps) => {
 	);
 };
 
-export const ProjectTasksSkeleton = () => {
+export const ProjectTasksSectionSkeleton = () => {
 	return (
 		<div className="flex flex-1 flex-col gap-4 lg:gap-8">
 			<ProjectHeaderSkeleton tab="tasks" />

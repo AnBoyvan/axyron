@@ -6,6 +6,8 @@ import { Drawer as DrawerPrimitive } from 'vaul';
 
 import { cn } from '@/lib/utils/cn';
 
+import { ScrollArea } from './scroll-area';
+
 function Drawer({
 	...props
 }: React.ComponentProps<typeof DrawerPrimitive.Root>) {

@@ -1,9 +1,11 @@
 import { TRPCError } from '@trpc/server';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, getTableColumns } from 'drizzle-orm';
 import z from 'zod';
 
 import { db } from '@/db';
 import { organizationMembers } from '@/db/schema/organization-members';
+import { organizations } from '@/db/schema/organizations';
+import { getOrgPermissions } from '@/features/organizations/utils/get-org-permission';
 import { protectedProcedure } from '@/trpc/init';
 
 import { buildProjectsQuery } from '../utils/build-projects-query';
@@ -13,9 +15,20 @@ export const getByOrganization = protectedProcedure
 	.query(async ({ ctx, input }) => {
 		const userId = ctx.auth.user.id;
 
-		const [existingOrgMember] = await db
-			.select()
+		const [data] = await db
+			.select({
+				member: {
+					...getTableColumns(organizationMembers),
+				},
+				organization: {
+					...getTableColumns(organizations),
+				},
+			})
 			.from(organizationMembers)
+			.innerJoin(
+				organizations,
+				eq(organizations.id, organizationMembers.organizationId),
+			)
 			.where(
 				and(
 					eq(organizationMembers.userId, userId),
@@ -24,17 +37,27 @@ export const getByOrganization = protectedProcedure
 			)
 			.limit(1);
 
-		if (!existingOrgMember) {
+		if (!data) {
 			throw new TRPCError({
 				code: 'FORBIDDEN',
 				message: 'projects.not_found',
 			});
 		}
+		const permissions = getOrgPermissions({
+			org: data.organization,
+			member: data.member,
+		});
 
-		return buildProjectsQuery({
+		const projects = await buildProjectsQuery({
 			organizationId: input.organizationId,
 			userId,
-			isAdmin: existingOrgMember.role === 'admin',
+			isAdmin: data.member.role === 'admin',
 			archived: false,
 		});
+
+		return {
+			organization: data.organization,
+			permissions,
+			projects,
+		};
 	});

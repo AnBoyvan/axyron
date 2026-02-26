@@ -16,7 +16,7 @@ import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 import { SelectItem } from '@/components/ui/select';
-import { useMembersForTask } from '@/features/projects/hooks/use-members-for-task';
+import { useProjectMembersForTask } from '@/features/projects/hooks/use-project-members-for-task';
 import { UserAvatar } from '@/features/users/ui/components/user-avatar';
 import { cn } from '@/lib/utils/cn';
 
@@ -53,7 +53,7 @@ export const NewTaskDialog = ({
 		},
 	});
 
-	const { data, isLoading } = useMembersForTask(projectId);
+	const { data, isLoading } = useProjectMembersForTask(projectId);
 
 	const createTask = useCreateTask();
 
