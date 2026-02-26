@@ -9,6 +9,14 @@ import {
 	ProjectMembers,
 	ProjectMembersSkeleton,
 } from '../components/project-members';
+import {
+	ProjectTasksStats,
+	ProjectTasksStatsSkeleton,
+} from '../components/project-tasks-stats';
+import {
+	ProjectTasksStatsMobile,
+	ProjectTasksStatsMobileSkeleton,
+} from '../components/project-tasks-stats-mobile';
 
 interface ProjectOverviewSectionProps {
 	projectId: string;
@@ -33,11 +41,21 @@ export const ProjectOverviewSection = ({
 				visibility={data.visibility}
 				tab="overview"
 			/>
-			<ProjectInfo project={data} />
-			<ProjectMembers project={data} />
-			{isAdmin && (
-				<ProjectDangerZone projectId={data.id} isArchived={data.archived} />
-			)}
+			<div className="grid grid-cols-5 gap-4 lg:gap-8">
+				<div className="col-span-5 flex flex-col gap-4 lg:col-span-4 lg:gap-8">
+					<div className="w-full lg:hidden">
+						<ProjectTasksStatsMobile data={data.tasks} />
+					</div>
+					<ProjectInfo project={data} />
+					<ProjectMembers project={data} />
+					{isAdmin && (
+						<ProjectDangerZone projectId={data.id} isArchived={data.archived} />
+					)}
+				</div>
+				<div className="col-span-1 hidden w-full lg:block">
+					<ProjectTasksStats data={data.tasks} />
+				</div>
+			</div>
 		</div>
 	);
 };
@@ -46,8 +64,18 @@ export const ProjectOverviewSectionSkeleton = () => {
 	return (
 		<div className="flex flex-1 flex-col gap-4 lg:gap-8">
 			<ProjectHeaderSkeleton tab="overview" />
-			<ProjectInfoSkeleton />
-			<ProjectMembersSkeleton />
+			<div className="grid grid-cols-5 gap-4 lg:gap-8">
+				<div className="col-span-5 flex flex-col gap-4 lg:col-span-4 lg:gap-8">
+					<div className="w-full lg:hidden">
+						<ProjectTasksStatsMobileSkeleton />
+					</div>
+					<ProjectInfoSkeleton />
+					<ProjectMembersSkeleton />
+				</div>
+				<div className="col-span-1 hidden w-full lg:block">
+					<ProjectTasksStatsSkeleton />
+				</div>
+			</div>
 		</div>
 	);
 };

@@ -33,7 +33,7 @@ export const ProjectHeader = ({
 	const t = useTranslations();
 
 	return (
-		<div className="flex flex-col gap-4">
+		<div className="flex flex-col gap-4 lg:gap-6">
 			<div className="flex gap-4">
 				<ProjectVisibility visibility={visibility} />
 				<h1 className="truncate font-semibold text-xl">{name}</h1>
@@ -67,7 +67,7 @@ export const ProjectHeaderSkeleton = ({
 	const t = useTranslations();
 
 	return (
-		<div className="flex flex-col gap-4">
+		<div className="flex flex-col gap-4 lg:gap-6">
 			<div className="flex h-7 items-center gap-4">
 				<Skeleton className="size-5 rounded-full" />
 				<Skeleton className="h-6 w-40" />

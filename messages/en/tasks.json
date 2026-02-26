@@ -35,6 +35,7 @@
 		"title_title": "Title",
 		"title_placeholder": "Enter task title",
 		"title_required": "Title is required",
+		"total": "Total tasks",
 		"update_admin_only": "Only admin can complete or cancel this task",
 		"yes": "Yes"
 	}

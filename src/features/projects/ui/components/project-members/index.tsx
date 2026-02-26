@@ -44,7 +44,7 @@ export const ProjectMembers = ({ project }: ProjectMembersProps) => {
 						</Button>
 					)}
 				</div>
-				<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+				<div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-3">
 					{project.members.map(member => (
 						<ProjectMember
 							key={member.userId}
@@ -68,7 +68,7 @@ export const ProjectMembersSkeleton = () => {
 			<div className="flex h-9 items-center">
 				<Skeleton className="h-4" />
 			</div>
-			<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+			<div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-3">
 				{Array.from({ length: 10 }).map((_, idx) => (
 					<ProjectMemberSkeleton key={idx} />
 				))}

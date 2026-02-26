@@ -20,6 +20,12 @@ export type TaskStatusOption = {
 };
 
 export const taskStatuses: Record<TaskStatusEnum, TaskStatusOption> = {
+	cancelled: {
+		value: TaskStatusEnum.cancelled,
+		label: 'tasks.statuses.cancelled',
+		icon: CircleDashedIcon,
+		iconStyle: 'text-red-600 dark:text-red-400',
+	},
 	pending: {
 		value: TaskStatusEnum.pending,
 		label: 'tasks.statuses.pending',
@@ -43,12 +49,6 @@ export const taskStatuses: Record<TaskStatusEnum, TaskStatusOption> = {
 		label: 'tasks.statuses.completed',
 		icon: ClockCheckIcon,
 		iconStyle: 'text-emerald-600 dark:text-emerald-400',
-	},
-	cancelled: {
-		value: TaskStatusEnum.cancelled,
-		label: 'tasks.statuses.cancelled',
-		icon: CircleDashedIcon,
-		iconStyle: 'text-red-600 dark:text-red-400',
 	},
 	overdue: {
 		value: TaskStatusEnum.overdue,
