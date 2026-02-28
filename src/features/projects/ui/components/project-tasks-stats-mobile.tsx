@@ -15,8 +15,6 @@ export const ProjectTasksStatsMobile = ({
 }: ProjectTasksStatsMobileProps) => {
 	const t = useTranslations();
 
-	const reversedOptions = [...taskStatusOptions].reverse();
-
 	return (
 		<div className="grid w-full grid-cols-12 gap-2">
 			<div className="col-span-4 flex flex-col gap-2 rounded-md border bg-card p-2">
@@ -26,7 +24,7 @@ export const ProjectTasksStatsMobile = ({
 					<p>{data.total}</p>
 				</div>
 			</div>
-			{reversedOptions.map((option, idx) => (
+			{taskStatusOptions.map((option, idx) => (
 				<div
 					key={option.value}
 					className={cn(

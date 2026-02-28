@@ -1,5 +1,14 @@
 {
 	"tasks": {
+		"chart_title": {
+			"by_status_with_priority": "Tasks by Status (by Priority)",
+			"by_status_with_assignees": "Tasks by Status (by Assignee)",
+			"by_priority_with_status": "Tasks by Priority (by Status)",
+			"by_priority_with_assignees": "Tasks by Priority (by Assignee)",
+			"by_member_with_status": "Tasks by Member (by Status)",
+			"by_member_with_priority": "Tasks by Member (by Priority)",
+			"by_member": "Tasks by Member"
+		},
 		"comment_not_found": "Comment not found",
 		"descripton_placeholder": "Add a description...",
 		"manage_tasks_allow": "Allow task editing",
@@ -12,6 +21,7 @@
 		"new_description": "Add the details below to create a task.",
 		"no": "No",
 		"no_tasks": "No tasks to display",
+		"not_assigned": "Not assigned",
 		"not_found": "Task not found",
 		"priority": {
 			"all": "All priorities",

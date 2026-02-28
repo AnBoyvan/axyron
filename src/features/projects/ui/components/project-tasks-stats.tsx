@@ -14,7 +14,14 @@ export const ProjectTasksStats = ({ data }: ProjectTasksStatsProps) => {
 	const t = useTranslations();
 
 	return (
-		<div className="2xl flex w-full flex-col-reverse gap-8">
+		<div className="2xl flex w-full flex-col gap-8">
+			<div className="flex flex-col gap-2 rounded-md border bg-card p-4">
+				<p className="font-semibold">{t('tasks.total')}</p>
+				<div className="flex h-9 items-center gap-4">
+					<ListTodoIcon className={'size-8'} />
+					<p className="text-3xl">{data.total}</p>
+				</div>
+			</div>
 			{taskStatusOptions.map(option => {
 				return (
 					<div
@@ -29,13 +36,6 @@ export const ProjectTasksStats = ({ data }: ProjectTasksStatsProps) => {
 					</div>
 				);
 			})}
-			<div className="flex flex-col gap-2 rounded-md border bg-card p-4">
-				<p className="font-semibold">{t('tasks.total')}</p>
-				<div className="flex h-9 items-center gap-4">
-					<ListTodoIcon className={'size-8'} />
-					<p className="text-3xl">{data.total}</p>
-				</div>
-			</div>
 		</div>
 	);
 };
@@ -44,7 +44,13 @@ export const ProjectTasksStatsSkeleton = () => {
 	const t = useTranslations();
 
 	return (
-		<div className="2xl flex w-full flex-col-reverse gap-8">
+		<div className="2xl flex w-full flex-col gap-8">
+			<div className="flex flex-col gap-2 rounded-md border bg-card p-4">
+				<p className="font-semibold">{t('tasks.total')}</p>
+				<div className="flex h-9 items-center gap-4">
+					<ListTodoIcon className={'size-8'} />
+				</div>
+			</div>
 			{taskStatusOptions.map(option => {
 				return (
 					<div
@@ -58,12 +64,6 @@ export const ProjectTasksStatsSkeleton = () => {
 					</div>
 				);
 			})}
-			<div className="flex flex-col gap-2 rounded-md border bg-card p-4">
-				<p className="font-semibold">{t('tasks.total')}</p>
-				<div className="flex h-9 items-center gap-4">
-					<ListTodoIcon className={'size-8'} />
-				</div>
-			</div>
 		</div>
 	);
 };

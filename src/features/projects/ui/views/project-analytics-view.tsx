@@ -4,17 +4,22 @@ import { Suspense } from 'react';
 
 import { CustomErrorBoundary } from '@/components/shared/custom-error-boundary';
 
+import {
+	ProjectAnalyticsSection,
+	ProjectAnalyticsSectionSkeleton,
+} from '../sections/project-analytics-section';
+
 interface ProjectOverviewViewProps {
 	projectId: string;
 }
 
-export const ProjectOverviewView = ({
+export const ProjectAnalyticsView = ({
 	projectId,
 }: ProjectOverviewViewProps) => {
 	return (
-		<Suspense fallback={<div />}>
+		<Suspense fallback={<ProjectAnalyticsSectionSkeleton />}>
 			<CustomErrorBoundary>
-				<div></div>
+				<ProjectAnalyticsSection projectId={projectId} />
 			</CustomErrorBoundary>
 		</Suspense>
 	);

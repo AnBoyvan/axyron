@@ -3,13 +3,12 @@ import {
 	InfoIcon,
 	ListTodoIcon,
 	type LucideIcon,
-	UsersIcon,
 } from 'lucide-react';
 import type { TranslationKey } from 'next-intl';
 import type { IconType } from 'react-icons/lib';
 
 export type ProjectTab = {
-	value: 'tasks' | 'overview' | 'members' | 'analytics';
+	value: 'tasks' | 'overview' | 'analytics';
 	link: string;
 	label: TranslationKey;
 	icon: LucideIcon | IconType;
@@ -28,12 +27,6 @@ export const projectTabs: ProjectTab[] = [
 		label: 'common.overview',
 		icon: InfoIcon,
 	},
-	// {
-	// 	value: 'members',
-	// 	link: 'members',
-	// 	label: 'common.members',
-	// 	icon: UsersIcon,
-	// },
 	{
 		value: 'analytics',
 		link: 'analytics',

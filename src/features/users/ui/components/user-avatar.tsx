@@ -14,6 +14,7 @@ const avatarVariants = cva('', {
 	variants: {
 		size: {
 			default: 'h-8 w-8',
+			xs: 'h-4 w-4',
 			sm: 'h-6 w-6',
 			lg: 'h-10 w-10',
 			xl: 'h-12 w-12',
@@ -33,7 +34,7 @@ const avatarFallbackVariants = cva('', {
 	variants: {
 		size: {
 			default: 'text-lg',
-			// xs: 'text-[10px]',
+			xs: 'text-[8px]',
 			sm: 'text-base',
 			lg: 'text-2xl',
 			xl: 'text-4xl',

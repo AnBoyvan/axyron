@@ -1,6 +1,8 @@
 import { relations } from 'drizzle-orm';
 import { boolean, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+import { createSelectSchema } from 'drizzle-zod';
 import { nanoid } from 'nanoid';
+import type z from 'zod';
 
 import { activities } from './activities';
 import { assignees } from './assignees';
@@ -42,6 +44,9 @@ export const tasks = pgTable('tasks', {
 		.notNull()
 		.defaultNow(),
 });
+
+export const taskSelectSchema = createSelectSchema(tasks);
+export type TaskSelectSchema = z.infer<typeof taskSelectSchema>;
 
 export const taskRelations = relations(tasks, ({ one, many }) => ({
 	organization: one(organizations, {

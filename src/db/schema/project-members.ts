@@ -6,6 +6,8 @@ import {
 	text,
 	timestamp,
 } from 'drizzle-orm/pg-core';
+import { createSelectSchema } from 'drizzle-zod';
+import type z from 'zod';
 
 import { memberRole } from './enums';
 import { projects } from './projects';
@@ -37,6 +39,11 @@ export const projectMembers = pgTable(
 		}),
 	],
 );
+
+export const projectMemberSelectSchema = createSelectSchema(projectMembers);
+export type ProjectMemberSelectSchema = z.infer<
+	typeof projectMemberSelectSchema
+>;
 
 export const projectMemberRelations = relations(projectMembers, ({ one }) => ({
 	user: one(user, {

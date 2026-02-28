@@ -20,7 +20,13 @@ const Page = async ({ params }: PageProps) => {
 
 	const { taskId } = await params;
 
-	return <Developing />;
+	// prefetch(trpc.tasks.getByProject.queryOptions({ projectId }));
+
+	return (
+		<HydrateClient>
+			<Developing />
+		</HydrateClient>
+	);
 };
 
 export default Page;

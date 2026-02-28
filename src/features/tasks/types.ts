@@ -1,5 +1,6 @@
 import type { inferRouterOutputs } from '@trpc/server';
 
+import type { AssigneeSelectSchema } from '@/db/schema/assignees';
 import type { AppRouter } from '@/trpc/routers/_app';
 
 export type TaskByProject =
@@ -34,3 +35,12 @@ export enum TaskPriorityEnum {
 	high = 'high',
 	critical = 'critical',
 }
+
+export type Assignee = AssigneeSelectSchema & {
+	name: string;
+	image?: string | null;
+};
+
+export type AssigneeWithCount = Assignee & {
+	count: number;
+};

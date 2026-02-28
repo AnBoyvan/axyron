@@ -1,12 +1,17 @@
-import { eq, sql } from 'drizzle-orm';
+import { eq, getTableColumns, inArray } from 'drizzle-orm';
 import z from 'zod';
 
 import { db } from '@/db';
 import { assignees } from '@/db/schema/assignees';
+import { projectMembers } from '@/db/schema/project-members';
 import { tasks } from '@/db/schema/tasks';
+import { user } from '@/db/schema/user';
 import { protectedProcedure } from '@/trpc/init';
 
 import { getProjectAccess } from '../../projects/utils/get-project-access';
+import { getAnalyticsByMembers } from '../utils/get-analytics-by-members';
+import { getAnalyticsByPriority } from '../utils/get-analytics-by-priority';
+import { getAnalyticsByStatus } from '../utils/get-analytics-by-status';
 
 export const getAnalytics = protectedProcedure
 	.input(z.object({ projectId: z.string() }))
@@ -18,118 +23,59 @@ export const getAnalytics = protectedProcedure
 			userId,
 		});
 
-		const baseCondition = eq(tasks.projectId, input.projectId);
+		const allTasks = await db
+			.select()
+			.from(tasks)
+			.where(eq(tasks.projectId, input.projectId));
 
-		const [summaryRows, assigneeRows] = await Promise.all([
-			db
-				.select({
-					total: sql<number>`(count(*))::int`,
+		const allTaskIds = allTasks.map(({ id }) => id);
 
-					pending: sql<number>`
-            (count(*) filter (where status = 'pending'))::int
-          `,
-					inProgress: sql<number>`
-            (count(*) filter (where status = 'in_progress'))::int
-          `,
-					inReview: sql<number>`
-            (count(*) filter (where status = 'in_review'))::int
-          `,
-					completed: sql<number>`
-            (count(*) filter (where status = 'completed'))::int
-          `,
-					cancelled: sql<number>`
-            (count(*) filter (where status = 'cancelled'))::int
-          `,
-					overdue: sql<number>`
-            (
-              count(*) filter (
-                where status not in ('completed','cancelled')
-                and due_date is not null
-                and due_date < now()
-              )
-            )::int
-          `,
-					low: sql<number>`
-            (count(*) filter (where priority = 'low'))::int
-          `,
-					medium: sql<number>`
-            (count(*) filter (where priority = 'medium'))::int
-          `,
-					high: sql<number>`
-            (count(*) filter (where priority = 'high'))::int
-          `,
-					critical: sql<number>`
-            (count(*) filter (where priority = 'critical'))::int
-          `,
-				})
-				.from(tasks)
-				.where(baseCondition),
-			db
-				.select({
-					userId: assignees.userId,
+		const allAssignees =
+			allTaskIds.length > 0
+				? await db
+						.select({
+							...getTableColumns(assignees),
+							name: user.name,
+							image: user.image,
+						})
+						.from(assignees)
+						.innerJoin(user, eq(user.id, assignees.userId))
+						.where(inArray(assignees.taskId, allTaskIds))
+				: [];
 
-					total: sql<number>`
-            (count(distinct ${tasks.id}))::int
-          `,
-					pending: sql<number>`
-            (
-              count(distinct ${tasks.id})
-              filter (where ${tasks.status} = 'pending')
-            )::int
-          `,
-					inProgress: sql<number>`
-            (
-              count(distinct ${tasks.id})
-              filter (where ${tasks.status} = 'in_progress')
-            )::int
-          `,
-					inReview: sql<number>`
-            (
-              count(distinct ${tasks.id})
-              filter (where ${tasks.status} = 'in_review')
-            )::int
-          `,
-					completed: sql<number>`
-            (
-              count(distinct ${tasks.id})
-              filter (where ${tasks.status} = 'completed')
-            )::int
-          `,
-					cancelled: sql<number>`
-            (
-              count(distinct ${tasks.id})
-              filter (where ${tasks.status} = 'cancelled')
-            )::int
-          `,
-				})
-				.from(assignees)
-				.innerJoin(tasks, eq(tasks.id, assignees.taskId))
-				.where(baseCondition)
-				.groupBy(assignees.userId),
-		]);
+		const allMembers = await db
+			.select({
+				...getTableColumns(projectMembers),
+				name: user.name,
+				image: user.image,
+				email: user.email,
+				phone: user.phone,
+			})
+			.from(projectMembers)
+			.innerJoin(user, eq(user.id, projectMembers.userId))
+			.where(eq(projectMembers.projectId, input.projectId));
 
-		const summary = summaryRows[0];
+		const byStatus = getAnalyticsByStatus({
+			tasks: allTasks,
+			assignees: allAssignees,
+		});
+
+		const byPriority = getAnalyticsByPriority({
+			tasks: allTasks,
+			assignees: allAssignees,
+		});
+
+		const byMembers = getAnalyticsByMembers({
+			tasks: allTasks,
+			assignees: allAssignees,
+			members: allMembers,
+		});
 
 		return {
 			project,
 			permissions,
-			summary: {
-				total: summary.total,
-				byStatus: {
-					pending: summary.pending,
-					in_progress: summary.inProgress,
-					in_review: summary.inReview,
-					completed: summary.completed,
-					cancelled: summary.cancelled,
-					overdue: summary.overdue,
-				},
-				byPriority: {
-					low: summary.low,
-					medium: summary.medium,
-					high: summary.high,
-					critical: summary.critical,
-				},
-			},
-			byAssignee: assigneeRows,
+			byStatus,
+			byPriority,
+			byMembers,
 		};
 	});

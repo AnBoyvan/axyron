@@ -1,14 +1,15 @@
 import type { inferRouterOutputs } from '@trpc/server';
 
+import type { ProjectMemberSelectSchema } from '@/db/schema/project-members';
 import type { AppRouter } from '@/trpc/routers/_app';
 
 export type ProjectMemberDTO = {
 	userId: string;
 	role: 'admin' | 'member';
 	name: string;
-	image: string | null;
 	email: string;
-	phone: string | null;
+	image?: string | null;
+	phone?: string | null;
 };
 
 export type ProjectById = inferRouterOutputs<AppRouter>['projects']['getById'];
@@ -24,3 +25,10 @@ export type ProjectVisibilityType =
 
 export type Project =
 	inferRouterOutputs<AppRouter>['projects']['getByOrganization']['projects'][number];
+
+export type ProjectMember = ProjectMemberSelectSchema & {
+	name: string;
+	email: string;
+	image?: string | null;
+	phone?: string | null;
+};

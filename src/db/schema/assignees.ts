@@ -1,5 +1,7 @@
 import { relations } from 'drizzle-orm';
 import { pgTable, primaryKey, text, timestamp } from 'drizzle-orm/pg-core';
+import { createSelectSchema } from 'drizzle-zod';
+import type z from 'zod';
 
 import { tasks } from './tasks';
 import { user } from './user';
@@ -29,6 +31,9 @@ export const assignees = pgTable(
 		}),
 	],
 );
+
+export const assigneeSelectSchema = createSelectSchema(assignees);
+export type AssigneeSelectSchema = z.infer<typeof assigneeSelectSchema>;
 
 export const assigneeRelations = relations(assignees, ({ one }) => ({
 	user: one(user, {

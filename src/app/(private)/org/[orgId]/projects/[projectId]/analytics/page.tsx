@@ -1,6 +1,7 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+import { ProjectAnalyticsView } from '@/features/projects/ui/views/project-analytics-view';
 import { auth } from '@/lib/auth/auth';
 import { HydrateClient, prefetch, trpc } from '@/trpc/server';
 
@@ -19,11 +20,11 @@ const Page = async ({ params }: PageProps) => {
 
 	const { projectId } = await params;
 
-	// prefetch(trpc.projects.getById.queryOptions({ id: projectId }));
+	prefetch(trpc.projects.getAnalytics.queryOptions({ projectId }));
 
 	return (
 		<HydrateClient>
-			<div></div>
+			<ProjectAnalyticsView projectId={projectId} />
 		</HydrateClient>
 	);
 };
