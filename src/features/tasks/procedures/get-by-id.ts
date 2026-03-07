@@ -95,12 +95,24 @@ export const getById = protectedProcedure
 			userId,
 		});
 
+		const isAssignee = row.assignees.some(a => a.userId === userId);
+		const isAdmin = permissions.isProjectAdmin || permissions.isOrgAdmin;
+		const canCloseTask = isAdmin
+			? true
+			: row.task.needReview
+				? isAdmin
+				: isAssignee;
+
 		return {
 			...row.task,
 			link: `/org/${row.task.organizationId}/projects/${row.task.projectId}/tasks/${row.task.id}`,
 			creator: row.creator,
 			assignees: row.assignees,
 			subtasks: row.subtasks,
-			permissions,
+			permissions: {
+				...permissions,
+				isAssignee,
+				canCloseTask,
+			},
 		};
 	});

@@ -9,6 +9,8 @@
 		"create": "Create",
 		"edit": "Edit",
 		"leave": "Leave",
+		"move_up": "Move up",
+		"move_down": "Move down",
 		"remove": "Remove",
 		"reset": "Reset",
 		"restore": "Restore",

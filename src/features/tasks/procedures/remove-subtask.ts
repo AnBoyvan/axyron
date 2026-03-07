@@ -64,7 +64,10 @@ export const removeSubtask = protectedProcedure
 			},
 		});
 
-		await db.delete(subtasks).where(eq(subtasks.id, input.subtaskId));
+		const [deleted] = await db
+			.delete(subtasks)
+			.where(eq(subtasks.id, input.subtaskId))
+			.returning();
 
-		return { subtaskId: input.subtaskId };
+		return { ...deleted, projectId: existingTask.projectId };
 	});

@@ -60,5 +60,5 @@ export const subtaskCompletedToggle = protectedProcedure
 			.where(eq(subtasks.id, input.subtaskId))
 			.returning();
 
-		return updatedSubtask;
+		return { ...updatedSubtask, projectId: existingTask.projectId };
 	});

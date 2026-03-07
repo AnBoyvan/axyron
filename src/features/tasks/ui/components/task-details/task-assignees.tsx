@@ -4,7 +4,6 @@ import { UserPlusIcon, UsersIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
 import type { TaskById } from '@/features/tasks/types';
 import { UserAvatar } from '@/features/users/ui/components/user-avatar';
 
@@ -33,13 +32,32 @@ export const TaskAssignees = ({
 	}, [assignees]);
 
 	return (
-		<div className="flex flex-col gap-2">
-			<div className="flex gap-2 text-muted-foreground">
+		<div className="flex flex-col">
+			<div className="flex h-8 items-center gap-2 text-muted-foreground">
 				<UsersIcon className="size-4" />
-				<Label>{t('common.assignees')}</Label>
+				<h2 className="font-semibold text-base">{t('common.assignees')}</h2>
+				{canUpdate && (
+					<>
+						<AddAssigneesDialog
+							taskId={taskId}
+							projectId={projectId}
+							existedIds={existedAssigneeIds}
+							open={open}
+							onOpenChange={setOpen}
+						/>
+						<Button
+							size="icon-sm"
+							variant="ghost"
+							onClick={() => setOpen(true)}
+							className="text-primary"
+						>
+							<UserPlusIcon />
+						</Button>
+					</>
+				)}
 			</div>
 			{assignees.length > 0 ? (
-				<div className="grid grid-cols-1 gap-2 md:grid-cols-2 2xl:grid-cols-3">
+				<div className="grid grid-cols-1 gap-2 pt-2 md:grid-cols-2 2xl:grid-cols-3">
 					{assignees.map(assignee => (
 						<div
 							key={assignee.userId}
@@ -67,21 +85,6 @@ export const TaskAssignees = ({
 				<p className="text-muted-foreground italic">
 					{t('tasks.not_assigned')}
 				</p>
-			)}
-			{canUpdate && (
-				<>
-					<AddAssigneesDialog
-						taskId={taskId}
-						projectId={projectId}
-						existedIds={existedAssigneeIds}
-						open={open}
-						onOpenChange={setOpen}
-					/>
-					<Button size="sm" onClick={() => setOpen(true)} className="w-fit">
-						<UserPlusIcon />
-						{t('actions.add')}
-					</Button>
-				</>
 			)}
 		</div>
 	);

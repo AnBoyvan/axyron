@@ -60,7 +60,7 @@ export const reorderSubtasks = protectedProcedure
 		const newPosition = input.newPosition;
 
 		if (oldPosition === newPosition) {
-			return existingTask;
+			return { ...existingSubtask, projectId: existingTask.projectId };
 		}
 
 		const allSubtasks = await db
@@ -106,5 +106,5 @@ export const reorderSubtasks = protectedProcedure
 			.set({ position: newPosition, updatedAt: sql`now()` })
 			.where(eq(subtasks.id, input.subtaskId));
 
-		return existingSubtask;
+		return { ...existingSubtask, projectId: existingTask.projectId };
 	});

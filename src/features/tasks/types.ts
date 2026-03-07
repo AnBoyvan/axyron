@@ -38,6 +38,8 @@ export enum TaskPriorityEnum {
 	critical = 'critical',
 }
 
+export type Subtask = TaskById['subtasks'][number];
+
 export type Assignee = AssigneeSelectSchema & {
 	name: string;
 	image?: string | null;

@@ -73,5 +73,5 @@ export const addSubtask = protectedProcedure
 			action: 'created',
 		});
 
-		return createdSubtask;
+		return { ...createdSubtask, projectId: existingTask.projectId };
 	});

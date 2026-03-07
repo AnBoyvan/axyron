@@ -38,10 +38,6 @@ export const updateSubtask = protectedProcedure
 			.where(eq(tasks.id, existingSubtask.taskId))
 			.limit(1);
 
-		if (existingSubtask.title === input.title) {
-			return existingSubtask;
-		}
-
 		if (!existingTask) {
 			throw new TRPCError({
 				code: 'NOT_FOUND',
@@ -70,18 +66,19 @@ export const updateSubtask = protectedProcedure
 			.where(eq(subtasks.id, input.subtaskId))
 			.returning();
 
-		await db.insert(activities).values({
-			projectId: existingTask.projectId,
-			taskId: existingTask.id,
-			authorId: userId,
-			entityId: existingSubtask.id,
-			entityType: 'subtask',
-			action: 'renamed',
-			meta: {
-				from: existingSubtask.title,
-				to: updatedSubtask.title,
-			},
-		});
-
-		return updatedSubtask;
+		if (existingSubtask.title === input.title) {
+			await db.insert(activities).values({
+				projectId: existingTask.projectId,
+				taskId: existingTask.id,
+				authorId: userId,
+				entityId: existingSubtask.id,
+				entityType: 'subtask',
+				action: 'renamed',
+				meta: {
+					from: existingSubtask.title,
+					to: updatedSubtask.title,
+				},
+			});
+		}
+		return { ...updatedSubtask, projectId: existingTask.projectId };
 	});
