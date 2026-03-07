@@ -38,7 +38,10 @@ export const remove = protectedProcedure
 			});
 		}
 
-		await db.delete(tasks).where(eq(tasks.id, input.taskId));
+		const [deletedTask] = await db
+			.delete(tasks)
+			.where(eq(tasks.id, input.taskId))
+			.returning();
 
 		await db.insert(activities).values({
 			projectId: existingTask.projectId,
@@ -51,5 +54,5 @@ export const remove = protectedProcedure
 			},
 		});
 
-		return { taskId: input.taskId };
+		return deletedTask;
 	});

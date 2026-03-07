@@ -1,6 +1,6 @@
 import {
 	ChevronsUpIcon,
-	EllipsisIcon,
+	EllipsisVerticalIcon,
 	FilePlusCornerIcon,
 	UserPlusIcon,
 } from 'lucide-react';
@@ -107,7 +107,7 @@ export const ProjectMember = ({ member, canUpdate }: ProjectMemberProps) => {
 				<div className="ml-auto">
 					<ProjectMemberMenu member={member}>
 						<Button variant="ghost" size="icon">
-							<EllipsisIcon />
+							<EllipsisVerticalIcon />
 						</Button>
 					</ProjectMemberMenu>
 				</div>

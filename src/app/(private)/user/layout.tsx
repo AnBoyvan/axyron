@@ -18,11 +18,11 @@ const UserLayout = ({ children }: UserLayoutProps) => {
 	return (
 		<HydrateClient>
 			<SidebarProvider>
-				<Suspense fallback={<UserSidebarSkeleton />}>
-					<CustomErrorBoundary fallback={'orgs.failed_load_many'}>
+				<CustomErrorBoundary fallback={'orgs.failed_load_many'}>
+					<Suspense fallback={<UserSidebarSkeleton />}>
 						<UserSidebar />
-					</CustomErrorBoundary>
-				</Suspense>
+					</Suspense>
+				</CustomErrorBoundary>
 				<SidebarInset>
 					<main className="flex h-screen flex-col">{children}</main>
 				</SidebarInset>

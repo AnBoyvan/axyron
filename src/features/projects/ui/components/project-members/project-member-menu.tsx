@@ -1,6 +1,11 @@
 import type { ReactNode } from 'react';
 
-import { ChevronsUpIcon, LogOutIcon, UserPlusIcon } from 'lucide-react';
+import {
+	ChevronsUpIcon,
+	FilePlusCornerIcon,
+	UserPlusIcon,
+	UserXIcon,
+} from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import {
@@ -102,7 +107,7 @@ export const ProjectMemberMenu = ({
 								<DropdownMenuItem
 									onClick={() => updateTasksAccess(!canCreateTask)}
 								>
-									<UserPlusIcon
+									<FilePlusCornerIcon
 										className={
 											canCreateTask
 												? 'text-muted-foreground opacity-50'
@@ -121,7 +126,7 @@ export const ProjectMemberMenu = ({
 					</>
 				)}
 				<DropdownMenuItem variant="destructive" onClick={() => removeOrLeave()}>
-					<LogOutIcon />
+					<UserXIcon />
 					{t(
 						member.userId === data?.user.id
 							? 'actions.leave'

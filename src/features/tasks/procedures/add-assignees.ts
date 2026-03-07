@@ -79,5 +79,9 @@ export const addAssignees = protectedProcedure
 			);
 		}
 
-		return { added: newAssignees.length };
+		return {
+			added: newAssignees.length,
+			taskId: existingTask.id,
+			projectId: existingTask.projectId,
+		};
 	});

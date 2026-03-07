@@ -6,6 +6,8 @@ import type { AppRouter } from '@/trpc/routers/_app';
 export type TaskByProject =
 	inferRouterOutputs<AppRouter>['tasks']['getByProject']['tasks'][number];
 
+export type TaskById = inferRouterOutputs<AppRouter>['tasks']['getById'];
+
 export enum TaskPrority {
 	low = 'low',
 	medium = 'medium',

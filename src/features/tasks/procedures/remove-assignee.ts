@@ -79,5 +79,7 @@ export const removeAssignee = protectedProcedure
 			userId: removedAssignee.userId,
 			name: userData?.name,
 			email: userData?.email,
+			projectId: existingTask.projectId,
+			taskId: existingTask.id,
 		};
 	});

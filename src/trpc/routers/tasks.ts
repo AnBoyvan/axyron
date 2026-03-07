@@ -16,9 +16,9 @@ import { createTRPCRouter } from '../init';
 // TODO:
 export const tasksRouter = createTRPCRouter({
 	create,
-	// update,
-	// remove,
-	// getById,
+	update,
+	remove,
+	getById,
 	getByProject,
 	// getByUser,
 	// addSubtask,
@@ -26,6 +26,6 @@ export const tasksRouter = createTRPCRouter({
 	// subtaskCompletedToggle,
 	// reorderSubtasks,
 	// removeSubtask,
-	// addAssignees,
-	// removeAssignee,
+	addAssignees,
+	removeAssignee,
 });

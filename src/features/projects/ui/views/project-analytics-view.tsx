@@ -3,6 +3,7 @@
 import { Suspense } from 'react';
 
 import { CustomErrorBoundary } from '@/components/shared/custom-error-boundary';
+import { ViewWrapper } from '@/components/shared/view-wrapper';
 
 import {
 	ProjectAnalyticsSection,
@@ -17,10 +18,12 @@ export const ProjectAnalyticsView = ({
 	projectId,
 }: ProjectOverviewViewProps) => {
 	return (
-		<Suspense fallback={<ProjectAnalyticsSectionSkeleton />}>
+		<ViewWrapper>
 			<CustomErrorBoundary>
-				<ProjectAnalyticsSection projectId={projectId} />
+				<Suspense fallback={<ProjectAnalyticsSectionSkeleton />}>
+					<ProjectAnalyticsSection projectId={projectId} />
+				</Suspense>
 			</CustomErrorBoundary>
-		</Suspense>
+		</ViewWrapper>
 	);
 };

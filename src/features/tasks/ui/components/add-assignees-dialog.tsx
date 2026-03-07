@@ -13,32 +13,32 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useOrgMembersForProject } from '@/features/organizations/hooks/use-org-members-for-project';
+import { useProjectMembersForTask } from '@/features/projects/hooks/use-project-members-for-task';
 import { UserAvatar } from '@/features/users/ui/components/user-avatar';
 
-import { useAddProjectMembers } from '../../hooks/use-add-project-members';
+import { useAddAssignees } from '../../hooks/use-add-assignees';
 
-interface AddMembersDialogProps {
+interface AddAssigneesDialogProps {
 	projectId: string;
-	orgId: string;
+	taskId: string;
 	existedIds: string[];
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 }
 
-export const AddMembersDialog = ({
+export const AddAssigneesDialog = ({
 	projectId,
-	orgId,
+	taskId,
 	existedIds,
 	open,
 	onOpenChange,
-}: AddMembersDialogProps) => {
+}: AddAssigneesDialogProps) => {
 	const t = useTranslations();
 
 	const [search, setSearch] = useState('');
 
-	const addMembers = useAddProjectMembers();
-	const { data, isLoading } = useOrgMembersForProject(orgId);
+	const { data, isLoading } = useProjectMembersForTask(projectId);
+	const addAssignees = useAddAssignees();
 
 	const form = useForm<{ userIds: string[] }>({
 		defaultValues: {
@@ -52,9 +52,9 @@ export const AddMembersDialog = ({
 	};
 
 	const onSubmit = ({ userIds }: { userIds: string[] }) => {
-		addMembers.mutate(
+		addAssignees.mutate(
 			{
-				id: projectId,
+				taskId,
 				userIds,
 			},
 			{
@@ -85,8 +85,8 @@ export const AddMembersDialog = ({
 
 	return (
 		<ResponsiveDialog
-			title={t('projects.members_add_title')}
-			description={t('projects.members_add_description')}
+			title={t('tasks.assignees_add_title')}
+			description={t('tasks.assignees_add_description')}
 			open={open}
 			onOpenChange={onOpenChange}
 		>
@@ -167,13 +167,16 @@ export const AddMembersDialog = ({
 					<div className="flex justify-between gap-x-2">
 						<Button
 							type="button"
-							disabled={addMembers.isPending || isLoading}
+							disabled={addAssignees.isPending || isLoading}
 							variant="ghost"
 							onClick={onCancel}
 						>
 							{t('actions.cancel')}
 						</Button>
-						<Button type="submit" disabled={addMembers.isPending || isLoading}>
+						<Button
+							type="submit"
+							disabled={addAssignees.isPending || isLoading}
+						>
 							{t('actions.add')}
 						</Button>
 					</div>

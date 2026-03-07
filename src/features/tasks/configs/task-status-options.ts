@@ -66,3 +66,7 @@ export const taskStatuses: Record<TaskStatusEnum, TaskStatusOption> = {
 };
 
 export const taskStatusOptions = Array.from(Object.values(taskStatuses));
+
+export const dbTaskStatuses = taskStatusOptions.filter(
+	s => s.value !== 'overdue',
+);

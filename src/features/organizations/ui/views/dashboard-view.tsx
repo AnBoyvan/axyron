@@ -1,7 +1,9 @@
+import { ViewWrapper } from '@/components/shared/view-wrapper';
+
 interface DashboardViewProps {
 	orgId: string;
 }
 
 export const DashboardView = ({ orgId }: DashboardViewProps) => {
-	return <div>OrdDashboardView</div>;
+	return <ViewWrapper>OrdDashboardView</ViewWrapper>;
 };

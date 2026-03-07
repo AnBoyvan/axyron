@@ -1,7 +1,7 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { Developing } from '@/components/shared/developing';
+import { TaskView } from '@/features/tasks/ui/views/task-view';
 import { auth } from '@/lib/auth/auth';
 import { HydrateClient, prefetch, trpc } from '@/trpc/server';
 
@@ -20,11 +20,11 @@ const Page = async ({ params }: PageProps) => {
 
 	const { taskId } = await params;
 
-	// prefetch(trpc.tasks.getByProject.queryOptions({ projectId }));
+	prefetch(trpc.tasks.getById.queryOptions({ taskId }));
 
 	return (
 		<HydrateClient>
-			<Developing />
+			<TaskView taskId={taskId} />
 		</HydrateClient>
 	);
 };

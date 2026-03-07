@@ -1,5 +1,7 @@
 {
 	"tasks": {
+		"assignees_add_title": "Add assignees",
+		"assignees_add_description": "Choose members to assign to this task.",
 		"chart_title": {
 			"by_status_with_priority": "Tasks by Status (by Priority)",
 			"by_status_with_assignees": "Tasks by Status (by Assignee)",
@@ -10,7 +12,11 @@
 			"by_member": "Tasks by Member"
 		},
 		"comment_not_found": "Comment not found",
+		"description_empty": "No description added yet.",
 		"descripton_placeholder": "Add a description...",
+		"edit": "Edit task",
+		"edit_title": "Edit task",
+		"edit_description": "Update the task details.",
 		"manage_tasks_allow": "Allow task editing",
 		"manage_tasks_allowed": "Can create and edit tasks",
 		"manage_tasks_deny": "Disallow task editing",
@@ -23,6 +29,7 @@
 		"no_tasks": "No tasks to display",
 		"not_assigned": "Not assigned",
 		"not_found": "Task not found",
+		"overdue_alert": "This task is overdue!",
 		"priority": {
 			"all": "All priorities",
 			"low": "Low",
@@ -32,6 +39,7 @@
 		},
 		"priority_title": "Priority",
 		"reaction_not_found": "Reaction not found",
+		"remove_confirm": "This action cannot be undone. Deleting the task will remove all comments and activity history.",
 		"statuses": {
 			"all": "All statuses",
 			"pending": "Pending",
@@ -47,6 +55,7 @@
 		"title_required": "Title is required",
 		"total": "Total tasks",
 		"update_admin_only": "Only admin can complete or cancel this task",
+		"updated": "Task updated",
 		"yes": "Yes"
 	}
 }

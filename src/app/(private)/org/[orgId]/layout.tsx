@@ -24,15 +24,15 @@ const OrgLayout = async ({ children, params }: OrgLayoutProps) => {
 	return (
 		<HydrateClient>
 			<SidebarProvider>
-				<Suspense fallback={<OrgSidebarSkeleton orgId={orgId} />}>
-					<CustomErrorBoundary fallback={'orgs.failed_load_one'}>
+				<CustomErrorBoundary fallback={'orgs.failed_load_one'}>
+					<Suspense fallback={<OrgSidebarSkeleton orgId={orgId} />}>
 						<OrgSidebar orgId={orgId} />
-					</CustomErrorBoundary>
-				</Suspense>
+					</Suspense>
+				</CustomErrorBoundary>
 				<SidebarInset>
 					<UserNavbar />
 					<Separator />
-					<div className="flex flex-1 flex-col p-4 lg:p-8">{children}</div>
+					{children}
 				</SidebarInset>
 			</SidebarProvider>
 		</HydrateClient>
