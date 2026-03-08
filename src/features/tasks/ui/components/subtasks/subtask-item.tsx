@@ -1,12 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-import {
-	ArrowDownIcon,
-	ArrowUpIcon,
-	PencilIcon,
-	Trash2Icon,
-	XIcon,
-} from 'lucide-react';
+import { ArrowDownIcon, ArrowUpIcon, Trash2Icon, XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';

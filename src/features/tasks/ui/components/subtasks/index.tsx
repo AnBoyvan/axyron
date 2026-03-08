@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+import { Skeleton } from '@/components/ui/skeleton';
 import { useReorderSubtasks } from '@/features/tasks/hooks/use-reorder-subtasks';
 import type { Subtask, TaskById } from '@/features/tasks/types';
 
@@ -122,3 +123,21 @@ export const Subtasks = ({ subtasks, taskId, permissions }: SubtasksProps) => {
 		</div>
 	);
 };
+
+export const SubtasksSkeleton = () => (
+	<div className="flex flex-col px-4 pt-4 lg:px-8 lg:pt-8">
+		<div className="flex h-8 items-center gap-2">
+			<Skeleton className="size-4" />
+			<Skeleton className="h-4 w-20" />
+		</div>
+		<div className="flex flex-col gap-1">
+			<Skeleton className="mt-2 h-2 w-full" />
+			{Array.from({ length: 3 }).map((_, i) => (
+				<div key={i} className="flex items-center gap-2 px-2 py-1.5">
+					<Skeleton className="size-4 shrink-0 rounded-sm" />
+					<Skeleton className="h-4" style={{ width: `${60 + i * 10}%` }} />
+				</div>
+			))}
+		</div>
+	</div>
+);

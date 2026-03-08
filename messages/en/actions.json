@@ -4,16 +4,20 @@
 		"archive": "Archive",
 		"assign": "Assign",
 		"cancel": "Cancel",
+		"comment": "Comment",
 		"confirm": "Confirm",
 		"copy_link": "Copy link",
 		"create": "Create",
 		"edit": "Edit",
 		"leave": "Leave",
+		"load_more": "Load more",
 		"move_up": "Move up",
 		"move_down": "Move down",
 		"remove": "Remove",
+		"reply": "Reply",
 		"reset": "Reset",
 		"restore": "Restore",
-		"save": "Save"
+		"save": "Save",
+		"show_more_replies": "Show more replies"
 	}
 }

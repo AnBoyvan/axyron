@@ -4,7 +4,7 @@ import z from 'zod';
 
 import { db } from '@/db';
 import { meetingComments } from '@/db/schema/meeting-comments';
-import { MAX_COMMENT_SIZE } from '@/features/comments/constants';
+import { MAX_COMMENT_SIZE } from '@/features/task-comments/constants';
 import { protectedProcedure } from '@/trpc/init';
 
 export const editComment = protectedProcedure

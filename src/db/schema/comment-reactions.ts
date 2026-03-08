@@ -21,7 +21,7 @@ export const commentReactions = pgTable(
 	t => [
 		primaryKey({
 			name: 'comment_reactions_pk',
-			columns: [t.commentId, t.userId, t.emoji],
+			columns: [t.commentId, t.userId],
 		}),
 	],
 );

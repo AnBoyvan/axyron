@@ -2,6 +2,7 @@ import { format } from 'date-fns';
 import { CalendarCheck2Icon, CalendarSyncIcon } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
+import { Skeleton } from '@/components/ui/skeleton';
 import type { TaskById } from '@/features/tasks/types';
 import { fnsLocale } from '@/i18n/config';
 import { cn } from '@/lib/utils/cn';
@@ -50,6 +51,29 @@ export const TaskDates = ({
 					</p>
 				</div>
 			)}
+		</div>
+	);
+};
+
+export const TaskDatesSkeleton = () => {
+	return (
+		<div className="flex gap-8">
+			<div className="flex flex-col">
+				<div className="flex h-8 items-center">
+					<Skeleton className="h-4 w-24" />
+				</div>
+				<div className="flex h-6 items-center">
+					<Skeleton className="h-4 w-32" />
+				</div>
+			</div>
+			<div className="flex flex-col">
+				<div className="flex h-8 items-center">
+					<Skeleton className="h-4 w-24" />
+				</div>
+				<div className="flex h-6 items-center">
+					<Skeleton className="h-4 w-32" />
+				</div>
+			</div>
 		</div>
 	);
 };

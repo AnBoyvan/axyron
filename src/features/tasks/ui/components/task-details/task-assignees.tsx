@@ -4,6 +4,7 @@ import { UserPlusIcon, UsersIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import type { TaskById } from '@/features/tasks/types';
 import { UserAvatar } from '@/features/users/ui/components/user-avatar';
 
@@ -86,6 +87,30 @@ export const TaskAssignees = ({
 					{t('tasks.not_assigned')}
 				</p>
 			)}
+		</div>
+	);
+};
+
+export const TaskAssigneesSkeleton = () => {
+	return (
+		<div className="flex flex-col">
+			<div className="flex h-8 items-center">
+				<Skeleton className="h-4 w-24" />
+			</div>
+			<div className="grid grid-cols-1 gap-2 md:grid-cols-2 2xl:grid-cols-3">
+				{Array.from({ length: 2 }).map((_, i) => (
+					<div
+						key={i}
+						className="flex h-[60px] items-center gap-2 rounded-md bg-muted p-2"
+					>
+						<Skeleton className="size-10 shrink-0 rounded-md" />
+						<div className="flex flex-1 flex-col gap-1">
+							<Skeleton className="h-4 w-24" />
+							<Skeleton className="h-3 w-32" />
+						</div>
+					</div>
+				))}
+			</div>
 		</div>
 	);
 };

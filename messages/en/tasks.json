@@ -12,6 +12,7 @@
 			"by_member": "Tasks by Member"
 		},
 		"comment_not_found": "Comment not found",
+		"comments_empty": "No comments added yet.",
 		"description_empty": "No description added yet.",
 		"descripton_placeholder": "Add a description...",
 		"edit": "Edit task",

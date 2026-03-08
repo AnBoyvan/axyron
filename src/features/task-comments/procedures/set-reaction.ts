@@ -18,18 +18,16 @@ export const setReaction = protectedProcedure
 		const [existingReaction] = await db
 			.select()
 			.from(commentReactions)
-
 			.where(
 				and(
 					eq(commentReactions.commentId, input.commentId),
 					eq(commentReactions.userId, userId),
-					eq(commentReactions.emoji, input.emoji),
 				),
 			)
 			.limit(1);
 
-		if (existingReaction) {
-			const [deletedReaction] = await db
+		if (existingReaction?.emoji === input.emoji) {
+			const [deleted] = await db
 				.delete(commentReactions)
 				.where(
 					and(
@@ -39,10 +37,10 @@ export const setReaction = protectedProcedure
 				)
 				.returning();
 
-			return deletedReaction;
+			return deleted;
 		}
 
-		const [createdReaction] = await db
+		const [upserted] = await db
 			.insert(commentReactions)
 			.values({
 				commentId: input.commentId,
@@ -51,11 +49,9 @@ export const setReaction = protectedProcedure
 			})
 			.onConflictDoUpdate({
 				target: [commentReactions.userId, commentReactions.commentId],
-				set: {
-					emoji: input.emoji,
-				},
+				set: { emoji: input.emoji },
 			})
 			.returning();
 
-		return createdReaction;
+		return upserted;
 	});

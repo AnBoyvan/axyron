@@ -20,6 +20,7 @@ interface TextareaFieldProps<T extends FieldValues> {
 	className?: string;
 	cols?: number;
 	rows?: number;
+	maxLenght?: number;
 }
 
 export const TextareaField = <T extends FieldValues>({
@@ -31,6 +32,7 @@ export const TextareaField = <T extends FieldValues>({
 	className,
 	cols,
 	rows,
+	maxLenght,
 }: TextareaFieldProps<T>) => {
 	return (
 		<FormField
@@ -48,6 +50,7 @@ export const TextareaField = <T extends FieldValues>({
 							disabled={disabled}
 							placeholder={placeholder}
 							className={cn(className)}
+							maxLength={maxLenght}
 						/>
 					</FormControl>
 					<FormMessage />

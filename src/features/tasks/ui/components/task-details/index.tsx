@@ -2,13 +2,14 @@ import { TextIcon, TriangleAlertIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
 import { taskPriority } from '@/features/tasks/configs/task-priority-options';
 import { resolveTaskStatus } from '@/features/tasks/utils/resolve-task-status';
 import { cn } from '@/lib/utils/cn';
 
 import type { TaskById } from '../../../types';
-import { TaskAssignees } from './task-assignees';
-import { TaskDates } from './task-dates';
+import { TaskAssignees, TaskAssigneesSkeleton } from './task-assignees';
+import { TaskDates, TaskDatesSkeleton } from './task-dates';
 import { TaskStatusSelect } from './task-status-select';
 
 interface TaskDetailsProps {
@@ -80,6 +81,34 @@ export const TaskDetails = ({ task }: TaskDetailsProps) => {
 					projectId={task.projectId}
 					canUpdate={task.permissions.canCreateTask}
 				/>
+			</div>
+		</div>
+	);
+};
+
+export const TaskDetailsSkeleton = () => {
+	return (
+		<div className="flex flex-col gap-4 px-4 pt-4 lg:px-8 lg:pt-8">
+			<div className="flex items-center justify-between gap-4">
+				<Skeleton className="h-5 w-20 rounded-full" />
+				<Skeleton className="h-9 w-36" />
+			</div>
+			<div className="flex flex-col gap-4 lg:gap-8">
+				<Skeleton className="h-7 w-3/4" />
+				<TaskDatesSkeleton />
+				<div className="flex flex-col gap-1">
+					<div className="flex h-8 items-center">
+						<Skeleton className="h-4 w-24" />
+					</div>
+					<div className="space-y-2">
+						<Skeleton className="h-4 w-full" />
+						<Skeleton className="h-4 w-full" />
+						<Skeleton className="h-4 w-full" />
+						<Skeleton className="h-4 w-full" />
+						<Skeleton className="h-4 w-5/6" />
+					</div>
+				</div>
+				<TaskAssigneesSkeleton />
 			</div>
 		</div>
 	);

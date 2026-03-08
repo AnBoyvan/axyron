@@ -6,7 +6,7 @@ import { db } from '@/db';
 import { meetingComments } from '@/db/schema/meeting-comments';
 import { meetings } from '@/db/schema/meetings';
 import { organizationMembers } from '@/db/schema/organization-members';
-import { MAX_COMMENT_SIZE } from '@/features/comments/constants';
+import { MAX_COMMENT_SIZE } from '@/features/task-comments/constants';
 import { protectedProcedure } from '@/trpc/init';
 
 export const addComment = protectedProcedure
