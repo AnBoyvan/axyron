@@ -1,5 +1,6 @@
 {
 	"users": {
+		"deleted": "Deleted User",
 		"my_dashboard": "My dashboard",
 		"my_tasks": "My tasks",
 		"name": "Name",

@@ -72,6 +72,9 @@ export const create = protectedProcedure
 			entityId: createdProject.id,
 			entityType: 'project',
 			action: 'created',
+			meta: {
+				name: createdProject.name,
+			},
 		});
 
 		return createdProject;

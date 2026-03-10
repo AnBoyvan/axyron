@@ -1,7 +1,6 @@
 import { Suspense } from 'react';
 
 import { CustomErrorBoundary } from '@/components/shared/custom-error-boundary';
-import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import {
 	OrgSidebar,
@@ -29,10 +28,11 @@ const OrgLayout = async ({ children, params }: OrgLayoutProps) => {
 						<OrgSidebar orgId={orgId} />
 					</Suspense>
 				</CustomErrorBoundary>
-				<SidebarInset>
+				<SidebarInset className="relative h-svh overflow-hidden">
 					<UserNavbar />
-					<Separator />
-					{children}
+					<div className="flex min-w-0 flex-1 flex-col overflow-y-scroll">
+						{children}
+					</div>
 				</SidebarInset>
 			</SidebarProvider>
 		</HydrateClient>

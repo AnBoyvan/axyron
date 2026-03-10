@@ -26,13 +26,6 @@ export const useRemoveProject = () => {
 				//   queryKey: trpc.projects.getByUser.queryKey()
 				// }) // TODO:
 
-				toast.success(
-					t.rich('projects.restore_message', {
-						projectName: data.name,
-						b: chunks => <strong>{chunks}</strong>,
-					}),
-				);
-
 				router.push(`/org/${data.organizationId}/projects`);
 			},
 			onError: error => {

@@ -34,9 +34,6 @@ export const useRemoveTask = () => {
 					}),
 				});
 
-				//  await queryClient.invalidateQueries({
-				//   queryKey: trpc.projects.getByUser.queryKey()
-				// }) // TODO:
 				router.push(`/org/${data.organizationId}/projects/${data.projectId}`);
 
 				toast.success(

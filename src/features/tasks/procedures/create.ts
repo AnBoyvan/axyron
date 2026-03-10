@@ -51,6 +51,15 @@ export const create = protectedProcedure
 			})
 			.returning();
 
+		await db.insert(activities).values({
+			projectId: projectId,
+			taskId: createdTask.id,
+			authorId: userId,
+			entityId: createdTask.id,
+			entityType: 'task',
+			action: 'created',
+		});
+
 		if (data.assigneeIds && data.assigneeIds.length > 0) {
 			const projectMemberIds = await db
 				.select({ userId: projectMembers.userId })
@@ -78,15 +87,6 @@ export const create = protectedProcedure
 				})),
 			);
 		}
-
-		await db.insert(activities).values({
-			projectId: projectId,
-			taskId: createdTask.id,
-			authorId: userId,
-			entityId: createdTask.id,
-			entityType: 'task',
-			action: 'created',
-		});
 
 		return createdTask;
 	});

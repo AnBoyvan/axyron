@@ -51,11 +51,16 @@
 			"overdue": "Overdue"
 		},
 		"subtask_add": "Add an item",
+		"subtask_deleted": "Deleted subtask",
 		"subtask_hide": "Hide completed",
 		"subtask_not_found": "Subtask not found",
 		"subtask_placeholder": "New subtask...",
 		"subtask_remove_confirm": "All subtasks will be permanently deleted and cannot be recovered. All actions related to it will be removed from the activity feed.",
 		"subtask_show": "Show completed",
+		"subtask_status": {
+			"completed": "comleted",
+			"incompleted": "incompleted"
+		},
 		"subtasks_empty": "No subtasks added yet.",
 		"title_title": "Title",
 		"title_placeholder": "Enter task title",

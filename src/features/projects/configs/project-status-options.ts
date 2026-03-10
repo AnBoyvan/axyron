@@ -16,23 +16,29 @@ export type ProjectStatusOption = {
 	style: string;
 };
 
+export const projectStatusTextColor = {
+	pending: 'text-sky-700 dark:text-sky-400',
+	active: 'text-green-700 dark:text-green-500',
+	closed: 'text-red-700 dark:text-red-400',
+};
+
 export const projectStatuses: ProjectStatusOption[] = [
 	{
 		value: 'pending',
 		label: 'projects.statuses.pending',
 		icon: CircleDashedIcon,
-		style: 'text-sky-700 dark:text-sky-400',
+		style: projectStatusTextColor.pending,
 	},
 	{
 		value: 'active',
 		label: 'projects.statuses.active',
 		icon: CircleDotIcon,
-		style: 'text-green-700 dark:text-green-500 ',
+		style: projectStatusTextColor.active,
 	},
 	{
 		value: 'closed',
 		label: 'projects.statuses.closed',
 		icon: CircleCheckBigIcon,
-		style: 'text-red-700 dark:text-red-400',
+		style: projectStatusTextColor.closed,
 	},
 ];

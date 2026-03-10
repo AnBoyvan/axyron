@@ -31,10 +31,6 @@ export const useCreateTask = () => {
 					}),
 				});
 
-				//  await queryClient.invalidateQueries({
-				//   queryKey: trpc.projects.getByUser.queryKey()
-				// }) // TODO:
-
 				toast.success(
 					`${t('common.task')} ${data.title} ${t('common.created')}`,
 				);

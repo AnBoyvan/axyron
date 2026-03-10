@@ -37,6 +37,10 @@ export const InfiniteScroll = ({
 		fetchNextPage,
 	]);
 
+	if (!hasNextPage) {
+		return null;
+	}
+
 	return (
 		<div className="flex flex-col items-center gap-4 p-4">
 			<div ref={targetRef} className="h-1" />

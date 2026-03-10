@@ -1,6 +1,7 @@
 {
 	"common": {
 		"access_denied": "Access denied",
+		"activity": "Activity",
 		"all": "All",
 		"analytics": "Analytics",
 		"and": " and ",

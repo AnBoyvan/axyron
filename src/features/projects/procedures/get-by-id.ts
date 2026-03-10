@@ -21,35 +21,13 @@ export const getById = protectedProcedure
 
 		const [taskStats] = await db
 			.select({
-				total: db.$count(tasks, eq(tasks.projectId, project.id)),
-				pending: db.$count(
-					tasks,
-					and(eq(tasks.projectId, project.id), eq(tasks.status, 'pending')),
-				),
-				in_progress: db.$count(
-					tasks,
-					and(eq(tasks.projectId, project.id), eq(tasks.status, 'in_progress')),
-				),
-				in_review: db.$count(
-					tasks,
-					and(eq(tasks.projectId, project.id), eq(tasks.status, 'in_review')),
-				),
-				completed: db.$count(
-					tasks,
-					and(eq(tasks.projectId, project.id), eq(tasks.status, 'completed')),
-				),
-				cancelled: db.$count(
-					tasks,
-					and(eq(tasks.projectId, project.id), eq(tasks.status, 'cancelled')),
-				),
-				overdue: db.$count(
-					tasks,
-					and(
-						eq(tasks.projectId, project.id),
-						eq(tasks.status, 'in_progress'),
-						lt(tasks.dueDate, sql`now()`),
-					),
-				),
+				total: sql<number>`count(*) filter (where ${eq(tasks.projectId, project.id)})`,
+				pending: sql<number>`count(*) filter (where ${and(eq(tasks.projectId, project.id), eq(tasks.status, 'pending'))})`,
+				in_progress: sql<number>`count(*) filter (where ${and(eq(tasks.projectId, project.id), eq(tasks.status, 'in_progress'))})`,
+				in_review: sql<number>`count(*) filter (where ${and(eq(tasks.projectId, project.id), eq(tasks.status, 'in_review'))})`,
+				completed: sql<number>`count(*) filter (where ${and(eq(tasks.projectId, project.id), eq(tasks.status, 'completed'))})`,
+				cancelled: sql<number>`count(*) filter (where ${and(eq(tasks.projectId, project.id), eq(tasks.status, 'cancelled'))})`,
+				overdue: sql<number>`count(*) filter (where ${and(eq(tasks.projectId, project.id), eq(tasks.status, 'in_progress'), lt(tasks.dueDate, sql`now()`))})`,
 			})
 			.from(tasks)
 			.where(eq(tasks.projectId, project.id))

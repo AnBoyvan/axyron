@@ -1,6 +1,7 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+import { DEFAULT_ACTIVITIES_LIMIT } from '@/features/activities/constants';
 import { DEFAULT_COMMENTS_LIMIT } from '@/features/task-comments/constants';
 import { TaskView } from '@/features/tasks/ui/views/task-view';
 import { auth } from '@/lib/auth/auth';
@@ -26,6 +27,12 @@ const Page = async ({ params }: PageProps) => {
 		trpc.taskComments.getByTask.infiniteQueryOptions({
 			limit: DEFAULT_COMMENTS_LIMIT,
 			taskId,
+		}),
+	);
+	prefetch(
+		trpc.activities.getByTask.infiniteQueryOptions({
+			taskId,
+			limit: DEFAULT_ACTIVITIES_LIMIT,
 		}),
 	);
 

@@ -71,6 +71,9 @@ export const addSubtask = protectedProcedure
 			entityId: createdSubtask.id,
 			entityType: 'subtask',
 			action: 'created',
+			meta: {
+				title: createdSubtask.title,
+			},
 		});
 
 		return { ...createdSubtask, projectId: existingTask.projectId };

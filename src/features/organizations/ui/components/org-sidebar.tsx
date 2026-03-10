@@ -14,7 +14,6 @@ import {
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
-	SidebarSeparator,
 } from '@/components/ui/sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils/cn';
@@ -94,7 +93,6 @@ export const OrgSidebarSkeleton = ({ orgId }: OrgSidebarProps) => {
 					</SidebarMenuItem>
 				</SidebarMenu>
 			</SidebarHeader>
-			<SidebarSeparator />
 			<SidebarContent>
 				<SidebarGroup>
 					{orgNav.map(item => (

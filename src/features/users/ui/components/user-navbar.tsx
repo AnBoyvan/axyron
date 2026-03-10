@@ -8,7 +8,7 @@ import { UserButton } from './user-button';
 
 export const UserNavbar = () => {
 	return (
-		<header className="sticky top-0 flex h-14 shrink-0 items-center gap-4 bg-sidebar px-4 text-sidebar-foreground">
+		<header className="sticky top-0 z-50 flex h-14 w-full shrink-0 items-center gap-4 border-b bg-sidebar px-4 text-sidebar-foreground">
 			<SidebarTrigger className="size-8" />
 			<Separator orientation="vertical" className="h-7!" />
 			<div className="flex-1" />

@@ -3,6 +3,7 @@ import { eq, sql } from 'drizzle-orm';
 import z from 'zod';
 
 import { db } from '@/db';
+import { activities } from '@/db/schema/activities';
 import { subtasks } from '@/db/schema/subtasks';
 import { tasks } from '@/db/schema/tasks';
 import { getProjectAccess } from '@/features/projects/utils/get-project-access';
@@ -59,6 +60,19 @@ export const subtaskCompletedToggle = protectedProcedure
 			})
 			.where(eq(subtasks.id, input.subtaskId))
 			.returning();
+
+		await db.insert(activities).values({
+			projectId: existingTask.projectId,
+			taskId: existingTask.id,
+			authorId: userId,
+			entityId: existingSubtask.id,
+			entityType: 'subtask',
+			action: 'status',
+			meta: {
+				title: updatedSubtask.title,
+				completed: updatedSubtask.completed,
+			},
+		});
 
 		return { ...updatedSubtask, projectId: existingTask.projectId };
 	});

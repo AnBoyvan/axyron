@@ -5,13 +5,17 @@ import { TaskHeader, TaskHeaderSkeleton } from '../components/task-header';
 
 interface TaskMainSectionProps {
 	taskId: string;
+	openActivities: (open: boolean) => void;
 }
 
-export const TaskMainSection = ({ taskId }: TaskMainSectionProps) => {
+export const TaskMainSection = ({
+	taskId,
+	openActivities,
+}: TaskMainSectionProps) => {
 	const { data } = useTaskById(taskId);
 	return (
 		<div className="flex flex-col">
-			<TaskHeader task={data} />
+			<TaskHeader task={data} openActivities={openActivities} />
 			<TaskDetails task={data} />
 			<Subtasks
 				taskId={data.id}

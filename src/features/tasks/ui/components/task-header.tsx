@@ -14,11 +14,12 @@ import { TaskMenu } from './task-menu';
 
 interface TaskHeaderProps {
 	task: TaskById;
+	openActivities: (open: boolean) => void;
 }
 
-export const TaskHeader = ({ task }: TaskHeaderProps) => {
+export const TaskHeader = ({ task, openActivities }: TaskHeaderProps) => {
 	return (
-		<div className="flex items-center gap-4 border-b px-4 py-2">
+		<div className="flex h-13 items-center gap-4 border-b px-4 py-2">
 			<Button asChild size="icon" variant="ghost">
 				<Link href={`/org/${task.organizationId}/projects/${task.projectId}`}>
 					<ArrowLeftIcon />
@@ -27,7 +28,11 @@ export const TaskHeader = ({ task }: TaskHeaderProps) => {
 			<span className="truncate">{task.permissions.project.name}</span>
 			<div className="ml-auto flex gap-2">
 				<div className="lg:hidden">
-					<Button size="icon" variant="ghost">
+					<Button
+						size="icon"
+						variant="ghost"
+						onClick={() => openActivities(true)}
+					>
 						<ActivityIcon />
 					</Button>
 				</div>

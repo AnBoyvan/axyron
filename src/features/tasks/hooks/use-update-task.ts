@@ -37,9 +37,11 @@ export const useUpdateTask = () => {
 					}),
 				});
 
-				//  await queryClient.invalidateQueries({
-				//   queryKey: trpc.projects.getByUser.queryKey()
-				// }) // TODO:
+				await queryClient.invalidateQueries({
+					queryKey: trpc.activities.getByTask.infiniteQueryKey({
+						taskId: data.id,
+					}),
+				});
 
 				toast.success(t('tasks.updated'));
 			},

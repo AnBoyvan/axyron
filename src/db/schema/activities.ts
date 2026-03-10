@@ -1,6 +1,8 @@
 import { relations } from 'drizzle-orm';
 import { jsonb, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+import { createSelectSchema } from 'drizzle-zod';
 import { nanoid } from 'nanoid';
+import type z from 'zod';
 
 import { actionType, entityType } from './enums';
 import { projects } from './projects';
@@ -45,3 +47,6 @@ export const activityRelations = relations(activities, ({ one }) => ({
 		references: [user.id],
 	}),
 }));
+
+export const activitySelectSchema = createSelectSchema(activities);
+export type ActivitySelectSchema = z.infer<typeof activitySelectSchema>;

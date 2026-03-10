@@ -66,7 +66,7 @@ export const updateSubtask = protectedProcedure
 			.where(eq(subtasks.id, input.subtaskId))
 			.returning();
 
-		if (existingSubtask.title === input.title) {
+		if (existingSubtask.title !== input.title) {
 			await db.insert(activities).values({
 				projectId: existingTask.projectId,
 				taskId: existingTask.id,
@@ -77,6 +77,7 @@ export const updateSubtask = protectedProcedure
 				meta: {
 					from: existingSubtask.title,
 					to: updatedSubtask.title,
+					title: updatedSubtask.title,
 				},
 			});
 		}

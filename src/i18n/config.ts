@@ -2,6 +2,7 @@ import { enUS, uk } from 'date-fns/locale';
 import type { Locale } from 'next-intl';
 
 import actions from '@/messages/en/actions.json';
+import activities from '@/messages/en/activities.json';
 import auth from '@/messages/en/auth.json';
 import common from '@/messages/en/common.json';
 import general from '@/messages/en/general.json';
@@ -14,6 +15,7 @@ import users from '@/messages/en/users.json';
 
 export const messages = {
 	...actions,
+	...activities,
 	...auth,
 	...common,
 	...general,

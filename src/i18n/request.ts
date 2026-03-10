@@ -9,6 +9,7 @@ export default getRequestConfig(async () => {
 		locale,
 		messages: {
 			...(await import(`../../messages/${locale}/actions.json`)).default,
+			...(await import(`../../messages/${locale}/activities.json`)).default,
 			...(await import(`../../messages/${locale}/auth.json`)).default,
 			...(await import(`../../messages/${locale}/common.json`)).default,
 			...(await import(`../../messages/${locale}/general.json`)).default,

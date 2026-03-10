@@ -28,7 +28,6 @@ export const TaskCommentsSection = ({ taskId }: TaskCommentsSectionProps) => {
 				</h2>
 			</div>
 			<CreateTaskCommentForm taskId={taskId} />
-
 			<div className="mt-2 flex flex-col gap-4">
 				{data.pages
 					.flatMap(page => page.items)

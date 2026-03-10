@@ -1,0 +1,32 @@
+{
+	"activities": {
+		"action": {
+			"archived": " archived this project",
+			"assigned": " assigned <b>{entityName}</b>",
+			"created": " created {entityType} <b>{entityName}</b>",
+			"date_due_changed": " changed due date from <b>{from}</b> to <b>{to}</b>",
+			"date_due_removed": " removed due date",
+			"date_due_set": " set due date to {to}",
+			"date_start_changed": " changed start date from <b>{from}</b> to <b>{to}</b>",
+			"date_start_removed": " removed start date",
+			"date_start_set": " set start date to {to}",
+			"deleted": " deleted {entityType} <b>{entityName}</b>",
+			"priority": " changed priority from <fromTag>{from}</fromTag> to <toTag>{to}</toTag>",
+			"restored": " restored this project",
+			"renamed": " renamed {entityType} <b>{from}</b> to <b>{to}</b>",
+			"status_project": " changed status from <fromTag>{from}</fromTag> to <toTag>{to}</toTag>",
+			"status_subtask": " marked subtask as <b>{status}</b>",
+			"status_task": " changed status from <fromTag>{from}</fromTag> to <toTag>{to}</toTag>",
+			"unassigned": " unassigned <b>{entityName}</b>",
+			"visibility": " changed visibility to <b>{to}</b>"
+		},
+		"type": {
+			"user": "user",
+			"project": "project",
+			"task": "task",
+			"subtask": "subtask"
+		},
+		"none": "none",
+		"empty": "No activity yet"
+	}
+}

@@ -52,6 +52,11 @@ export const removeSubtask = protectedProcedure
 			});
 		}
 
+		const [deleted] = await db
+			.delete(subtasks)
+			.where(eq(subtasks.id, input.subtaskId))
+			.returning();
+
 		await db.insert(activities).values({
 			projectId: existingTask.projectId,
 			taskId: existingTask.id,
@@ -60,14 +65,9 @@ export const removeSubtask = protectedProcedure
 			entityType: 'subtask',
 			action: 'deleted',
 			meta: {
-				title: existingSubtask.title,
+				title: deleted.title,
 			},
 		});
-
-		const [deleted] = await db
-			.delete(subtasks)
-			.where(eq(subtasks.id, input.subtaskId))
-			.returning();
 
 		return { ...deleted, projectId: existingTask.projectId };
 	});

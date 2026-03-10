@@ -81,7 +81,7 @@ export const getByTask = protectedProcedure
 			.from(activities)
 			.innerJoin(projects, eq(projects.id, activities.projectId))
 			.leftJoin(tasks, eq(tasks.id, activities.taskId))
-			.innerJoin(user, eq(user.id, activities.authorId))
+			.leftJoin(user, eq(user.id, activities.authorId))
 			.leftJoin(
 				sql`projects ep`,
 				sql`ep.id = ${activities.entityId}

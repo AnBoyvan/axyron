@@ -48,17 +48,10 @@ export const addAssignees = protectedProcedure
 		const userIds = projectMemberIds.map(m => m.userId);
 		const validIds = input.userIds.filter(id => userIds.includes(id));
 
-		await db.insert(assignees).values(
-			validIds.map(assigneeId => ({
-				userId: assigneeId,
-				taskId: existingTask.id,
-			})),
-		);
-
 		const newAssignees = await db
 			.insert(assignees)
 			.values(
-				input.userIds.map(assigneeId => ({
+				validIds.map(assigneeId => ({
 					userId: assigneeId,
 					taskId: input.taskId,
 				})),
@@ -67,15 +60,17 @@ export const addAssignees = protectedProcedure
 			.returning({ userId: assignees.userId });
 
 		if (newAssignees.length > 0) {
-			await db.insert(activities).values(
-				newAssignees.map(assignee => ({
-					projectId: existingTask.projectId,
-					taskId: existingTask.id,
-					authorId: userId,
-					entityId: assignee.userId,
-					entityType: 'user' as const,
-					action: 'assigned' as const,
-				})),
+			await Promise.all(
+				newAssignees.map(async assignee => {
+					await db.insert(activities).values({
+						projectId: existingTask.projectId,
+						taskId: existingTask.id,
+						authorId: userId,
+						entityId: assignee.userId,
+						entityType: 'user' as const,
+						action: 'assigned' as const,
+					});
+				}),
 			);
 		}
 

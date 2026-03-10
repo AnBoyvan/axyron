@@ -24,6 +24,12 @@ export const useUpdateSubtask = () => {
 						taskId: data.taskId,
 					}),
 				});
+
+				await queryClient.invalidateQueries({
+					queryKey: trpc.activities.getByTask.infiniteQueryKey({
+						taskId: data.taskId,
+					}),
+				});
 			},
 			onError: error => {
 				const message = getMessage(error.message, t);

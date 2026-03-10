@@ -31,9 +31,11 @@ export const useAddAssignees = () => {
 					}),
 				});
 
-				//  await queryClient.invalidateQueries({
-				//   queryKey: trpc.projects.getByUser.queryKey()
-				// }) // TODO:
+				await queryClient.invalidateQueries({
+					queryKey: trpc.activities.getByTask.infiniteQueryKey({
+						taskId: data.taskId,
+					}),
+				});
 			},
 			onError: error => {
 				const message = getMessage(error.message, t);
