@@ -2,11 +2,13 @@
 	"common": {
 		"access_denied": "Access denied",
 		"activity": "Activity",
+		"administration": "Administration",
 		"all": "All",
 		"analytics": "Analytics",
 		"and": " and ",
 		"assignee": "Assignee",
 		"assignees": "Assignees",
+		"billing": "Billing",
 		"calendar": "Calendar",
 		"comment": "Comment",
 		"comment_placeholder": "Write a comment...",

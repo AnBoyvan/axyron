@@ -1,6 +1,5 @@
 import Link from 'next/link';
 
-import { useSuspenseQuery } from '@tanstack/react-query';
 import { ChevronsUpDown, PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -18,9 +17,9 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from '@/components/ui/sidebar';
-import { useTRPC } from '@/trpc/client';
 
 import { useCreateOrgDialog } from '../../hooks/use-create-org-dialog';
+import { useOrganizations } from '../../hooks/use-organizations';
 import type { Organization } from '../../types';
 import { OrgAvatar } from './org-avatar';
 
@@ -30,11 +29,10 @@ interface OrgsSwitcherProps {
 
 export const OrgsSwitcher = ({ org }: OrgsSwitcherProps) => {
 	const t = useTranslations();
-	const trpc = useTRPC();
 	const { onOpen } = useCreateOrgDialog();
 	const { state } = useSidebar();
 
-	const { data } = useSuspenseQuery(trpc.organizations.getMany.queryOptions());
+	const { data } = useOrganizations();
 
 	const filteredData = data.filter(item => item.id !== org.id);
 

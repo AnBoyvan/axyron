@@ -48,5 +48,6 @@ export const getById = protectedProcedure
 			description: row.org.description,
 			image: row.org.image,
 			permissions,
+			member: row.member,
 		};
 	});

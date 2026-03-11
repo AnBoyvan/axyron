@@ -10,7 +10,7 @@ const avatarVariants = cva('', {
 			xs: 'h-4 w-4',
 			sm: 'h-6 w-6',
 			lg: 'h-10 w-10',
-			xl: 'h-20 w-20',
+			xl: 'h-12 w-12',
 		},
 	},
 	defaultVariants: {
@@ -25,7 +25,7 @@ const avatarFallbackVariants = cva('', {
 			xs: 'text-[10px] rounded',
 			sm: 'text-base rounded-lg',
 			lg: 'text-2xl rounded-xl',
-			xl: 'text-6xl rounded-2xl',
+			xl: 'text-4xl rounded-md',
 		},
 	},
 	defaultVariants: {

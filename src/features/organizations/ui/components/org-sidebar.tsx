@@ -3,23 +3,22 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { useSuspenseQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 
 import {
 	Sidebar,
 	SidebarContent,
 	SidebarGroup,
+	SidebarGroupLabel,
 	SidebarHeader,
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
-import { cn } from '@/lib/utils/cn';
-import { useTRPC } from '@/trpc/client';
 
-import { orgNav } from '../../configs/org-nav';
+import { orgAdminsNav, orgMembersNav } from '../../configs/org-nav';
+import { useOrgById } from '../../hooks/use-org-by-id';
 import { OrgsSwitcher } from './orgs-switcher';
 
 interface OrgSidebarProps {
@@ -28,12 +27,9 @@ interface OrgSidebarProps {
 
 export const OrgSidebar = ({ orgId }: OrgSidebarProps) => {
 	const t = useTranslations();
-	const trpc = useTRPC();
 	const pathname = usePathname();
 
-	const { data } = useSuspenseQuery(
-		trpc.organizations.getById.queryOptions({ id: orgId }),
-	);
+	const { data } = useOrgById(orgId);
 
 	const segments = pathname.split('/').filter(Boolean);
 	const activeSection = segments[2] ?? null;
@@ -50,12 +46,25 @@ export const OrgSidebar = ({ orgId }: OrgSidebarProps) => {
 			</SidebarHeader>
 			<SidebarContent>
 				<SidebarGroup>
-					{orgNav.map(item => {
-						if (item.adminOnly && !data.permissions.isAdmin) {
-							return;
-						}
-
-						return (
+					{orgMembersNav.map(item => (
+						<SidebarMenuItem key={item.label}>
+							<SidebarMenuButton
+								asChild
+								tooltip={t(item.label)}
+								isActive={isActive(item.link)}
+							>
+								<Link href={`/org/${orgId}/${item.link}`}>
+									<item.icon />
+									<span>{t(item.label)}</span>
+								</Link>
+							</SidebarMenuButton>
+						</SidebarMenuItem>
+					))}
+				</SidebarGroup>
+				{data.permissions.isAdmin && (
+					<SidebarGroup>
+						<SidebarGroupLabel>{t('common.administration')}</SidebarGroupLabel>
+						{orgAdminsNav.map(item => (
 							<SidebarMenuItem key={item.label}>
 								<SidebarMenuButton
 									asChild
@@ -68,9 +77,9 @@ export const OrgSidebar = ({ orgId }: OrgSidebarProps) => {
 									</Link>
 								</SidebarMenuButton>
 							</SidebarMenuItem>
-						);
-					})}
-				</SidebarGroup>
+						))}
+					</SidebarGroup>
+				)}
 			</SidebarContent>
 		</Sidebar>
 	);
@@ -95,11 +104,8 @@ export const OrgSidebarSkeleton = ({ orgId }: OrgSidebarProps) => {
 			</SidebarHeader>
 			<SidebarContent>
 				<SidebarGroup>
-					{orgNav.map(item => (
-						<SidebarMenuItem
-							key={item.label}
-							className={cn(item.adminOnly && 'hidden')}
-						>
+					{orgMembersNav.map(item => (
+						<SidebarMenuItem key={item.label}>
 							<SidebarMenuButton asChild>
 								<Link href={`/${orgId}/${item.link}`}>
 									<item.icon />

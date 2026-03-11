@@ -2,6 +2,7 @@
 	"tasks": {
 		"assignees_add_title": "Add assignees",
 		"assignees_add_description": "Choose members to assign to this task.",
+		"assigned_to_me": "Tasks assigned to me",
 		"chart_title": {
 			"by_status_with_priority": "Tasks by Status (by Priority)",
 			"by_status_with_assignees": "Tasks by Status (by Assignee)",
@@ -13,6 +14,7 @@
 		},
 		"comment_not_found": "Comment not found",
 		"comments_empty": "No comments added yet.",
+		"created_by_me": "Tasks created by me",
 		"description_empty": "No description added yet.",
 		"descripton_placeholder": "Add a description...",
 		"edit": "Edit task",

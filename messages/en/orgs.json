@@ -4,10 +4,14 @@
 		"failed_load_many": "Failed to load organizations",
 		"failed_load_one": "Failed to load organization",
 		"invite_not_found": "This invitation link is no longer valid. Please request a new invitation.",
+		"members": "Organization members",
 		"name_placeholder": "Enter a name of your organization",
 		"name_required": "Organization name is required",
 		"new_org": "New organization",
 		"new_org_descr": "Create a new organization",
-		"not_found": "Organization not found"
+		"not_found": "Organization not found",
+		"reset_code": "Reset invite code",
+		"reset_code_success": "Code has been reset. The previous invitation link is no longer valid.",
+		"reset_code_warning": "Resetting the invitation code will invalidate all previously generated invitation links."
 	}
 }

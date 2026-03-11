@@ -20,10 +20,10 @@ export const organizationsRouter = createTRPCRouter({
 	remove,
 	// leave,
 	// removeMember,
-	// resetInviteCode,
+	resetInviteCode,
 	// updateMember,
 	getById,
 	getMany,
 	getMembers,
-	// acceptInvite,
+	acceptInvite,
 });
