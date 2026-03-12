@@ -31,7 +31,6 @@ export const UserSidebar = () => {
 					</p>
 				</Link>
 			</SidebarHeader>
-			<SidebarSeparator />
 			<SidebarContent>
 				<UserNav />
 				<UserOrgsList />

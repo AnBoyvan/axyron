@@ -46,10 +46,10 @@ export const InvitePopover = ({ inviteCode, orgId }: InvitePopoverProps) => {
 		});
 	};
 
-	const onCopyLink = async () => {
-		const base = process.env.NEXT_PUBLIC_APP_URL;
-		const link = `${base}/org/invite/${inviteCode}`;
+	const base = process.env.NEXT_PUBLIC_APP_URL;
+	const link = `${base}/user/invite/${inviteCode}`;
 
+	const onCopyLink = async () => {
 		await navigator.clipboard.writeText(link);
 
 		toast.success(t('common.link_copied'));

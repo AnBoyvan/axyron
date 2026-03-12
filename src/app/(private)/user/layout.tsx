@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 
 import { CustomErrorBoundary } from '@/components/shared/custom-error-boundary';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import { UserNavbar } from '@/features/users/ui/components/user-navbar';
 import {
 	UserSidebar,
 	UserSidebarSkeleton,
@@ -23,8 +24,11 @@ const UserLayout = ({ children }: UserLayoutProps) => {
 						<UserSidebar />
 					</Suspense>
 				</CustomErrorBoundary>
-				<SidebarInset>
-					<main className="flex h-screen flex-col">{children}</main>
+				<SidebarInset className="relative h-svh overflow-hidden">
+					<UserNavbar />
+					<div className="flex min-w-0 flex-1 flex-col overflow-y-scroll">
+						{children}
+					</div>
 				</SidebarInset>
 			</SidebarProvider>
 		</HydrateClient>

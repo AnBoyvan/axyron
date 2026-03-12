@@ -2,8 +2,8 @@ import {
 	CalendarDaysIcon,
 	ClipboardListIcon,
 	LayoutDashboardIcon,
+	ListTodoIcon,
 	type LucideIcon,
-	UsersIcon,
 } from 'lucide-react';
 import type { TranslationKey } from 'next-intl';
 import type { IconType } from 'react-icons/lib';
@@ -37,8 +37,8 @@ export const userOrgNav: UserOrgNavItem[] = [
 		icon: PiVideoConferenceLight,
 	},
 	{
-		label: 'common.members',
-		link: 'members',
-		icon: UsersIcon,
+		label: 'users.my_tasks',
+		link: 'tasks',
+		icon: ListTodoIcon,
 	},
 ];

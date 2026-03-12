@@ -9,7 +9,7 @@ interface ViewWrapperProps {
 
 export const ViewWrapper = ({ children, className }: ViewWrapperProps) => {
 	return (
-		<div className={cn('"flex flex-1 flex-col p-4 lg:p-8', className)}>
+		<div className={cn('flex flex-1 flex-col p-4 lg:p-8', className)}>
 			{children}
 		</div>
 	);

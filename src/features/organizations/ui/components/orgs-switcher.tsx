@@ -70,7 +70,7 @@ export const OrgsSwitcher = ({ org }: OrgsSwitcherProps) => {
 						</DropdownMenuLabel>
 						{filteredData.map(item => (
 							<DropdownMenuItem asChild key={item.id} className="gap-2 p-2">
-								<Link href={`/org/${item.id}`} className="">
+								<Link href={`/org/${item.id}/dashboard`} className="">
 									<OrgAvatar name={item.name} imageUrl={item.image} size="sm" />
 									{item.name}
 								</Link>

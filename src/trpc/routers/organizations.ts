@@ -1,6 +1,7 @@
 import { acceptInvite } from '@/features/organizations/procedures/accept-invite';
 import { create } from '@/features/organizations/procedures/create';
 import { getById } from '@/features/organizations/procedures/get-by-id';
+import { getByInviteCode } from '@/features/organizations/procedures/get-by-invite-code';
 import { getMany } from '@/features/organizations/procedures/get-many';
 import { getMembers } from '@/features/organizations/procedures/get-members';
 import { leave } from '@/features/organizations/procedures/leave';
@@ -24,6 +25,7 @@ export const organizationsRouter = createTRPCRouter({
 	// updateMember,
 	getById,
 	getMany,
+	getByInviteCode,
 	getMembers,
 	acceptInvite,
 });
