@@ -8,6 +8,9 @@ export type TaskByProject =
 
 export type TaskById = inferRouterOutputs<AppRouter>['tasks']['getById'];
 
+export type UserTask =
+	inferRouterOutputs<AppRouter>['tasks']['getByUser']['created'][number];
+
 export enum TaskPrority {
 	low = 'low',
 	medium = 'medium',

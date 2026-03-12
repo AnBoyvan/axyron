@@ -20,6 +20,7 @@
 		"reset": "Reset",
 		"restore": "Restore",
 		"save": "Save",
-		"show_more_replies": "Show more replies"
+		"show_more_replies": "Show more replies",
+		"view_all": "View all"
 	}
 }

@@ -3,6 +3,7 @@ import {
 	ClipboardListIcon,
 	CreditCardIcon,
 	LayoutDashboardIcon,
+	ListTodoIcon,
 	type LucideIcon,
 	SettingsIcon,
 	UsersIcon,
@@ -37,6 +38,11 @@ export const orgMembersNav: OrgNavItem[] = [
 		label: 'common.meetings',
 		link: 'meetings',
 		icon: PiVideoConferenceLight,
+	},
+	{
+		label: 'users.my_tasks',
+		link: 'tasks',
+		icon: ListTodoIcon,
 	},
 ];
 

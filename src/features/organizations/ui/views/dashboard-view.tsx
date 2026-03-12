@@ -5,7 +5,14 @@ import { Suspense } from 'react';
 import { CustomErrorBoundary } from '@/components/shared/custom-error-boundary';
 import { ViewWrapper } from '@/components/shared/view-wrapper';
 
-import { OrgInfoSection } from '../sections/org-info-section';
+import {
+	OrgInfoSection,
+	OrgInfoSectionSkeleton,
+} from '../sections/org-info-section';
+import {
+	UserTasksSection,
+	UserTasksSectionSkeleton,
+} from '../sections/user-tasks-section';
 
 interface DashboardViewProps {
 	orgId: string;
@@ -15,12 +22,16 @@ export const DashboardView = ({ orgId }: DashboardViewProps) => {
 	return (
 		<ViewWrapper>
 			<CustomErrorBoundary>
-				<Suspense fallback={<div />}>
+				<Suspense fallback={<OrgInfoSectionSkeleton />}>
 					<OrgInfoSection orgId={orgId} />
 				</Suspense>
 			</CustomErrorBoundary>
-			<div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
-				<div className="col-span-1 lg:col-span-2"></div>
+			<div className="mt-4 grid grid-cols-1 gap-4 lg:mt-8 lg:grid-cols-3 lg:gap-8">
+				<CustomErrorBoundary>
+					<Suspense fallback={<UserTasksSectionSkeleton />}>
+						<UserTasksSection orgId={orgId} />
+					</Suspense>
+				</CustomErrorBoundary>
 				<div className="col-span-1"></div>
 			</div>
 		</ViewWrapper>

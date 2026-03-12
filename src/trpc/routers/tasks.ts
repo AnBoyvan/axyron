@@ -13,14 +13,14 @@ import { update } from '@/features/tasks/procedures/update';
 import { updateSubtask } from '@/features/tasks/procedures/update-subtask';
 
 import { createTRPCRouter } from '../init';
-// TODO:
+
 export const tasksRouter = createTRPCRouter({
 	create,
 	update,
 	remove,
 	getById,
 	getByProject,
-	// getByUser,
+	getByUser,
 	addSubtask,
 	updateSubtask,
 	subtaskCompletedToggle,
