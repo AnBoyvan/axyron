@@ -25,6 +25,7 @@
 		"remove": "Remove Project",
 		"remove_confirm": "This action is permanent and cannot be undone.",
 		"remove_description": "Deleting is permanent and cannot be undone. All tasks, members, files, comments, activity logs, and other associated data will be permanently deleted and cannot be recovered.",
+		"remove_member_alert": "Removing members will revoke their access to the project and remove them from all tasks.",
 		"removed": "Project <b>{projectName}</b> removed",
 		"restore_title": "Restore project?",
 		"restore_message": "Project <b>{projectName}</b> will be moved back to active projects.",

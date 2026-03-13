@@ -13,16 +13,16 @@ import { updateMember } from '@/features/organizations/procedures/update-member'
 import { updateRule } from '@/features/organizations/procedures/update-rule';
 
 import { createTRPCRouter } from '../init';
-//TODO:
+
 export const organizationsRouter = createTRPCRouter({
 	create,
 	update,
 	updateRule,
 	remove,
-	// leave,
-	// removeMember,
+	leave,
+	removeMember,
 	resetInviteCode,
-	// updateMember,
+	updateMember,
 	getById,
 	getMany,
 	getByInviteCode,

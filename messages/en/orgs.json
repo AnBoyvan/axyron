@@ -14,6 +14,7 @@
 		"new_org": "New organization",
 		"new_org_descr": "Create a new organization",
 		"not_found": "Organization not found",
+		"remove_member_alert": "Removing members will revoke their access to the organization and remove them from all projects and tasks.",
 		"reset_code": "Reset invite code",
 		"reset_code_success": "Code has been reset. The previous invitation link is no longer valid.",
 		"reset_code_warning": "Resetting the invitation code will invalidate all previously generated invitation links."

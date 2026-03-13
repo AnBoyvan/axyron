@@ -3,8 +3,12 @@ import { and, eq, getTableColumns } from 'drizzle-orm';
 import z from 'zod';
 
 import { db } from '@/db';
+import { assignees } from '@/db/schema/assignees';
 import { organizationMembers } from '@/db/schema/organization-members';
 import { organizations } from '@/db/schema/organizations';
+import { projectMembers } from '@/db/schema/project-members';
+import { projects } from '@/db/schema/projects';
+import { tasks } from '@/db/schema/tasks';
 import { user } from '@/db/schema/user';
 import { protectedProcedure } from '@/trpc/init';
 
@@ -78,10 +82,59 @@ export const removeMember = protectedProcedure
 			});
 		}
 
+		const orgProjects = await db
+			.select({
+				projectId: projects.id,
+			})
+			.from(projects)
+			.leftJoin(
+				projectMembers,
+				and(
+					eq(projectMembers.projectId, projects.id),
+					eq(projectMembers.userId, input.userId),
+				),
+			)
+			.where(eq(projects.organizationId, org.org.id));
+
+		const orgTasks = await db
+			.select({
+				taskId: tasks.id,
+			})
+			.from(tasks)
+			.leftJoin(
+				assignees,
+				and(eq(assignees.taskId, tasks.id), eq(assignees.userId, input.userId)),
+			)
+			.where(eq(tasks.organizationId, org.org.id));
+
+		await Promise.all([
+			...orgProjects.map(async ({ projectId }) => {
+				await db
+					.delete(projectMembers)
+					.where(
+						and(
+							eq(projectMembers.projectId, projectId),
+							eq(projectMembers.userId, input.userId),
+						),
+					);
+			}),
+			...orgTasks.map(async ({ taskId }) => {
+				await db
+					.delete(assignees)
+					.where(
+						and(
+							eq(assignees.taskId, taskId),
+							eq(assignees.userId, input.userId),
+						),
+					);
+			}),
+		]);
+
 		return {
 			userId: removedMember.userId,
 			name: org.targetName,
 			email: org.targetEmail,
 			image: org.targetImage,
+			organizationId: org.org.id,
 		};
 	});

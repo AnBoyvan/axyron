@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import {
 	ChevronsUpIcon,
 	FilePlusCornerIcon,
+	TriangleAlertIcon,
 	UserPlusIcon,
 	UserXIcon,
 } from 'lucide-react';
@@ -18,6 +19,7 @@ import {
 import { useRemoveProjectMember } from '@/features/projects/hooks/use-remove-project-member';
 import { useUpdateProjectMember } from '@/features/projects/hooks/use-update-project-member';
 import type { ProjectById } from '@/features/projects/types';
+import { useConfirm } from '@/hooks/use-confirm';
 import { authClient } from '@/lib/auth/auth-client';
 
 interface ProjectMemberMenuProps {
@@ -31,6 +33,14 @@ export const ProjectMemberMenu = ({
 }: ProjectMemberMenuProps) => {
 	const t = useTranslations();
 	const { data } = authClient.useSession();
+
+	const [RemoveConfirmDialog, confirmRemove] = useConfirm({
+		title: t('common.sure'),
+		message: t('projects.remove_member_alert'),
+		action: t('actions.remove'),
+		variant: 'destructive',
+		media: <TriangleAlertIcon className="size-10 text-destructive" />,
+	});
 
 	const updateMember = useUpdateProjectMember();
 	const removeMember = useRemoveProjectMember();
@@ -59,7 +69,10 @@ export const ProjectMemberMenu = ({
 		});
 	};
 
-	const removeOrLeave = () => {
+	const removeOrLeave = async () => {
+		const ok = await confirmRemove();
+		if (!ok) return;
+
 		removeMember.mutate({
 			projectId: member.projectId,
 			userId: member.userId,
@@ -71,69 +84,77 @@ export const ProjectMemberMenu = ({
 	const canInvite = isAdmin || member.canInvite;
 
 	return (
-		<DropdownMenu>
-			<DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
-			<DropdownMenuContent align="end">
-				{member.userId !== data?.user.id && (
-					<>
-						<DropdownMenuItem
-							onClick={() => updateRole(isAdmin ? 'member' : 'admin')}
-						>
-							<ChevronsUpIcon
-								className={
-									isAdmin ? 'text-muted-foreground opacity-50' : 'text-primary'
-								}
-							/>
-							{t(isAdmin ? 'members.admin_revoke' : 'members.admin_add')}
-						</DropdownMenuItem>
-						{!isAdmin && (
-							<>
-								<DropdownMenuItem
-									onClick={() => updateInviteAccess(!canInvite)}
-								>
-									<UserPlusIcon
-										className={
+		<>
+			<RemoveConfirmDialog />
+			<DropdownMenu>
+				<DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
+				<DropdownMenuContent align="end">
+					{member.userId !== data?.user.id && (
+						<>
+							<DropdownMenuItem
+								onClick={() => updateRole(isAdmin ? 'member' : 'admin')}
+							>
+								<ChevronsUpIcon
+									className={
+										isAdmin
+											? 'text-muted-foreground opacity-50'
+											: 'text-primary'
+									}
+								/>
+								{t(isAdmin ? 'members.admin_revoke' : 'members.admin_add')}
+							</DropdownMenuItem>
+							{!isAdmin && (
+								<>
+									<DropdownMenuItem
+										onClick={() => updateInviteAccess(!canInvite)}
+									>
+										<UserPlusIcon
+											className={
+												canInvite
+													? 'text-muted-foreground opacity-50'
+													: 'text-primary'
+											}
+										/>
+										{t(
 											canInvite
-												? 'text-muted-foreground opacity-50'
-												: 'text-primary'
-										}
-									/>
-									{t(
-										canInvite
-											? 'members.add_members_deny'
-											: 'members.add_members_allow',
-									)}
-								</DropdownMenuItem>
-								<DropdownMenuItem
-									onClick={() => updateTasksAccess(!canCreateTask)}
-								>
-									<FilePlusCornerIcon
-										className={
+												? 'members.add_members_deny'
+												: 'members.add_members_allow',
+										)}
+									</DropdownMenuItem>
+									<DropdownMenuItem
+										onClick={() => updateTasksAccess(!canCreateTask)}
+									>
+										<FilePlusCornerIcon
+											className={
+												canCreateTask
+													? 'text-muted-foreground opacity-50'
+													: 'text-primary'
+											}
+										/>
+										{t(
 											canCreateTask
-												? 'text-muted-foreground opacity-50'
-												: 'text-primary'
-										}
-									/>
-									{t(
-										canCreateTask
-											? 'tasks.manage_tasks_deny'
-											: 'tasks.manage_tasks_allow',
-									)}
-								</DropdownMenuItem>
-							</>
-						)}
-						<DropdownMenuSeparator />
-					</>
-				)}
-				<DropdownMenuItem variant="destructive" onClick={() => removeOrLeave()}>
-					<UserXIcon />
-					{t(
-						member.userId === data?.user.id
-							? 'actions.leave'
-							: 'members.remove',
+												? 'tasks.manage_tasks_deny'
+												: 'tasks.manage_tasks_allow',
+										)}
+									</DropdownMenuItem>
+								</>
+							)}
+							<DropdownMenuSeparator />
+						</>
 					)}
-				</DropdownMenuItem>
-			</DropdownMenuContent>
-		</DropdownMenu>
+					<DropdownMenuItem
+						variant="destructive"
+						onClick={() => removeOrLeave()}
+					>
+						<UserXIcon />
+						{t(
+							member.userId === data?.user.id
+								? 'actions.leave'
+								: 'members.remove',
+						)}
+					</DropdownMenuItem>
+				</DropdownMenuContent>
+			</DropdownMenu>
+		</>
 	);
 };

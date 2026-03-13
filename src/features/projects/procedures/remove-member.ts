@@ -4,7 +4,9 @@ import z from 'zod';
 
 import { db } from '@/db';
 import { activities } from '@/db/schema/activities';
+import { assignees } from '@/db/schema/assignees';
 import { projectMembers } from '@/db/schema/project-members';
+import { tasks } from '@/db/schema/tasks';
 import { protectedProcedure } from '@/trpc/init';
 
 import { getProjectAccess } from '../utils/get-project-access';
@@ -41,6 +43,37 @@ export const removeMember = protectedProcedure
 				),
 			)
 			.returning();
+
+		if (!removedMember) {
+			throw new TRPCError({
+				code: 'NOT_FOUND',
+				message: 'members.not_found',
+			});
+		}
+
+		const projectTasks = await db
+			.select({
+				taskId: tasks.id,
+			})
+			.from(tasks)
+			.leftJoin(
+				assignees,
+				and(eq(assignees.taskId, tasks.id), eq(assignees.userId, input.userId)),
+			)
+			.where(eq(tasks.projectId, input.projectId));
+
+		await Promise.all(
+			projectTasks.map(async ({ taskId }) => {
+				await db
+					.delete(assignees)
+					.where(
+						and(
+							eq(assignees.taskId, taskId),
+							eq(assignees.userId, input.userId),
+						),
+					);
+			}),
+		);
 
 		await db.insert(activities).values({
 			projectId: input.projectId,

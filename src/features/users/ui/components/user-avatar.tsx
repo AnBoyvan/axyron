@@ -18,6 +18,7 @@ const avatarVariants = cva('', {
 			sm: 'h-6 w-6',
 			lg: 'h-10 w-10',
 			xl: 'h-12 w-12',
+			'2xl': 'h-20 w-20',
 		},
 		form: {
 			default: 'rounded-full',
@@ -38,6 +39,7 @@ const avatarFallbackVariants = cva('', {
 			sm: 'text-base',
 			lg: 'text-2xl',
 			xl: 'text-4xl',
+			'2xl': 'text-6xl',
 		},
 		form: {
 			default: 'rounded-full',
