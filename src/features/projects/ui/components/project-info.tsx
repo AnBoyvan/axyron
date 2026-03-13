@@ -76,7 +76,7 @@ export const ProjectInfo = ({ project }: ProjectInfoProps) => {
 				</div>
 				<div className="flex flex-col gap-1">
 					<p className="text-muted-foreground text-sm">
-						{t('common.descripton')}
+						{t('common.description')}
 					</p>
 					{project.description ? (
 						<p>{project.description}</p>

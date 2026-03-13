@@ -2,8 +2,14 @@
 	"meetings": {
 		"already_accepted": "Already accepted",
 		"already_rejected": "Already rejected",
+		"description_placeholder": "Add meeting details...",
 		"invite_not_found": "Invite not found",
+		"link_placeholder": "Paste meeting link",
+		"new_title": "Schedule a new meeting",
+		"new_description": "Add the details below to achedule a meeting.",
 		"not_found": "Meeting not found",
-		"not_member": "Access denied. You are not member of this meeting"
+		"not_member": "Access denied. You are not member of this meeting",
+		"scheduled": "New meeting scheduled",
+		"title_placeholder": "Enter meeting title"
 	}
 }

@@ -71,5 +71,18 @@ export const create = protectedProcedure
 			status: 'accepted',
 		});
 
+		await Promise.all(
+			input.memberIds
+				.filter(id => id !== userId)
+				.map(async id => {
+					await db.insert(meetingMembers).values({
+						userId: id,
+						meetingId: createdMeeting.id,
+						organizationId: data.org.id,
+						status: 'pending',
+					});
+				}),
+		);
+
 		return createdMeeting;
 	});

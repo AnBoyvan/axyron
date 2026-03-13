@@ -56,7 +56,7 @@ export const CreateOrgDialog = () => {
 					<TextareaField
 						control={form.control}
 						name="description"
-						label={t('common.descripton')}
+						label={t('common.description')}
 						placeholder={t('orgs.descr_placeholder')}
 					/>
 					<div className="flex justify-between gap-x-2">

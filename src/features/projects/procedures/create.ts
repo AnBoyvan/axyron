@@ -1,5 +1,5 @@
 import { TRPCError } from '@trpc/server';
-import { and, eq, getTableColumns } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import z from 'zod';
 
 import { db } from '@/db';
@@ -8,6 +8,7 @@ import { organizationMembers } from '@/db/schema/organization-members';
 import { organizations } from '@/db/schema/organizations';
 import { projectMembers } from '@/db/schema/project-members';
 import { projects } from '@/db/schema/projects';
+import { getOrgPermissions } from '@/features/organizations/utils/get-org-permission';
 import { protectedProcedure } from '@/trpc/init';
 
 import { createProjectSchema } from '../schemas/create-project-schema';
@@ -18,30 +19,28 @@ export const create = protectedProcedure
 		const userId = ctx.auth.user.id;
 		const { organizationId, data } = input;
 
-		const [existingMember] = await db
+		const [row] = await db
 			.select({
-				...getTableColumns(organizationMembers),
-				createPermission: organizations.canCreateProject,
+				org: organizations,
+				member: organizationMembers,
 			})
-			.from(organizationMembers)
+			.from(organizations)
 			.innerJoin(
-				organizations,
-				eq(organizations.id, organizationMembers.organizationId),
-			)
-			.where(
+				organizationMembers,
 				and(
+					eq(organizationMembers.organizationId, organizations.id),
 					eq(organizationMembers.userId, userId),
-					eq(organizationMembers.organizationId, organizationId),
 				),
 			)
+			.where(eq(organizations.id, input.organizationId))
 			.limit(1);
 
-		if (
-			!existingMember ||
-			existingMember.role !== 'admin' ||
-			!existingMember.canCreateProject ||
-			!existingMember.createPermission
-		) {
+		const permissions = getOrgPermissions({
+			org: row.org,
+			member: row.member,
+		});
+
+		if (!permissions.createProject) {
 			throw new TRPCError({
 				code: 'FORBIDDEN',
 				message: 'common.access_denied',

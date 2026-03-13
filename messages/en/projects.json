@@ -5,7 +5,7 @@
 		"archive_confirm": "This action will make it inactive and remove it from active lists.",
 		"archive_description": "Archiving this project will make it inactive and remove it from active lists. All data will be preserved and can be restored at any time.",
 		"description_empty": "No description added yet.",
-		"descripton_placeholder": "Describe the goal of this project…",
+		"description_placeholder": "Describe the goal of this project…",
 		"edit_title": "Edit project",
 		"edit_description": "Modify the project details, status and visibility.",
 		"members_add_title": "Add members",

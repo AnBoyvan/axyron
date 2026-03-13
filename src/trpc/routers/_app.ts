@@ -14,7 +14,7 @@ export const appRouter = createTRPCRouter({
 	tasks: tasksRouter,
 	activities: activitiesRouter,
 	taskComments: taskCommentsRouter,
-	meetingsRouter,
+	meetings: meetingsRouter,
 });
 
 export type AppRouter = typeof appRouter;

@@ -1,14 +1,19 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { Developing } from '@/components/shared/developing';
+import { MeetingsView } from '@/features/organizations/ui/views/meetings-view';
 import { auth } from '@/lib/auth/auth';
+import { HydrateClient, prefetch, trpc } from '@/trpc/server';
 
 interface PageProps {
 	params: Promise<{ orgId: string }>;
+	searchParams: Promise<{
+		dateFrom?: string;
+		dateTo?: string;
+	}>;
 }
 
-const Page = async ({ params }: PageProps) => {
+const Page = async ({ params, searchParams }: PageProps) => {
 	const session = await auth.api.getSession({
 		headers: await headers(),
 	});
@@ -18,8 +23,21 @@ const Page = async ({ params }: PageProps) => {
 	}
 
 	const { orgId } = await params;
+	const { dateFrom, dateTo } = await searchParams;
 
-	return <Developing />;
+	prefetch(
+		trpc.meetings.getByOrganization.queryOptions({
+			organizationId: orgId,
+			dateFrom,
+			dateTo,
+		}),
+	);
+
+	return (
+		<HydrateClient>
+			<MeetingsView orgId={orgId} />
+		</HydrateClient>
+	);
 };
 
 export default Page;

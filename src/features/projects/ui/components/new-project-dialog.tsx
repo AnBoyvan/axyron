@@ -80,8 +80,8 @@ export const NewProjectDialog = ({
 						control={form.control}
 						name="description"
 						disabled={createProject.isPending}
-						label={t('common.descripton')}
-						placeholder={t('projects.descripton_placeholder')}
+						label={t('common.description')}
+						placeholder={t('projects.description_placeholder')}
 					/>
 					<div className="flex justify-between gap-x-2">
 						<Button

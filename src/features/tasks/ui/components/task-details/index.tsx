@@ -64,7 +64,7 @@ export const TaskDetails = ({ task }: TaskDetailsProps) => {
 					<div className="flex h-8 items-center gap-2 text-muted-foreground">
 						<TextIcon className="size-4" />
 						<h2 className="font-semibold text-base">
-							{t('common.descripton')}
+							{t('common.description')}
 						</h2>
 					</div>
 					{task.description ? (

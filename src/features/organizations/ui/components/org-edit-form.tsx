@@ -56,7 +56,7 @@ export const OrgEditForm = ({ org }: OrgEditFormProps) => {
 					control={form.control}
 					disabled={updateOrg.isPending}
 					name="description"
-					label={t('common.descripton')}
+					label={t('common.description')}
 					placeholder={t('orgs.descr_placeholder')}
 				/>
 				<div className="flex w-full">

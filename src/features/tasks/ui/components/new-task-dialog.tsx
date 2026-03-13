@@ -119,8 +119,8 @@ export const NewTaskDialog = ({
 						control={form.control}
 						name="description"
 						disabled={createTask.isPending}
-						label={t('common.descripton')}
-						placeholder={t('tasks.descripton_placeholder')}
+						label={t('common.description')}
+						placeholder={t('tasks.description_placeholder')}
 					/>
 					<div className="grid grid-cols-2 gap-4">
 						<SelectField

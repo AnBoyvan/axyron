@@ -1,60 +1,27 @@
-import { and, eq, sql } from 'drizzle-orm';
+import { and, between, eq, sql } from 'drizzle-orm';
 import { z } from 'zod';
 
 import { db } from '@/db';
-import { meetingMembers } from '@/db/schema/meeting-members';
 import { meetings } from '@/db/schema/meetings';
 import { organizations } from '@/db/schema/organizations';
 import { user } from '@/db/schema/user';
+import { resolveDateRange } from '@/lib/utils/resolve-week-range';
 import { protectedProcedure } from '@/trpc/init';
 
 export const getByOrganization = protectedProcedure
-	.input(z.object({ organizationId: z.string() }))
+	.input(
+		z.object({
+			organizationId: z.string(),
+			dateFrom: z.coerce.date().optional(),
+			dateTo: z.coerce.date().optional(),
+		}),
+	)
 	.query(async ({ ctx, input }) => {
 		const userId = ctx.auth.user.id;
 
-		const membersCte = db.$with('members_cte').as(
-			db
-				.select({
-					meetingId: meetingMembers.meetingId,
-					members: sql<
-						{
-							userId: string;
-							name: string;
-							email: string;
-							image: string | null;
-							status: 'pending' | 'accepted' | 'rejected';
-						}[]
-					>`
-            json_agg(
-              jsonb_build_object(
-                'userId', u.id,
-                'name', u.name,
-                'email', u.email,
-                'image', u.image,
-                'status', mm.status
-              )
-              order by mm.created_at
-            )
-          `,
-				})
-				.from(meetingMembers)
-				.innerJoin(user, eq(user.id, meetingMembers.userId))
-				.groupBy(meetingMembers.meetingId),
-		);
-
-		const commentsCte = db.$with('comments_cte').as(
-			db
-				.select({
-					meetingId: sql<string>`mc.meeting_id`,
-					count: sql<number>`count(*)::int`,
-				})
-				.from(sql`meeting_comments mc`)
-				.groupBy(sql`mc.meeting_id`),
-		);
+		const { dateFrom, dateTo } = resolveDateRange(input.dateFrom, input.dateTo);
 
 		const data = await db
-			.with(membersCte, commentsCte)
 			.select({
 				meeting: meetings,
 				organization: {
@@ -76,22 +43,60 @@ export const getByOrganization = protectedProcedure
 						image: string | null;
 						status: 'pending' | 'accepted' | 'rejected';
 					}[]
-				>`coalesce(${membersCte.members}, '[]'::json)`,
-				commentsCount: sql<number>`coalesce(${commentsCte.count}, 0)`,
+				>`
+          coalesce(members.members, '[]'::json)
+        `,
+				commentsCount: sql<number>`
+          coalesce(comments.count, 0)
+        `,
 			})
 			.from(meetings)
-			.innerJoin(
-				meetingMembers,
-				and(
-					eq(meetingMembers.meetingId, meetings.id),
-					eq(meetingMembers.userId, userId),
-				),
-			)
 			.innerJoin(organizations, eq(organizations.id, meetings.organizationId))
 			.innerJoin(user, eq(user.id, meetings.createdBy))
-			.leftJoin(membersCte, eq(membersCte.meetingId, meetings.id))
-			.leftJoin(commentsCte, eq(commentsCte.meetingId, meetings.id))
-			.where(eq(meetings.organizationId, input.organizationId))
+			.leftJoin(
+				sql`
+          lateral (
+            select json_agg(
+              jsonb_build_object(
+                'userId', u.id,
+                'name', u.name,
+                'email', u.email,
+                'image', u.image,
+                'status', mm.status
+              )
+              order by mm.created_at
+            ) as members
+            from meeting_members mm
+            join "user" u on u.id = mm.user_id
+            where mm.meeting_id = ${meetings.id}
+          ) members
+        `,
+				sql`true`,
+			)
+			.leftJoin(
+				sql`
+          lateral (
+            select count(*)::int as count
+            from meeting_comments mc
+            where mc.meeting_id = ${meetings.id}
+          ) comments
+        `,
+				sql`true`,
+			)
+			.where(
+				and(
+					eq(meetings.organizationId, input.organizationId),
+					between(meetings.startTime, dateFrom, dateTo),
+					sql`
+            exists (
+              select 1
+              from meeting_members mm
+              where mm.meeting_id = ${meetings.id}
+              and mm.user_id = ${userId}
+            )
+          `,
+				),
+			)
 			.orderBy(meetings.startTime);
 
 		return data.map(item => ({

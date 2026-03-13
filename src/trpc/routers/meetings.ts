@@ -15,7 +15,7 @@ import { update } from '@/features/meetings/procedures/update';
 import { createTRPCRouter } from '../init';
 //TODO:
 export const meetingsRouter = createTRPCRouter({
-	// create,
+	create,
 	// update,
 	// remove,
 	// invite,
@@ -26,6 +26,6 @@ export const meetingsRouter = createTRPCRouter({
 	// editComment,
 	// removeComment,
 	// getById,
-	// getByOrganization,
+	getByOrganization,
 	// getByUser,
 });
