@@ -49,5 +49,8 @@ export const getById = protectedProcedure
 			image: row.org.image,
 			permissions,
 			member: row.member,
+			canInvite: row.org.canInvite,
+			canCreateProject: row.org.canCreateProject,
+			canCreateMeeting: row.org.canCreateMeeting,
 		};
 	});

@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { asc, eq } from 'drizzle-orm';
 
 import { db } from '@/db';
 import { organizationMembers } from '@/db/schema/organization-members';
@@ -20,7 +20,8 @@ export const getMany = protectedProcedure.query(async ({ ctx }) => {
 			organizations,
 			eq(organizations.id, organizationMembers.organizationId),
 		)
-		.where(eq(organizationMembers.userId, userId));
+		.where(eq(organizationMembers.userId, userId))
+		.orderBy(asc(organizationMembers.createdAt));
 
 	const orgs = data.map(item => {
 		const { org, member } = item;

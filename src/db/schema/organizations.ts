@@ -16,9 +16,9 @@ export const organizations = pgTable('organizations', {
 	name: text('name').notNull(),
 	image: text('image'),
 	description: text('description'),
-	canInvite: boolean('can_invite').notNull().default(true),
-	canCreateProject: boolean('can_create_project').notNull().default(true),
-	canCreateMeeting: boolean('can_create_meeting').notNull().default(true),
+	canInvite: boolean('can_invite').notNull().default(false),
+	canCreateProject: boolean('can_create_project').notNull().default(false),
+	canCreateMeeting: boolean('can_create_meeting').notNull().default(false),
 	createdAt: timestamp('created_at', { withTimezone: true })
 		.notNull()
 		.defaultNow(),

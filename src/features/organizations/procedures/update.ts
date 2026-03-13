@@ -62,7 +62,7 @@ export const update = protectedProcedure
 			id: row.org.id,
 			name: input.data.name ?? row.org.name,
 			description: input.data.description ?? row.org.description,
-			image: row.org.image,
+			image: input.data.image ?? row.org.image,
 			permissions,
 		};
 	});

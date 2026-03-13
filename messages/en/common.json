@@ -10,6 +10,7 @@
 		"assignees": "Assignees",
 		"billing": "Billing",
 		"calendar": "Calendar",
+		"cannot_udone": "This action cannot be undone.",
 		"comment": "Comment",
 		"comment_placeholder": "Write a comment...",
 		"comments": "Comments",
@@ -21,6 +22,8 @@
 		"due_date": "Due Date",
 		"due_date_to": "Due Date to",
 		"edited": "edited",
+		"file_too_large": "File size exceeds the limit.",
+		"invalid_file_type": "Unsupported file type",
 		"link_copied": "Link copied to the clipboard",
 		"loading": "Loading...",
 		"meeting": "Meeting",
@@ -38,6 +41,7 @@
 		"page_first": "First page",
 		"page_last": "Last page",
 		"page_per": "Per page",
+		"permissions": "Permissions",
 		"priority": "Priority",
 		"progress": "Progress",
 		"project": "Project",
@@ -56,6 +60,7 @@
 		"sure": "Are you sure?",
 		"task": "Task",
 		"tasks": "Tasks",
-		"try_later": "Please try again later"
+		"try_later": "Please try again later",
+		"uploading": "Uploading"
 	}
 }

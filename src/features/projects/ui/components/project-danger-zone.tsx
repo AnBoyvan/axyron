@@ -68,21 +68,21 @@ export const ProjectDangerZone = ({
 				</div>
 				<div
 					className={cn(
-						'grid grid-cols-1 gap-4',
+						'grid grid-cols-1 gap-4 lg:gap-8',
 						!isArchived && 'md:grid-cols-2',
 					)}
 				>
 					{!isArchived && (
 						<div className="flex flex-col">
 							<p className="text-destructive">{t('projects.archive')}</p>
-							<p className="text-muted-foreground text-sm">
+							<p className="mb-2 text-muted-foreground text-sm">
 								{t('projects.archive_description')}
 							</p>
 							<Button
 								size="xs"
 								variant="destructive"
 								onClick={onArchive}
-								className="mt-2 ml-auto w-fit"
+								className="mt-auto ml-auto w-fit"
 							>
 								<ArchiveIcon />
 								{t('actions.archive')}
@@ -91,14 +91,14 @@ export const ProjectDangerZone = ({
 					)}
 					<div className="flex flex-col">
 						<p className="text-destructive">{t('projects.remove')}</p>
-						<p className="text-muted-foreground text-sm">
+						<p className="mb-2 text-muted-foreground text-sm">
 							{t('projects.remove_description')}
 						</p>
 						<Button
 							size="xs"
 							variant="destructive"
 							onClick={onRemove}
-							className="mt-2 ml-auto w-fit"
+							className="mt-auto ml-auto w-fit"
 						>
 							<Trash2Icon />
 							{t('actions.remove')}

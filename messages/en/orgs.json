@@ -17,6 +17,13 @@
 		"remove_member_alert": "Removing members will revoke their access to the organization and remove them from all projects and tasks.",
 		"reset_code": "Reset invite code",
 		"reset_code_success": "Code has been reset. The previous invitation link is no longer valid.",
-		"reset_code_warning": "Resetting the invitation code will invalidate all previously generated invitation links."
+		"reset_code_warning": "Resetting the invitation code will invalidate all previously generated invitation links.",
+		"rules": {
+			"canInvite": "Invite new members",
+			"canCreateProject": "Create projects",
+			"canCreateMeeting": "Schedule meetings"
+		},
+		"rules_description": "Allowed to all organization members",
+		"updated": "Organization updated"
 	}
 }

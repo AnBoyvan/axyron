@@ -5,17 +5,21 @@ import z from 'zod';
 import { db } from '@/db';
 import { organizationMembers } from '@/db/schema/organization-members';
 import { organizations } from '@/db/schema/organizations';
+import { deleteFile } from '@/lib/r2/delete-file';
 import { protectedProcedure } from '@/trpc/init';
 
-import { updateOrgRuleSchema } from '../schemas/update-org-rule-schema';
+import { getOrgPermissions } from '../utils/get-org-permission';
 
-export const updateRule = protectedProcedure
-	.input(z.object({ id: z.string(), data: updateOrgRuleSchema }))
+export const removeImage = protectedProcedure
+	.input(z.object({ id: z.string() }))
 	.mutation(async ({ ctx, input }) => {
 		const userId = ctx.auth.user.id;
 
 		const [row] = await db
-			.select({ memberRole: organizationMembers.role })
+			.select({
+				org: organizations,
+				member: organizationMembers,
+			})
 			.from(organizations)
 			.innerJoin(
 				organizationMembers,
@@ -34,7 +38,12 @@ export const updateRule = protectedProcedure
 			});
 		}
 
-		if (row.memberRole !== 'admin') {
+		const permissions = getOrgPermissions({
+			org: row.org,
+			member: row.member,
+		});
+
+		if (!permissions.update) {
 			throw new TRPCError({
 				code: 'FORBIDDEN',
 				message: 'common.access_denied',
@@ -44,10 +53,20 @@ export const updateRule = protectedProcedure
 		await db
 			.update(organizations)
 			.set({
-				[input.data.rule]: input.data.value,
+				image: null,
 				updatedAt: sql`now()`,
 			})
 			.where(eq(organizations.id, input.id));
 
-		return { id: input.id };
+		if (row.org.image) {
+			await deleteFile(`orgs/${row.org.id}`);
+		}
+
+		return {
+			id: row.org.id,
+			name: row.org.name,
+			description: row.org.description,
+			image: null,
+			permissions,
+		};
 	});

@@ -11,6 +11,7 @@ const avatarVariants = cva('', {
 			sm: 'h-6 w-6',
 			lg: 'h-10 w-10',
 			xl: 'h-12 w-12',
+			'2xl': 'h-20 w-20',
 		},
 	},
 	defaultVariants: {
@@ -26,6 +27,7 @@ const avatarFallbackVariants = cva('', {
 			sm: 'text-base rounded-lg',
 			lg: 'text-2xl rounded-xl',
 			xl: 'text-4xl rounded-md',
+			'2xl': 'text-6xl rounded-md',
 		},
 	},
 	defaultVariants: {
@@ -54,7 +56,11 @@ export const OrgAvatar = ({
 			className={cn(avatarVariants({ size, className }), 'rounded-md')}
 			onClick={onClick}
 		>
-			<AvatarImage src={imageUrl ?? ''} alt={name} className="rounded-md" />
+			<AvatarImage
+				src={imageUrl ?? undefined}
+				alt={name}
+				className="rounded-md"
+			/>
 			<AvatarFallback
 				className={cn(
 					avatarFallbackVariants({ size }),

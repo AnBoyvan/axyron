@@ -6,6 +6,7 @@ import { getMany } from '@/features/organizations/procedures/get-many';
 import { getMembers } from '@/features/organizations/procedures/get-members';
 import { leave } from '@/features/organizations/procedures/leave';
 import { remove } from '@/features/organizations/procedures/remove';
+import { removeImage } from '@/features/organizations/procedures/remove-image';
 import { removeMember } from '@/features/organizations/procedures/remove-member';
 import { resetInviteCode } from '@/features/organizations/procedures/reset-invite-code';
 import { update } from '@/features/organizations/procedures/update';
@@ -17,6 +18,7 @@ import { createTRPCRouter } from '../init';
 export const organizationsRouter = createTRPCRouter({
 	create,
 	update,
+	removeImage,
 	updateRule,
 	remove,
 	leave,
