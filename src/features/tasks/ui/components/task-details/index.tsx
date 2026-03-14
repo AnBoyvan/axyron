@@ -7,13 +7,13 @@ import { taskPriority } from '@/features/tasks/configs/task-priority-options';
 import { resolveTaskStatus } from '@/features/tasks/utils/resolve-task-status';
 import { cn } from '@/lib/utils/cn';
 
-import type { TaskById } from '../../../types';
+import type { Task } from '../../../types';
+import { TaskStatusSelect } from '../task-status-select';
 import { TaskAssignees, TaskAssigneesSkeleton } from './task-assignees';
 import { TaskDates, TaskDatesSkeleton } from './task-dates';
-import { TaskStatusSelect } from './task-status-select';
 
 interface TaskDetailsProps {
-	task: TaskById;
+	task: Task;
 }
 
 export const TaskDetails = ({ task }: TaskDetailsProps) => {

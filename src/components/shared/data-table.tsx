@@ -32,6 +32,7 @@ interface DataTableProps<TData extends { link?: string }, TValue> {
 	placeholder: string;
 	defaultPageSize: number;
 	pageSizeVariants: number[];
+	onRowClick?: (row: TData) => void;
 }
 
 export function DataTable<TData extends { link?: string }, TValue>({
@@ -40,6 +41,7 @@ export function DataTable<TData extends { link?: string }, TValue>({
 	placeholder,
 	defaultPageSize,
 	pageSizeVariants,
+	onRowClick,
 }: DataTableProps<TData, TValue>) {
 	const router = useRouter();
 
@@ -92,12 +94,15 @@ export function DataTable<TData extends { link?: string }, TValue>({
 										key={row.id}
 										data-state={row.getIsSelected() && 'selected'}
 										onClick={() => {
-											if (row.original.link) {
+											if (onRowClick) {
+												onRowClick(row.original);
+											} else if (row.original.link) {
 												router.push(row.original.link);
 											}
 										}}
 										className={cn(
-											Boolean(row.original.link) && 'cursor-pointer',
+											(Boolean(row.original.link) || Boolean(onRowClick)) &&
+												'cursor-pointer',
 										)}
 									>
 										{row.getVisibleCells().map(cell => (

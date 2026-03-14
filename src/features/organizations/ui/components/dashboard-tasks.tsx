@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ORG_DASHBOARD_TASKS_LIMIT } from '@/features/tasks/constants';
-import type { UserTask } from '@/features/tasks/types';
+import type { Task } from '@/features/tasks/types';
 
 import {
 	DashboardTaskCard,
@@ -15,7 +15,7 @@ import {
 } from './dashboard-task-card';
 
 interface DashboardTasksProps {
-	tasks: UserTask[];
+	tasks: Task[];
 	variant: 'assigned' | 'created';
 	orgId: string;
 }

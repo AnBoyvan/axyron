@@ -64,13 +64,6 @@ export const create = protectedProcedure
 			})
 			.returning();
 
-		await db.insert(meetingMembers).values({
-			userId,
-			meetingId: createdMeeting.id,
-			organizationId: data.org.id,
-			status: 'accepted',
-		});
-
 		await Promise.all(
 			input.memberIds
 				.filter(id => id !== userId)

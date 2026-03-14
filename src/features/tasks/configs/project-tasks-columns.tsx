@@ -8,23 +8,29 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from '@/components/ui/tooltip';
-import type { TaskByProject } from '@/features/tasks/types';
+import type { Task } from '@/features/tasks/types';
 import { UserAvatar } from '@/features/users/ui/components/user-avatar';
 import { fnsLocale } from '@/i18n/config';
 import { cn } from '@/lib/utils/cn';
 
+import { resolveTaskStatus } from '../utils/resolve-task-status';
 import { taskPriority } from './task-priority-options';
 import { taskStatuses } from './task-status-options';
 
 export const projectTasksColumns = (
 	t: Translator,
 	locale: Locale,
-): ColumnDef<TaskByProject>[] => [
+): ColumnDef<Task>[] => [
 	{
 		accessorKey: 'status',
 		header: '',
 		cell: ({ row }) => {
-			const status = taskStatuses[row.original.status];
+			const resolvedStatus = resolveTaskStatus({
+				status: row.original.status,
+				dueDate: row.original.dueDate,
+			});
+
+			const status = taskStatuses[resolvedStatus];
 			return (
 				<div className="flex justify-center">
 					<Tooltip>
@@ -81,17 +87,17 @@ export const projectTasksColumns = (
 		accessorKey: 'dueDate',
 		header: t('common.due_date'),
 		cell: ({ row }) => {
-			const startDate = row.original.dueDate;
-			const isOverdue = row.original.status === 'overdue';
-			if (!startDate) return null;
+			const resolvedStatus = resolveTaskStatus({
+				status: row.original.status,
+				dueDate: row.original.dueDate,
+			});
+			const isOverdue = resolvedStatus === 'overdue';
+			if (!row.original.dueDate) return null;
 			return (
 				<div
-					className={cn(
-						'text-sm',
-						isOverdue && taskStatuses[row.original.status].iconStyle,
-					)}
+					className={cn('text-sm', isOverdue && taskStatuses.overdue.iconStyle)}
 				>
-					{format(startDate, 'dd-MM-yyy', {
+					{format(row.original.dueDate, 'dd-MM-yyy', {
 						locale: fnsLocale[locale],
 					})}
 				</div>

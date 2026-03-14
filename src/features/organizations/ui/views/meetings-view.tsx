@@ -10,7 +10,7 @@ import { ViewWrapper } from '@/components/shared/view-wrapper';
 import { Button } from '@/components/ui/button';
 import { NewMeetingDialog } from '@/features/meetings/ui/components/new-meeting-dialog';
 
-import { MeetingsDateFilter } from '../components/meetings-date-filter';
+import { MeetingsDateFilter } from '../../../meetings/ui/components/meetings-date-filter';
 import {
 	MeetingsSection,
 	MeetingsSectionSkeleton,

@@ -1,10 +1,11 @@
 import { TRPCError } from '@trpc/server';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, getTableColumns } from 'drizzle-orm';
 
 import { db } from '@/db';
 import { organizationMembers } from '@/db/schema/organization-members';
+import { type OrgSelectSchema, organizations } from '@/db/schema/organizations';
 import { projectMembers } from '@/db/schema/project-members';
-import { projects } from '@/db/schema/projects';
+import { type ProjectSelectSchema, projects } from '@/db/schema/projects';
 
 type GetProjectAccessProps = {
 	userId: string;
@@ -17,15 +18,8 @@ type ProjectAccess = {
 	isOrgAdmin: boolean;
 	canInvite: boolean;
 	canCreateTask: boolean;
-	project: {
-		id: string;
-		name: string;
-		description: string | null;
-		visibility: 'private' | 'public';
-		organizationId: string;
-		archived: boolean;
-		status: 'pending' | 'active' | 'closed';
-	};
+	organization: OrgSelectSchema;
+	project: ProjectSelectSchema;
 };
 
 export const getProjectAccess = async ({
@@ -35,13 +29,10 @@ export const getProjectAccess = async ({
 	const [row] = await db
 		.select({
 			project: {
-				id: projects.id,
-				name: projects.name,
-				description: projects.description,
-				visibility: projects.visibility,
-				organizationId: projects.organizationId,
-				archived: projects.archived,
-				status: projects.status,
+				...getTableColumns(projects),
+			},
+			organization: {
+				...getTableColumns(organizations),
 			},
 			orgMemberRole: organizationMembers.role,
 			projectMemberRole: projectMembers.role,
@@ -63,6 +54,7 @@ export const getProjectAccess = async ({
 				eq(projectMembers.userId, userId),
 			),
 		)
+		.innerJoin(organizations, eq(organizations.id, projects.organizationId))
 		.where(eq(projects.id, projectId))
 		.limit(1);
 
@@ -93,6 +85,7 @@ export const getProjectAccess = async ({
 
 	return {
 		project: row.project,
+		organization: row.organization,
 		isMember,
 		isProjectAdmin,
 		isOrgAdmin,

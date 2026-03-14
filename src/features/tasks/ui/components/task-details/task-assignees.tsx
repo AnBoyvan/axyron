@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import type { TaskById } from '@/features/tasks/types';
+import type { Task } from '@/features/tasks/types';
 import { UserAvatar } from '@/features/users/ui/components/user-avatar';
 
 import { AddAssigneesDialog } from '../add-assignees-dialog';
@@ -14,7 +14,7 @@ import { TaskAssigneeMenu } from './task-assignee-menu';
 interface TaskAssigneesProps {
 	taskId: string;
 	projectId: string;
-	assignees: TaskById['assignees'];
+	assignees: Task['assignees'];
 	canUpdate?: boolean;
 }
 

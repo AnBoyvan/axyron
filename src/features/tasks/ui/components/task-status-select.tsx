@@ -12,12 +12,12 @@ import {
 	taskStatuses,
 } from '@/features/tasks/configs/task-status-options';
 import { useUpdateTask } from '@/features/tasks/hooks/use-update-task';
-import type { TaskById } from '@/features/tasks/types';
+import type { Task } from '@/features/tasks/types';
 import { cn } from '@/lib/utils/cn';
 
 interface TaskStatusSelectProps {
 	taskId: string;
-	currentStatus: TaskById['status'];
+	currentStatus: Task['status'];
 	isOverdue?: boolean;
 	canClose?: boolean;
 	canEdit?: boolean;
@@ -34,7 +34,7 @@ export const TaskStatusSelect = ({
 
 	const updateTask = useUpdateTask();
 
-	const onStatusSelect = (status: TaskById['status']) => {
+	const onStatusSelect = (status: Task['status']) => {
 		updateTask.mutate({
 			taskId,
 			data: {
@@ -49,7 +49,7 @@ export const TaskStatusSelect = ({
 		<Select
 			value={currentStatus}
 			disabled={!canEdit}
-			onValueChange={value => onStatusSelect(value as TaskById['status'])}
+			onValueChange={value => onStatusSelect(value as Task['status'])}
 		>
 			<SelectTrigger className={cn(isOverdue && 'border-destructive')}>
 				<SelectValue>

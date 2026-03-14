@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 import { useLocale, useTranslations } from 'next-intl';
 
@@ -10,6 +10,7 @@ import {
 } from '@/features/tasks/constants';
 import { useTasksByProject } from '@/features/tasks/hooks/use-tasks-by-projects';
 import { useTasksFilters } from '@/features/tasks/hooks/use-tasks-filter';
+import { TaskPreview } from '@/features/tasks/ui/components/task-preview';
 import {
 	TasksFilter,
 	TasksFilterSkeleton,
@@ -32,6 +33,8 @@ export const ProjectTasksSection = ({
 	const locale = useLocale();
 	const [filters] = useTasksFilters();
 
+	const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
+
 	const {
 		data: { tasks, project, permissions },
 	} = useTasksByProject(projectId);
@@ -43,29 +46,40 @@ export const ProjectTasksSection = ({
 		[tasks, filters],
 	);
 
+	const selectedTask = tasks.find(t => t.id === selectedTaskId) ?? null;
 	return (
-		<div className="flex flex-1 flex-col gap-4 lg:gap-8">
-			<ProjectHeader
-				projectId={projectId}
-				orgId={project.organizationId}
-				name={project.name}
-				isArchived={project.archived}
-				status={project.status}
-				visibility={project.visibility}
-				tab="tasks"
-			/>
-			<TasksFilter
-				projectId={projectId}
-				canCreate={permissions.canCreateTask}
-			/>
-			<DataTable
-				data={filteredTasks}
-				columns={columns}
-				defaultPageSize={DEFAULT_TASKS_TABLE_PAGE_SIZE}
-				placeholder={t('tasks.no_tasks')}
-				pageSizeVariants={TASKS_TABLE_PAGE_SIZES}
-			/>
-		</div>
+		<>
+			{selectedTask && (
+				<TaskPreview
+					task={selectedTask}
+					open={Boolean(selectedTask)}
+					onOpenChange={open => !open && setSelectedTaskId(null)}
+				/>
+			)}
+			<div className="flex flex-1 flex-col gap-4 lg:gap-8">
+				<ProjectHeader
+					projectId={projectId}
+					orgId={project.organizationId}
+					name={project.name}
+					isArchived={project.archived}
+					status={project.status}
+					visibility={project.visibility}
+					tab="tasks"
+				/>
+				<TasksFilter
+					projectId={projectId}
+					canCreate={permissions.canCreateTask}
+				/>
+				<DataTable
+					data={filteredTasks}
+					columns={columns}
+					defaultPageSize={DEFAULT_TASKS_TABLE_PAGE_SIZE}
+					placeholder={t('tasks.no_tasks')}
+					pageSizeVariants={TASKS_TABLE_PAGE_SIZES}
+					onRowClick={row => setSelectedTaskId(row.id)}
+				/>
+			</div>
+		</>
 	);
 };
 

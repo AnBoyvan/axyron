@@ -1,10 +1,13 @@
-import { and, between, eq, sql } from 'drizzle-orm';
+import { TRPCError } from '@trpc/server';
+import { and, between, eq, getTableColumns, sql } from 'drizzle-orm';
 import { z } from 'zod';
 
 import { db } from '@/db';
 import { meetings } from '@/db/schema/meetings';
+import { organizationMembers } from '@/db/schema/organization-members';
 import { organizations } from '@/db/schema/organizations';
 import { user } from '@/db/schema/user';
+import { getOrgPermissions } from '@/features/organizations/utils/get-org-permission';
 import { resolveDateRange } from '@/lib/utils/resolve-week-range';
 import { protectedProcedure } from '@/trpc/init';
 
@@ -18,6 +21,34 @@ export const getByOrganization = protectedProcedure
 	)
 	.query(async ({ ctx, input }) => {
 		const userId = ctx.auth.user.id;
+
+		const [orgData] = await db
+			.select({
+				org: getTableColumns(organizations),
+				member: getTableColumns(organizationMembers),
+			})
+			.from(organizations)
+			.innerJoin(
+				organizationMembers,
+				and(
+					eq(organizationMembers.organizationId, organizations.id),
+					eq(organizationMembers.userId, userId),
+				),
+			)
+			.where(eq(organizations.id, input.organizationId))
+			.limit(1);
+
+		if (!orgData) {
+			throw new TRPCError({
+				code: 'NOT_FOUND',
+				message: 'orgs.not_found',
+			});
+		}
+
+		const permissions = getOrgPermissions({
+			org: orgData.org,
+			member: orgData.member,
+		});
 
 		const { dateFrom, dateTo } = resolveDateRange(input.dateFrom, input.dateTo);
 
@@ -105,5 +136,6 @@ export const getByOrganization = protectedProcedure
 			creator: item.creator,
 			members: item.members,
 			commentsCount: item.commentsCount,
+			isUserAdmin: permissions.isAdmin,
 		}));
 	});

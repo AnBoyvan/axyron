@@ -3,13 +3,13 @@ import { CalendarCheck2Icon, CalendarSyncIcon } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
 import { Skeleton } from '@/components/ui/skeleton';
-import type { TaskById } from '@/features/tasks/types';
+import type { Task } from '@/features/tasks/types';
 import { fnsLocale } from '@/i18n/config';
 import { cn } from '@/lib/utils/cn';
 
 interface TaskDatesProps {
-	startDate: TaskById['startDate'];
-	dueDate: TaskById['dueDate'];
+	startDate: Task['startDate'];
+	dueDate: Task['dueDate'];
 	isOverdue?: boolean;
 }
 

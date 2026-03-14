@@ -10,8 +10,8 @@ import { UserAvatar } from '@/features/users/ui/components/user-avatar';
 import { fnsLocale } from '@/i18n/config';
 import { formatDuration } from '@/lib/utils/format-duration';
 
+import { OrgAvatar } from '../../../organizations/ui/components/org-avatar';
 import { MeetingPreview } from './meeting-preview';
-import { OrgAvatar } from './org-avatar';
 
 interface MeetingCardProps {
 	meeting: MeetingByOrg;

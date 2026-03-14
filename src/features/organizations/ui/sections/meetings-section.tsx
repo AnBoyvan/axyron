@@ -1,7 +1,10 @@
 import { useMeetingsByOrg } from '@/features/meetings/hooks/use-meetings-by-org';
 import { useMeetingsFilters } from '@/features/meetings/hooks/use-meetings-filter';
 
-import { MeetingCard, MeetingCardSkeleton } from '../components/meeting-card';
+import {
+	MeetingCard,
+	MeetingCardSkeleton,
+} from '../../../meetings/ui/components/meeting-card';
 
 interface MeetingsSectionProps {
 	orgId: string;

@@ -21,11 +21,11 @@ import {
 import { useConfirm } from '@/hooks/use-confirm';
 
 import { useRemoveTask } from '../../hooks/use-remove-task';
-import type { TaskById } from '../../types';
+import type { Task } from '../../types';
 import { EditTaskDialog } from './edit-task-dialog';
 
 interface TaskMenuProps {
-	task: TaskById;
+	task: Task;
 }
 
 export const TaskMenu = ({ task }: TaskMenuProps) => {

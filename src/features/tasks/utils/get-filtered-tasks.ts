@@ -1,8 +1,8 @@
 import type { TasksFilters } from '../hooks/use-tasks-filter';
-import type { TaskByProject } from '../types';
+import type { Task } from '../types';
 
 interface GetFilteredTasksProps {
-	tasks: TaskByProject[];
+	tasks: Task[];
 	filters: TasksFilters;
 }
 

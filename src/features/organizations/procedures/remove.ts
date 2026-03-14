@@ -5,6 +5,7 @@ import z from 'zod';
 import { db } from '@/db';
 import { organizationMembers } from '@/db/schema/organization-members';
 import { organizations } from '@/db/schema/organizations';
+import { deleteFile } from '@/lib/r2/delete-file';
 import { protectedProcedure } from '@/trpc/init';
 
 export const remove = protectedProcedure
@@ -46,6 +47,10 @@ export const remove = protectedProcedure
 			.delete(organizations)
 			.where(eq(organizations.id, input.id))
 			.returning();
+
+		if (row.org.image) {
+			await deleteFile(`orgs/${row.org.id}`);
+		}
 
 		return {
 			id: removedOrg.id,

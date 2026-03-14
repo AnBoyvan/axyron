@@ -3,13 +3,9 @@ import type { inferRouterOutputs } from '@trpc/server';
 import type { AssigneeSelectSchema } from '@/db/schema/assignees';
 import type { AppRouter } from '@/trpc/routers/_app';
 
-export type TaskByProject =
-	inferRouterOutputs<AppRouter>['tasks']['getByProject']['tasks'][number];
+import type { getTasksQuery } from './utils/get-tasks-by-query';
 
-export type TaskById = inferRouterOutputs<AppRouter>['tasks']['getById'];
-
-export type UserTask =
-	inferRouterOutputs<AppRouter>['tasks']['getByUser']['created'][number];
+export type Task = inferRouterOutputs<AppRouter>['tasks']['getById'];
 
 export enum TaskPrority {
 	low = 'low',
@@ -41,7 +37,7 @@ export enum TaskPriorityEnum {
 	critical = 'critical',
 }
 
-export type Subtask = TaskById['subtasks'][number];
+export type Subtask = Task['subtasks'][number];
 
 export type Assignee = AssigneeSelectSchema & {
 	name: string;
@@ -51,3 +47,5 @@ export type Assignee = AssigneeSelectSchema & {
 export type AssigneeWithCount = Assignee & {
 	count: number;
 };
+
+export type TaskRow = Awaited<ReturnType<typeof getTasksQuery>>[number];

@@ -19,10 +19,10 @@ import {
 	type UpdateTaskSchema,
 	updateTaskSchema,
 } from '../../schemas/update-task-schema';
-import type { TaskById } from '../../types';
+import type { Task } from '../../types';
 
 interface EditTaskDialogProps {
-	task: TaskById;
+	task: Task;
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 }

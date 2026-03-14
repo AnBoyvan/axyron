@@ -9,11 +9,11 @@ import {
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 
-import type { TaskById } from '../../types';
+import type { Task } from '../../types';
 import { TaskMenu } from './task-menu';
 
 interface TaskHeaderProps {
-	task: TaskById;
+	task: Task;
 	openActivities: (open: boolean) => void;
 }
 

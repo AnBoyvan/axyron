@@ -7,15 +7,15 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useReorderSubtasks } from '@/features/tasks/hooks/use-reorder-subtasks';
-import type { Subtask, TaskById } from '@/features/tasks/types';
+import type { Subtask, Task } from '@/features/tasks/types';
 
 import { CreateSubtaskForm } from './create-subtask-form';
 import { SubtaskItem } from './subtask-item';
 
 interface SubtasksProps {
-	subtasks: TaskById['subtasks'];
+	subtasks: Task['subtasks'];
 	taskId: string;
-	permissions: TaskById['permissions'];
+	permissions: Task['permissions'];
 }
 
 export const Subtasks = ({ subtasks, taskId, permissions }: SubtasksProps) => {

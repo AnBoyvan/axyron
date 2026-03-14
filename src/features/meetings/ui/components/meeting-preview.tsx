@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 import { format } from 'date-fns';
 import {
@@ -28,6 +27,10 @@ import { fnsLocale } from '@/i18n/config';
 import { authClient } from '@/lib/auth/auth-client';
 import { formatDuration } from '@/lib/utils/format-duration';
 
+import { useChangeMeetingMemberStatus } from '../../hooks/use-change-meeting-member-status';
+
+type Status = 'accepted' | 'pending' | 'rejected';
+
 interface MeetingPreviewProps {
 	meeting: MeetingByOrg;
 	open: boolean;
@@ -41,12 +44,19 @@ export const MeetingPreview = ({
 }: MeetingPreviewProps) => {
 	const t = useTranslations();
 	const locale = useLocale();
-	const router = useRouter();
 	const { data } = authClient.useSession();
 
 	const dateLocale = fnsLocale[locale];
-
 	const userAsMember = meeting.members.find(m => m.userId === data?.user.id);
+
+	const changeStatus = useChangeMeetingMemberStatus();
+
+	const onStatusChange = (status: Status) => {
+		changeStatus.mutate({
+			meetingId: meeting.id,
+			status,
+		});
+	};
 
 	return (
 		<Sheet open={open} onOpenChange={onOpenChange}>
@@ -57,18 +67,33 @@ export const MeetingPreview = ({
 					</SheetTitle>
 				</SheetHeader>
 				<Separator />
-				{userAsMember && (
+				{userAsMember && meeting.createdBy !== data?.user.id && (
 					<>
 						<div className="grid grid-cols-3 gap-1 px-6 py-4 lg:gap-2">
-							<Button size="xs" variant="success" className="w-full">
+							<Button
+								size="xs"
+								variant="success"
+								onClick={() => onStatusChange('accepted')}
+								className="w-full"
+							>
 								<CheckIcon />
 								{t('actions.accept')}
 							</Button>
-							<Button size="xs" variant="outline" className="w-full">
+							<Button
+								size="xs"
+								variant="outline"
+								onClick={() => onStatusChange('pending')}
+								className="w-full"
+							>
 								<CircleQuestionMarkIcon />
 								{t('common.tentative')}
 							</Button>
-							<Button size="xs" variant="destructive" className="w-full">
+							<Button
+								size="xs"
+								variant="destructive"
+								onClick={() => onStatusChange('rejected')}
+								className="w-full"
+							>
 								<XIcon />
 								{t('actions.decline')}
 							</Button>
@@ -184,17 +209,16 @@ export const MeetingPreview = ({
 					)}
 				</div>
 				<div className="mt-auto border-t p-4">
-					<Button
-						className="w-full"
-						onClick={() => {
-							router.push(
-								`/org/${meeting.organizationId}/meetings/${meeting.id}`,
-							);
-							onOpenChange(false);
-						}}
-					>
-						<ExternalLinkIcon />
-						{t('actions.open')}
+					<Button asChild className="w-full">
+						<Link
+							href={`/org/${meeting.organizationId}/meetings/${meeting.id}`}
+							onClick={() => {
+								onOpenChange(false);
+							}}
+						>
+							<ExternalLinkIcon />
+							{t('actions.open')}
+						</Link>
 					</Button>
 				</div>
 			</SheetContent>
