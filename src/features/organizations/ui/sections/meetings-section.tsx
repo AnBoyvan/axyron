@@ -1,45 +1,40 @@
-import { useState } from 'react';
-
-import { PlusIcon } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-
-import { Button } from '@/components/ui/button';
 import { useMeetingsByOrg } from '@/features/meetings/hooks/use-meetings-by-org';
-import { NewMeetingDialog } from '@/features/meetings/ui/components/new-meeting-dialog';
+import { useMeetingsFilters } from '@/features/meetings/hooks/use-meetings-filter';
+
+import { MeetingCard, MeetingCardSkeleton } from '../components/meeting-card';
 
 interface MeetingsSectionProps {
 	orgId: string;
-	dateFrom?: string;
-	dateTo?: string;
 }
 
-export const MeetingsSection = ({
-	orgId,
-	dateFrom,
-	dateTo,
-}: MeetingsSectionProps) => {
-	const t = useTranslations();
-
-	const [open, setOpen] = useState(false);
+export const MeetingsSection = ({ orgId }: MeetingsSectionProps) => {
+	const [filters] = useMeetingsFilters();
 
 	const { data } = useMeetingsByOrg({
 		orgId,
-		dateFrom,
-		dateTo,
+		dateFrom: filters.dateFrom,
+		dateTo: filters.dateTo,
 	});
 
 	return (
-		<>
-			<NewMeetingDialog orgId={orgId} open={open} onOpenChange={setOpen} />
-			<div className="flex flex-col gap-4 lg:gap-8">
-				<div className="flex flex-col gap-4 lg:flex-row lg:justify-between">
-					<div />
-					<Button onClick={() => setOpen(true)}>
-						<PlusIcon />
-						{t('common.new')}
-					</Button>
-				</div>
-			</div>
-		</>
+		<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+			{data?.map(meeting => (
+				<MeetingCard key={meeting.id} meeting={meeting} />
+			))}
+		</div>
+	);
+};
+
+export const MeetingsSectionSkeleton = ({
+	showOrganization = false,
+}: {
+	showOrganization?: boolean;
+}) => {
+	return (
+		<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+			{Array.from({ length: 6 }).map((_, idx) => (
+				<MeetingCardSkeleton showOrganization={showOrganization} key={idx} />
+			))}
+		</div>
 	);
 };

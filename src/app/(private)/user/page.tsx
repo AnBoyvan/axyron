@@ -1,7 +1,6 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { SidebarTrigger } from '@/components/ui/sidebar';
 import { auth } from '@/lib/auth/auth';
 
 const Page = async () => {
@@ -13,11 +12,7 @@ const Page = async () => {
 		redirect('/sign-in');
 	}
 
-	return (
-		<div className="p-8">
-			<SidebarTrigger />
-		</div>
-	);
+	return <div className="p-8"></div>;
 };
 
 export default Page;

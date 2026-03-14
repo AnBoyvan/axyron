@@ -4,8 +4,8 @@ import { useTRPC } from '@/trpc/client';
 
 interface UseMeetingsByOrgProps {
 	orgId: string;
-	dateFrom?: string;
-	dateTo?: string;
+	dateFrom?: Date;
+	dateTo?: Date;
 }
 
 export const useMeetingsByOrg = ({

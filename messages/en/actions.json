@@ -1,6 +1,7 @@
 {
 	"actions": {
 		"add": "Add",
+		"accept": "Accept",
 		"archive": "Archive",
 		"assign": "Assign",
 		"cancel": "Cancel",
@@ -10,12 +11,14 @@
 		"copy_invite": "Copy invitation link",
 		"copy_link": "Copy link",
 		"create": "Create",
+		"decline": "Decline",
 		"edit": "Edit",
 		"invite": "Invite",
 		"leave": "Leave",
 		"load_more": "Load more",
 		"move_up": "Move up",
 		"move_down": "Move down",
+		"open": "Open",
 		"remove": "Remove",
 		"reply": "Reply",
 		"reset": "Reset",
