@@ -1,8 +1,12 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: use as shared form field */
 
+import { useLocale } from 'next-intl';
 import type { Control } from 'react-hook-form';
 
+import { MEETING_DURATION_OPTIONS } from '@/features/meetings/constants';
+import { fnsLocale } from '@/i18n/config';
 import { cn } from '@/lib/utils/cn';
+import { formatDuration } from '@/lib/utils/format-duration';
 
 import {
 	FormControl,
@@ -18,15 +22,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '../ui/select';
-
-const DURATION_OPTIONS = [
-	{ value: 15, label: '15 min' },
-	{ value: 30, label: '30 min' },
-	{ value: 45, label: '45 min' },
-	{ value: 60, label: '1 hour' },
-	{ value: 90, label: '1.5 hours' },
-	{ value: 120, label: '2 hours' },
-] as const;
 
 interface DurationFieldProps {
 	control: Control<any, any>;
@@ -45,6 +40,8 @@ export const DurationField = ({
 	disabled,
 	className,
 }: DurationFieldProps) => {
+	const locale = useLocale();
+
 	return (
 		<FormField
 			name={name}
@@ -64,9 +61,9 @@ export const DurationField = ({
 							</SelectTrigger>
 						</FormControl>
 						<SelectContent>
-							{DURATION_OPTIONS.map(option => (
+							{MEETING_DURATION_OPTIONS.map(option => (
 								<SelectItem key={option.value} value={option.value.toString()}>
-									{option.label}
+									{formatDuration(option.value, fnsLocale[locale])}
 								</SelectItem>
 							))}
 						</SelectContent>

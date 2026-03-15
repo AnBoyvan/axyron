@@ -8,7 +8,7 @@ import { Form } from '@/components/ui/form';
 import { UserAvatar } from '@/features/users/ui/components/user-avatar';
 import { authClient } from '@/lib/auth/auth-client';
 
-import { MAX_COMMENT_SIZE } from '../../constants';
+import { MAX_TASK_COMMENT_SIZE } from '../../constants';
 import { useCreateTaskComment } from '../../hooks/use-create-task-comment';
 import {
 	type CreateTaskCommentSchema,
@@ -70,7 +70,7 @@ export const CreateTaskCommentForm = ({
 						name="content"
 						control={form.control}
 						disabled={createComment.isPending}
-						maxLenght={MAX_COMMENT_SIZE}
+						maxLenght={MAX_TASK_COMMENT_SIZE}
 						placeholder={t(
 							variant === 'reply'
 								? 'common.reply_placeholder'

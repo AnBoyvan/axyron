@@ -1,12 +1,13 @@
 import { TRPCError } from '@trpc/server';
-import { and, eq, getTableColumns } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import z from 'zod';
 
 import { db } from '@/db';
 import { meetingMembers } from '@/db/schema/meeting-members';
 import { meetings } from '@/db/schema/meetings';
-import { organizationMembers } from '@/db/schema/organization-members';
 import { protectedProcedure } from '@/trpc/init';
+
+import { getMeetingAccess } from '../utils/get-meeting-access';
 
 export const invite = protectedProcedure
 	.input(z.object({ meetingId: z.string(), userIds: z.array(z.string()) }))
@@ -14,18 +15,8 @@ export const invite = protectedProcedure
 		const userId = ctx.auth.user.id;
 
 		const [existingMeeting] = await db
-			.select({
-				...getTableColumns(meetings),
-				member: organizationMembers,
-			})
+			.select()
 			.from(meetings)
-			.innerJoin(
-				organizationMembers,
-				and(
-					eq(organizationMembers.userId, userId),
-					eq(organizationMembers.organizationId, meetings.organizationId),
-				),
-			)
 			.where(eq(meetings.id, input.meetingId))
 			.limit(1);
 
@@ -35,32 +26,22 @@ export const invite = protectedProcedure
 				message: 'meetings.not_found',
 			});
 		}
+		const { isAdmin } = await getMeetingAccess({
+			meetingId: existingMeeting.id,
+			userId,
+		});
 
-		const canInvite =
-			existingMeeting.createdBy === userId ||
-			existingMeeting.member.role === 'admin';
-
-		if (!canInvite) {
+		if (!isAdmin) {
 			throw new TRPCError({
 				code: 'FORBIDDEN',
 				message: 'common.access_denied',
 			});
 		}
 
-		const orgMembers = await db
-			.select({ userId: organizationMembers.userId })
-			.from(organizationMembers)
-			.where(
-				eq(organizationMembers.organizationId, existingMeeting.organizationId),
-			);
-
-		const userIds = orgMembers.map(m => m.userId);
-		const validIds = input.userIds.filter(id => !userIds.includes(id));
-
-		const newInvites = await db
+		await db
 			.insert(meetingMembers)
 			.values(
-				validIds.map(id => ({
+				input.userIds.map(id => ({
 					userId: id,
 					meetingId: input.meetingId,
 					organizationId: existingMeeting.organizationId,
@@ -70,5 +51,5 @@ export const invite = protectedProcedure
 			.onConflictDoNothing()
 			.returning({ userId: meetingMembers.userId });
 
-		return { invited: newInvites.length };
+		return existingMeeting;
 	});

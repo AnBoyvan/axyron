@@ -5,7 +5,7 @@ import { CalendarClockIcon, ClockIcon } from 'lucide-react';
 import { useLocale } from 'next-intl';
 
 import { Skeleton } from '@/components/ui/skeleton';
-import type { MeetingByOrg } from '@/features/meetings/types';
+import type { Meeting } from '@/features/meetings/types';
 import { UserAvatar } from '@/features/users/ui/components/user-avatar';
 import { fnsLocale } from '@/i18n/config';
 import { formatDuration } from '@/lib/utils/format-duration';
@@ -14,7 +14,7 @@ import { OrgAvatar } from '../../../organizations/ui/components/org-avatar';
 import { MeetingPreview } from './meeting-preview';
 
 interface MeetingCardProps {
-	meeting: MeetingByOrg;
+	meeting: Meeting;
 	showOrganization?: boolean;
 }
 
@@ -63,7 +63,9 @@ export const MeetingCard = ({
 				</div>
 				<div className="gap flex items-center text-muted-foreground">
 					<ClockIcon className="mr-2 size-4" />
-					<span className="text-sm">{formatDuration(meeting.duration)}</span>
+					<span className="text-sm">
+						{formatDuration(meeting.duration, dateLocale)}
+					</span>
 				</div>
 				<div className="flex items-center justify-between">
 					<div className="flex -space-x-2">

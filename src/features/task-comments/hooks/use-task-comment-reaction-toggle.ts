@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 import { getMessage } from '@/lib/utils/get-message';
 import { useTRPC } from '@/trpc/client';
 
-import { DEFAULT_COMMENTS_LIMIT } from '../constants';
+import { DEFAULT_TASK_COMMENTS_LIMIT } from '../constants';
 
 interface UseTaskCommentReactionToggleProps {
 	taskId: string;
@@ -25,7 +25,7 @@ export const useTaskCommentReactionToggle = ({
 			onSuccess: async () => {
 				await queryClient.invalidateQueries({
 					queryKey: trpc.taskComments.getByTask.infiniteQueryKey({
-						limit: DEFAULT_COMMENTS_LIMIT,
+						limit: DEFAULT_TASK_COMMENTS_LIMIT,
 						taskId: taskId,
 					}),
 				});
@@ -35,7 +35,7 @@ export const useTaskCommentReactionToggle = ({
 						queryKey: trpc.taskComments.getByTask.infiniteQueryKey({
 							taskId: taskId,
 							parentId: parentId,
-							limit: DEFAULT_COMMENTS_LIMIT,
+							limit: DEFAULT_TASK_COMMENTS_LIMIT,
 						}),
 					});
 				}

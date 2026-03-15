@@ -6,13 +6,13 @@ import { db } from '@/db';
 import { comments } from '@/db/schema/comments';
 import { protectedProcedure } from '@/trpc/init';
 
-import { MAX_COMMENT_SIZE } from '../constants';
+import { MAX_TASK_COMMENT_SIZE } from '../constants';
 
 export const update = protectedProcedure
 	.input(
 		z.object({
 			commentId: z.string(),
-			content: z.string().min(1).max(MAX_COMMENT_SIZE),
+			content: z.string().min(1).max(MAX_TASK_COMMENT_SIZE),
 		}),
 	)
 	.mutation(async ({ ctx, input }) => {

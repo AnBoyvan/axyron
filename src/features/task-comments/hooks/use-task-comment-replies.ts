@@ -2,7 +2,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { useTRPC } from '@/trpc/client';
 
-import { DEFAULT_COMMENTS_LIMIT } from '../constants';
+import { DEFAULT_TASK_COMMENTS_LIMIT } from '../constants';
 
 interface UseTaskCommentsRepliesProps {
 	taskId: string;
@@ -18,7 +18,7 @@ export const useTaskCommentsReplies = ({
 	return useInfiniteQuery(
 		trpc.taskComments.getByTask.infiniteQueryOptions(
 			{
-				limit: DEFAULT_COMMENTS_LIMIT,
+				limit: DEFAULT_TASK_COMMENTS_LIMIT,
 				taskId,
 				parentId,
 			},

@@ -2,7 +2,7 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 import { DEFAULT_ACTIVITIES_LIMIT } from '@/features/activities/constants';
-import { DEFAULT_COMMENTS_LIMIT } from '@/features/task-comments/constants';
+import { DEFAULT_TASK_COMMENTS_LIMIT } from '@/features/task-comments/constants';
 import { TaskView } from '@/features/tasks/ui/views/task-view';
 import { auth } from '@/lib/auth/auth';
 import { HydrateClient, prefetch, trpc } from '@/trpc/server';
@@ -25,7 +25,7 @@ const Page = async ({ params }: PageProps) => {
 	prefetch(trpc.tasks.getById.queryOptions({ taskId }));
 	prefetch(
 		trpc.taskComments.getByTask.infiniteQueryOptions({
-			limit: DEFAULT_COMMENTS_LIMIT,
+			limit: DEFAULT_TASK_COMMENTS_LIMIT,
 			taskId,
 		}),
 	);

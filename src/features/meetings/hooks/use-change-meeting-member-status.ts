@@ -14,9 +14,19 @@ export const useChangeMeetingMemberStatus = () => {
 		trpc.meetings.changeStatus.mutationOptions({
 			onSuccess: async data => {
 				await queryClient.invalidateQueries({
+					queryKey: trpc.meetings.getById.queryKey({
+						meetingId: data.meetingId,
+					}),
+				});
+
+				await queryClient.invalidateQueries({
 					queryKey: trpc.meetings.getByOrganization.queryKey({
 						organizationId: data.organizationId,
 					}),
+				});
+
+				await queryClient.invalidateQueries({
+					queryKey: trpc.meetings.getByUser.queryKey(),
 				});
 			},
 			onError: error => {

@@ -5,9 +5,10 @@ import z from 'zod';
 import { db } from '@/db';
 import { meetingComments } from '@/db/schema/meeting-comments';
 import { meetings } from '@/db/schema/meetings';
+import { getMeetingAccess } from '@/features/meetings/utils/get-meeting-access';
 import { protectedProcedure } from '@/trpc/init';
 
-export const removeComment = protectedProcedure
+export const remove = protectedProcedure
 	.input(z.object({ commentId: z.string() }))
 	.mutation(async ({ ctx, input }) => {
 		const userId = ctx.auth.user.id;
@@ -30,10 +31,12 @@ export const removeComment = protectedProcedure
 			});
 		}
 
-		if (
-			existingComment.comment.userId !== userId &&
-			existingComment.createdBy !== userId
-		) {
+		const { isAdmin } = await getMeetingAccess({
+			meetingId: existingComment.comment.meetingId,
+			userId,
+		});
+
+		if (existingComment.comment.userId !== userId && !isAdmin) {
 			throw new TRPCError({
 				code: 'FORBIDDEN',
 				message: 'common.access_denied',

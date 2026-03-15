@@ -21,7 +21,7 @@ import {
 	SheetHeader,
 	SheetTitle,
 } from '@/components/ui/sheet';
-import type { MeetingByOrg } from '@/features/meetings/types';
+import type { AttendeeStatus, Meeting } from '@/features/meetings/types';
 import { UserAvatar } from '@/features/users/ui/components/user-avatar';
 import { fnsLocale } from '@/i18n/config';
 import { authClient } from '@/lib/auth/auth-client';
@@ -29,10 +29,8 @@ import { formatDuration } from '@/lib/utils/format-duration';
 
 import { useChangeMeetingMemberStatus } from '../../hooks/use-change-meeting-member-status';
 
-type Status = 'accepted' | 'pending' | 'rejected';
-
 interface MeetingPreviewProps {
-	meeting: MeetingByOrg;
+	meeting: Meeting;
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
 }
@@ -51,7 +49,7 @@ export const MeetingPreview = ({
 
 	const changeStatus = useChangeMeetingMemberStatus();
 
-	const onStatusChange = (status: Status) => {
+	const onStatusChange = (status: AttendeeStatus) => {
 		changeStatus.mutate({
 			meetingId: meeting.id,
 			status,
@@ -67,7 +65,7 @@ export const MeetingPreview = ({
 					</SheetTitle>
 				</SheetHeader>
 				<Separator />
-				{userAsMember && meeting.createdBy !== data?.user.id && (
+				{userAsMember && (
 					<>
 						<div className="grid grid-cols-3 gap-1 px-6 py-4 lg:gap-2">
 							<Button
@@ -113,7 +111,7 @@ export const MeetingPreview = ({
 					</div>
 					<div className="flex items-center text-muted-foreground">
 						<ClockIcon className="mr-2 size-4" />
-						<span>{formatDuration(meeting.duration)}</span>
+						<span>{formatDuration(meeting.duration, dateLocale)}</span>
 					</div>
 				</div>
 				<Separator />

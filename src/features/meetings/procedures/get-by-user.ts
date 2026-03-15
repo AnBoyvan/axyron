@@ -1,100 +1,28 @@
-import { and, eq, sql } from 'drizzle-orm';
+import { between } from 'drizzle-orm';
+import z from 'zod';
 
-import { db } from '@/db';
-import { meetingMembers } from '@/db/schema/meeting-members';
 import { meetings } from '@/db/schema/meetings';
-import { organizations } from '@/db/schema/organizations';
-import { user } from '@/db/schema/user';
+import { resolveDateRange } from '@/lib/utils/resolve-week-range';
 import { protectedProcedure } from '@/trpc/init';
 
-export const getByUser = protectedProcedure.query(async ({ ctx }) => {
-	const userId = ctx.auth.user.id;
+import { getMeetingQuery } from '../utils/get-meetings-query';
 
-	const membersCte = db.$with('members_cte').as(
-		db
-			.select({
-				meetingId: meetingMembers.meetingId,
-				members: sql<
-					{
-						userId: string;
-						name: string;
-						email: string;
-						image: string | null;
-						status: 'pending' | 'accepted' | 'rejected';
-					}[]
-				>`
-            json_agg(
-              jsonb_build_object(
-                'userId', u.id,
-                'name', u.name,
-                'email', u.email,
-                'image', u.image,
-                'status', mm.status
-              )
-              order by mm.created_at
-            )
-          `,
-			})
-			.from(meetingMembers)
-			.innerJoin(user, eq(user.id, meetingMembers.userId))
-			.groupBy(meetingMembers.meetingId),
-	);
+export const getByUser = protectedProcedure
+	.input(
+		z.object({
+			dateFrom: z.coerce.date().optional(),
+			dateTo: z.coerce.date().optional(),
+		}),
+	)
+	.query(async ({ ctx, input }) => {
+		const userId = ctx.auth.user.id;
 
-	const commentsCte = db.$with('comments_cte').as(
-		db
-			.select({
-				meetingId: sql<string>`mc.meeting_id`,
-				count: sql<number>`count(*)::int`,
-			})
-			.from(sql`meeting_comments mc`)
-			.groupBy(sql`mc.meeting_id`),
-	);
+		const { dateFrom, dateTo } = resolveDateRange(input.dateFrom, input.dateTo);
 
-	const data = await db
-		.with(membersCte, commentsCte)
-		.select({
-			meeting: meetings,
-			organization: {
-				id: organizations.id,
-				name: organizations.name,
-				image: organizations.image,
-			},
-			creator: {
-				id: user.id,
-				name: user.name,
-				email: user.email,
-				image: user.image,
-			},
-			members: sql<
-				{
-					userId: string;
-					name: string;
-					email: string;
-					image: string | null;
-					status: 'pending' | 'accepted' | 'rejected';
-				}[]
-			>`coalesce(${membersCte.members}, '[]'::json)`,
-			commentsCount: sql<number>`coalesce(${commentsCte.count}, 0)`,
-		})
-		.from(meetings)
-		.innerJoin(
-			meetingMembers,
-			and(
-				eq(meetingMembers.meetingId, meetings.id),
-				eq(meetingMembers.userId, userId),
-			),
-		)
-		.innerJoin(organizations, eq(organizations.id, meetings.organizationId))
-		.innerJoin(user, eq(user.id, meetings.createdBy))
-		.leftJoin(membersCte, eq(membersCte.meetingId, meetings.id))
-		.leftJoin(commentsCte, eq(commentsCte.meetingId, meetings.id))
-		.orderBy(meetings.startTime);
+		const data = await getMeetingQuery({
+			userId,
+			conditions: [between(meetings.startTime, dateFrom, dateTo)],
+		});
 
-	return data.map(item => ({
-		...item.meeting,
-		organization: item.organization,
-		creator: item.creator,
-		members: item.members,
-		commentsCount: item.commentsCount,
-	}));
-});
+		return data;
+	});

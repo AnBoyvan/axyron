@@ -9,13 +9,7 @@ import { organizations } from '@/db/schema/organizations';
 import { getOrgPermissions } from '@/features/organizations/utils/get-org-permission';
 import { protectedProcedure } from '@/trpc/init';
 
-const updateMeetingSchema = z.object({
-	title: z.string().min(1).max(255).optional(),
-	description: z.string().optional().nullable(),
-	meetingUrl: z.string().url().optional().nullable(),
-	startTime: z.string().datetime().optional(),
-	duration: z.number().int().min(1).optional(),
-});
+import { updateMeetingSchema } from '../schemas/update-meeting-schema';
 
 export const update = protectedProcedure
 	.input(z.object({ meetingId: z.string(), data: updateMeetingSchema }))
@@ -78,7 +72,7 @@ export const update = protectedProcedure
 				...input.data,
 				startTime: input.data.startTime
 					? new Date(input.data.startTime)
-					: undefined,
+					: existingMeeting.startTime,
 				updatedAt: sql`now()`,
 			})
 			.where(eq(meetings.id, input.meetingId))

@@ -1,46 +1,25 @@
 import { TRPCError } from '@trpc/server';
-import { and, eq, getTableColumns } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import z from 'zod';
 
 import { db } from '@/db';
 import { meetingMembers } from '@/db/schema/meeting-members';
-import { meetings } from '@/db/schema/meetings';
-import { organizationMembers } from '@/db/schema/organization-members';
 import { protectedProcedure } from '@/trpc/init';
+
+import { getMeetingAccess } from '../utils/get-meeting-access';
 
 export const removeMember = protectedProcedure
 	.input(z.object({ meetingId: z.string(), userId: z.string() }))
 	.mutation(async ({ ctx, input }) => {
 		const userId = ctx.auth.user.id;
+		const { meetingId } = input;
 
-		const [existingMeeting] = await db
-			.select({
-				...getTableColumns(meetings),
-				member: organizationMembers,
-			})
-			.from(meetings)
-			.innerJoin(
-				organizationMembers,
-				and(
-					eq(organizationMembers.userId, userId),
-					eq(organizationMembers.organizationId, meetings.organizationId),
-				),
-			)
-			.where(eq(meetings.id, input.meetingId))
-			.limit(1);
+		const { isAdmin } = await getMeetingAccess({
+			meetingId,
+			userId,
+		});
 
-		if (!existingMeeting) {
-			throw new TRPCError({
-				code: 'NOT_FOUND',
-				message: 'meetings.not_found',
-			});
-		}
-
-		const canRemove =
-			existingMeeting.createdBy === userId ||
-			existingMeeting.member.role === 'admin';
-
-		if (!canRemove) {
+		if (!isAdmin) {
 			throw new TRPCError({
 				code: 'FORBIDDEN',
 				message: 'common.access_denied',

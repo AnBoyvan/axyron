@@ -8,13 +8,13 @@ import { tasks } from '@/db/schema/tasks';
 import { getProjectAccess } from '@/features/projects/utils/get-project-access';
 import { protectedProcedure } from '@/trpc/init';
 
-import { MAX_COMMENT_SIZE } from '../constants';
+import { MAX_TASK_COMMENT_SIZE } from '../constants';
 
 export const create = protectedProcedure
 	.input(
 		z.object({
 			taskId: z.string(),
-			content: z.string().min(1).max(MAX_COMMENT_SIZE),
+			content: z.string().min(1).max(MAX_TASK_COMMENT_SIZE),
 			parentId: z.string().nullish(),
 		}),
 	)

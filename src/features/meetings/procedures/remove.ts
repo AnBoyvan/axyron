@@ -1,19 +1,18 @@
 import { TRPCError } from '@trpc/server';
-import { and, eq, getTableColumns } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import z from 'zod';
 
 import { db } from '@/db';
 import { meetings } from '@/db/schema/meetings';
-import { organizationMembers } from '@/db/schema/organization-members';
-import { organizations } from '@/db/schema/organizations';
 import { protectedProcedure } from '@/trpc/init';
 
-import { getOrgPermissions } from '../../organizations/utils/get-org-permission';
+import { getMeetingAccess } from '../utils/get-meeting-access';
 
 export const remove = protectedProcedure
 	.input(z.object({ meetingId: z.string() }))
 	.mutation(async ({ ctx, input }) => {
 		const userId = ctx.auth.user.id;
+		const { meetingId } = input;
 
 		const [existingMeeting] = await db
 			.select()
@@ -28,38 +27,12 @@ export const remove = protectedProcedure
 			});
 		}
 
-		const [data] = await db
-			.select({
-				org: getTableColumns(organizations),
-				member: getTableColumns(organizationMembers),
-			})
-			.from(organizations)
-			.innerJoin(
-				organizationMembers,
-				and(
-					eq(organizationMembers.organizationId, organizations.id),
-					eq(organizationMembers.userId, userId),
-				),
-			)
-			.where(eq(organizations.id, existingMeeting.organizationId))
-			.limit(1);
-
-		if (!data) {
-			throw new TRPCError({
-				code: 'FORBIDDEN',
-				message: 'common.access_denied',
-			});
-		}
-
-		const permissions = getOrgPermissions({
-			org: data.org,
-			member: data.member,
+		const { isAdmin } = await getMeetingAccess({
+			userId,
+			meetingId,
 		});
 
-		const canDelete =
-			existingMeeting.createdBy === userId || permissions.isAdmin;
-
-		if (!canDelete) {
+		if (!isAdmin) {
 			throw new TRPCError({
 				code: 'FORBIDDEN',
 				message: 'common.access_denied',

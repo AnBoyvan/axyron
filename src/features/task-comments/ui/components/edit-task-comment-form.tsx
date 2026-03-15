@@ -6,7 +6,7 @@ import { TextareaField } from '@/components/form/textarea-field';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 
-import { MAX_COMMENT_SIZE } from '../../constants';
+import { MAX_TASK_COMMENT_SIZE } from '../../constants';
 import { useUpdateTaskComment } from '../../hooks/use-update-task-comment';
 import {
 	type UpdateTaskCommentSchema,
@@ -48,7 +48,7 @@ export const EditTaskCommentForm = ({
 					name="content"
 					control={form.control}
 					disabled={updateComment.isPending}
-					maxLenght={MAX_COMMENT_SIZE}
+					maxLenght={MAX_TASK_COMMENT_SIZE}
 					placeholder={t('common.comment_placeholder')}
 					className="min-h-0 resize-none overflow-hidden bg-transparent"
 				/>

@@ -1,6 +1,11 @@
-export const formatDuration = (minutes: number) => {
-	if (minutes < 60) return `${minutes}m`;
-	const h = Math.floor(minutes / 60);
-	const m = minutes % 60;
-	return m ? `${h}h ${m}m` : `${h}h`;
+import { formatDuration as fnsFormatDuration, type Locale } from 'date-fns';
+
+export const formatDuration = (minutes: number, locale: Locale): string => {
+	const hours = Math.floor(minutes / 60);
+	const mins = minutes % 60;
+
+	return fnsFormatDuration(
+		{ hours: hours || undefined, minutes: mins || undefined },
+		{ locale },
+	);
 };

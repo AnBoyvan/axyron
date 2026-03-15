@@ -19,6 +19,10 @@ export const useCreateMeeting = () => {
 					}),
 				});
 
+				await queryClient.invalidateQueries({
+					queryKey: trpc.meetings.getByUser.queryKey(),
+				});
+
 				toast.success(t('meetings.scheduled'));
 			},
 			onError: error => {

@@ -11,12 +11,15 @@
 			"accepted": "Accepted",
 			"rejected": "Rejected"
 		},
+		"members_add_title": "Add members",
+		"members_add_description": "Choose members to add to this meeting.",
 		"new_title": "Schedule a new meeting",
 		"new_description": "Add the details below to achedule a meeting.",
 		"not_found": "Meeting not found",
 		"not_member": "Access denied. You are not member of this meeting",
 		"schedule": "Schedule meeting",
 		"scheduled": "New meeting scheduled",
-		"title_placeholder": "Enter meeting title"
+		"title_placeholder": "Enter meeting title",
+		"updated": "Meeting updated"
 	}
 }

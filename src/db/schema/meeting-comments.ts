@@ -2,6 +2,7 @@ import { relations } from 'drizzle-orm';
 import { boolean, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 import { nanoid } from 'nanoid';
 
+import { meetingCommentReactions } from './meeting-comment-reactions';
 import { meetings } from './meetings';
 import { user } from './user';
 
@@ -29,7 +30,7 @@ export const meetingComments = pgTable('meeting_comments', {
 
 export const meetingCommentsRelations = relations(
 	meetingComments,
-	({ one }) => ({
+	({ one, many }) => ({
 		user: one(user, {
 			fields: [meetingComments.userId],
 			references: [user.id],
@@ -38,5 +39,6 @@ export const meetingCommentsRelations = relations(
 			fields: [meetingComments.meetingId],
 			references: [meetings.id],
 		}),
+		reactions: many(meetingCommentReactions),
 	}),
 );

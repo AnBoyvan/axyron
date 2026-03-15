@@ -1,8 +1,9 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { Developing } from '@/components/shared/developing';
+import { MeetingView } from '@/features/meetings/ui/views/meeting-view';
 import { auth } from '@/lib/auth/auth';
+import { HydrateClient, prefetch, trpc } from '@/trpc/server';
 
 interface PageProps {
 	params: Promise<{ meetingId: string }>;
@@ -19,7 +20,14 @@ const Page = async ({ params }: PageProps) => {
 
 	const { meetingId } = await params;
 
-	return <Developing />;
+	prefetch(trpc.meetings.getById.queryOptions({ meetingId }));
+	prefetch(trpc.meetingComments.getByMeeting.queryOptions({ meetingId }));
+
+	return (
+		<HydrateClient>
+			<MeetingView meetingId={meetingId} />
+		</HydrateClient>
+	);
 };
 
 export default Page;

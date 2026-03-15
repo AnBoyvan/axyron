@@ -19,8 +19,11 @@ import { user } from '@/db/schema/user';
 import { getProjectAccess } from '@/features/projects/utils/get-project-access';
 import { protectedProcedure } from '@/trpc/init';
 
-import { DEFAULT_COMMENTS_LIMIT, MAX_COMMENTS_LIMIT } from '../constants';
-import type { Reaction } from '../types';
+import {
+	DEFAULT_TASK_COMMENTS_LIMIT,
+	MAX_TASK_COMMENTS_LIMIT,
+} from '../constants';
+import type { TaskCommentReaction } from '../types';
 
 export const getByTask = protectedProcedure
 	.input(
@@ -30,8 +33,8 @@ export const getByTask = protectedProcedure
 			limit: z
 				.number()
 				.min(1)
-				.max(MAX_COMMENTS_LIMIT)
-				.default(DEFAULT_COMMENTS_LIMIT),
+				.max(MAX_TASK_COMMENTS_LIMIT)
+				.default(DEFAULT_TASK_COMMENTS_LIMIT),
 			cursor: z
 				.object({
 					id: z.string(),
@@ -90,7 +93,7 @@ export const getByTask = protectedProcedure
 					position: user.position,
 				},
 				replyCount: repliesCte.count,
-				reactions: sql<Reaction[]>`
+				reactions: sql<TaskCommentReaction[]>`
 					coalesce(
 						(
 							select json_agg(
