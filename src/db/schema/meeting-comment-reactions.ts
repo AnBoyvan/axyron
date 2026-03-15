@@ -1,7 +1,7 @@
 import { relations } from 'drizzle-orm';
 import { pgTable, primaryKey, text, timestamp } from 'drizzle-orm/pg-core';
 
-import { comments } from './comments';
+import { meetingComments } from './meeting-comments';
 import { user } from './user';
 
 export const meetingCommentReactions = pgTable(
@@ -9,7 +9,7 @@ export const meetingCommentReactions = pgTable(
 	{
 		commentId: text('comment_id')
 			.notNull()
-			.references(() => comments.id, { onDelete: 'cascade' }),
+			.references(() => meetingComments.id, { onDelete: 'cascade' }),
 		userId: text('user_id')
 			.notNull()
 			.references(() => user.id, { onDelete: 'cascade' }),
@@ -33,9 +33,9 @@ export const meetingCommentReactionRelations = relations(
 			fields: [meetingCommentReactions.userId],
 			references: [user.id],
 		}),
-		comment: one(comments, {
+		comment: one(meetingComments, {
 			fields: [meetingCommentReactions.commentId],
-			references: [comments.id],
+			references: [meetingComments.id],
 		}),
 	}),
 );

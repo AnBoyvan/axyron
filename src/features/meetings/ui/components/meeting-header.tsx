@@ -4,15 +4,14 @@ import {
 	ArrowLeftIcon,
 	CheckIcon,
 	CircleQuestionMarkIcon,
-	EllipsisVerticalIcon,
 	XIcon,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { authClient } from '@/lib/auth/auth-client';
+import { cn } from '@/lib/utils/cn';
 
 import { useChangeMeetingMemberStatus } from '../../hooks/use-change-meeting-member-status';
 import type { AttendeeStatus, Meeting } from '../../types';
@@ -76,7 +75,7 @@ export const MeetingHeader = ({ meeting }: MeetingHeaderProps) => {
 					</Button>
 				</div>
 			)}
-			<div className="ml-auto">
+			<div className={cn(!userAsMember && 'ml-auto')}>
 				{meeting.permissions.isAdmin && <MeetingMenu meetingId={meeting.id} />}
 			</div>
 		</div>
@@ -87,10 +86,6 @@ export const MeetingHeaderSkeleton = () => (
 	<div className="flex h-13 items-center gap-4 border-b px-4 py-2">
 		<div className="flex size-9 items-center justify-center">
 			<ArrowLeftIcon className="size-4 text-muted-foreground" />
-		</div>
-		<Skeleton className="h-4 w-32" />
-		<div className="ml-auto flex size-9 items-center justify-center">
-			<EllipsisVerticalIcon className="size-4 text-muted-foreground" />
 		</div>
 	</div>
 );

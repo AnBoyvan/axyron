@@ -15,6 +15,7 @@ export async function getMeetingAccess({
 }: GetMeetingAccessParams) {
 	const [data] = await db
 		.select({
+			organizationId: meetings.organizationId,
 			isAdmin: sql<boolean>`
 				(
 					select ${organizationMembers.role} = 'admin'
@@ -47,11 +48,12 @@ export async function getMeetingAccess({
 		.limit(1);
 
 	if (!data) {
-		return { isAdmin: false, canComment: false };
+		return { isAdmin: false, canComment: false, organizationId: undefined };
 	}
 
 	return {
 		isAdmin: data.isAdmin ?? false,
 		canComment: data.canComment ?? false,
+		organizationId: data.organizationId,
 	};
 }

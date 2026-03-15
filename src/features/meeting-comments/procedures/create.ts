@@ -19,7 +19,7 @@ export const create = protectedProcedure
 		const userId = ctx.auth.user.id;
 		const { meetingId } = input;
 
-		const { canComment } = await getMeetingAccess({
+		const { canComment, organizationId } = await getMeetingAccess({
 			meetingId,
 			userId,
 		});
@@ -40,5 +40,5 @@ export const create = protectedProcedure
 			})
 			.returning();
 
-		return createdComment;
+		return { ...createdComment, organizationId };
 	});

@@ -57,13 +57,13 @@ export const MeetingCard = ({
 				</div>
 				<div className="gap flex items-center text-muted-foreground">
 					<CalendarClockIcon className="mr-2 size-4" />
-					<span className="text-sm">
+					<span className="text-wrap text-left text-xs">
 						{format(meeting.startTime, 'PPP - HH:mm', { locale: dateLocale })}
 					</span>
 				</div>
 				<div className="gap flex items-center text-muted-foreground">
 					<ClockIcon className="mr-2 size-4" />
-					<span className="text-sm">
+					<span className="text-wrap text-left text-xs">
 						{formatDuration(meeting.duration, dateLocale)}
 					</span>
 				</div>

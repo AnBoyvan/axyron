@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { DashboardView } from '@/features/organizations/ui/views/dashboard-view';
 import { ORG_DASHBOARD_TASKS_LIMIT } from '@/features/tasks/constants';
 import { auth } from '@/lib/auth/auth';
+import { getCurrentDayRange } from '@/lib/utils/get-current-day-range';
 import { HydrateClient, prefetch, trpc } from '@/trpc/server';
 
 interface PageProps {
@@ -20,6 +21,7 @@ const Page = async ({ params }: PageProps) => {
 	}
 
 	const { orgId } = await params;
+	const { start: dateFrom, end: dateTo } = getCurrentDayRange();
 
 	prefetch(
 		trpc.organizations.getMembers.queryOptions({ organizationId: orgId }),
@@ -28,6 +30,13 @@ const Page = async ({ params }: PageProps) => {
 		trpc.tasks.getByUser.queryOptions({
 			organizationId: orgId,
 			limit: ORG_DASHBOARD_TASKS_LIMIT,
+		}),
+	);
+	prefetch(
+		trpc.meetings.getByOrganization.queryOptions({
+			organizationId: orgId,
+			dateFrom,
+			dateTo,
 		}),
 	);
 

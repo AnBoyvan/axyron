@@ -58,7 +58,10 @@ export const MeetingPreview = ({
 
 	return (
 		<Sheet open={open} onOpenChange={onOpenChange}>
-			<SheetContent className="flex flex-col gap-0 overflow-y-auto">
+			<SheetContent
+				aria-describedby={undefined}
+				className="flex flex-col gap-0 overflow-y-auto"
+			>
 				<SheetHeader className="px-6 py-4">
 					<SheetTitle className="pr-6 text-lg">
 						{t('meetings.details')}

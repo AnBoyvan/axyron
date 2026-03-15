@@ -31,7 +31,7 @@ export const remove = protectedProcedure
 			});
 		}
 
-		const { isAdmin } = await getMeetingAccess({
+		const { isAdmin, organizationId } = await getMeetingAccess({
 			meetingId: existingComment.comment.meetingId,
 			userId,
 		});
@@ -48,5 +48,5 @@ export const remove = protectedProcedure
 			.where(eq(meetingComments.id, input.commentId))
 			.returning();
 
-		return deletedComment;
+		return { ...deletedComment, organizationId };
 	});

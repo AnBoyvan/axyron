@@ -2,6 +2,7 @@ import { format } from 'date-fns';
 import { CalendarClockIcon, ClockIcon } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 
+import { Skeleton } from '@/components/ui/skeleton';
 import { fnsLocale } from '@/i18n/config';
 import { formatDuration } from '@/lib/utils/format-duration';
 
@@ -63,6 +64,21 @@ export const MeetingDatetime = ({
 						{formatDuration(meeting.duration, fnsLocale[locale])}
 					</span>
 				)}
+			</div>
+		</div>
+	);
+};
+
+export const MeetingDatetimeSkeleton = () => {
+	return (
+		<div className="flex gap-6">
+			<div className="flex flex-col gap-2">
+				<Skeleton className="h-3.5 w-20" />
+				<Skeleton className="h-9 w-48" />
+			</div>
+			<div className="flex flex-col gap-2">
+				<Skeleton className="h-3.5 w-16" />
+				<Skeleton className="h-9 w-32" />
 			</div>
 		</div>
 	);

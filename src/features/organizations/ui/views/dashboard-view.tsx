@@ -13,6 +13,7 @@ import {
 	UserTasksSection,
 	UserTasksSectionSkeleton,
 } from '../sections/user-tasks-section';
+import { TodayMeetingsSection } from '../sections/today-meetings-section';
 
 interface DashboardViewProps {
 	orgId: string;
@@ -32,7 +33,11 @@ export const DashboardView = ({ orgId }: DashboardViewProps) => {
 						<UserTasksSection orgId={orgId} />
 					</Suspense>
 				</CustomErrorBoundary>
-				<div className="col-span-1"></div>
+				<CustomErrorBoundary>
+					<Suspense fallback={<div />}>
+						<TodayMeetingsSection orgId={orgId} />
+					</Suspense>
+				</CustomErrorBoundary>
 			</div>
 		</ViewWrapper>
 	);
