@@ -1,12 +1,4 @@
-import {
-	and,
-	asc,
-	desc,
-	eq,
-	getTableColumns,
-	type SQL,
-	sql,
-} from 'drizzle-orm';
+import { and, desc, eq, getTableColumns, type SQL, sql } from 'drizzle-orm';
 import { alias } from 'drizzle-orm/pg-core';
 
 import { db } from '@/db';
@@ -98,7 +90,7 @@ export const getTasksQuery = async ({
 		.leftJoin(user, eq(user.id, tasks.createdBy))
 		.where(and(...conditions))
 		.groupBy(tasks.id, projects.id, organizations.id)
-		.orderBy(asc(tasks.createdAt), desc(tasks.id));
+		.orderBy(desc(tasks.createdAt), desc(tasks.id));
 
 	return limit ? query.limit(limit) : query;
 };

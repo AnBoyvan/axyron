@@ -23,6 +23,7 @@
 		"edit": "Edit task",
 		"edit_title": "Edit task",
 		"edit_description": "Update the task details.",
+		"filter_title": "Filter tasks",
 		"manage_tasks_allow": "Allow task editing",
 		"manage_tasks_allowed": "Can create and edit tasks",
 		"manage_tasks_deny": "Disallow task editing",
@@ -73,6 +74,10 @@
 		"total": "Total tasks",
 		"update_admin_only": "Only admin can complete or cancel this task",
 		"updated": "Task updated",
+		"variant_filter": {
+			"assigned": "Assigned to me",
+			"created": "Created by me"
+		},
 		"yes": "Yes"
 	}
 }

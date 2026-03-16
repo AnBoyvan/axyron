@@ -32,16 +32,18 @@ export function TaskTablePagination<TData>({
 	const pageCount = table.getPageCount();
 
 	return (
-		<div className="mt-4 flex w-full flex-wrap justify-between gap-x-8 gap-y-4">
+		<div className="mt-4 flex w-full flex-nowrap justify-between gap-y-2 md:gap-x-8">
 			<div className="flex items-center space-x-2">
-				<p className="font-medium text-sm">{t('common.page_per')}</p>
+				<p className="hidden font-medium text-sm md:inline">
+					{t('common.page_per')}
+				</p>
 				<Select
 					value={`${table.getState().pagination.pageSize}`}
 					onValueChange={value => {
 						table.setPageSize(Number(value));
 					}}
 				>
-					<SelectTrigger className="h-9 w-[70px]">
+					<SelectTrigger className="h-8 w-[70px] data-[size=default]:h-8">
 						<SelectValue placeholder={table.getState().pagination.pageSize} />
 					</SelectTrigger>
 					<SelectContent side="top">
@@ -56,7 +58,7 @@ export function TaskTablePagination<TData>({
 			<div className="flex items-center justify-center space-x-2">
 				<Button
 					variant="outline"
-					size="icon"
+					size="icon-sm"
 					onClick={() => table.setPageIndex(0)}
 					disabled={!table.getCanPreviousPage()}
 				>
@@ -64,18 +66,21 @@ export function TaskTablePagination<TData>({
 				</Button>
 				<Button
 					variant="outline"
-					size="icon"
+					size="icon-sm"
 					onClick={() => table.previousPage()}
 					disabled={!table.getCanPreviousPage()}
 				>
 					<ChevronLeftIcon />
 				</Button>
-				<div className="flex w-28 items-center justify-center font-medium text-sm">
+				<div className="hidden w-28 flex-1 items-center justify-center font-medium text-sm md:flex">
 					{`${t('common.page')} ${currentPage}${t('common.of')}${pageCount}`}
+				</div>
+				<div className="flex w-16 flex-1 items-center justify-center font-medium text-sm md:hidden">
+					{`${currentPage}${t('common.of')}${pageCount}`}
 				</div>
 				<Button
 					variant="outline"
-					size="icon"
+					size="icon-sm"
 					onClick={() => table.nextPage()}
 					disabled={!table.getCanNextPage()}
 				>
@@ -83,7 +88,7 @@ export function TaskTablePagination<TData>({
 				</Button>
 				<Button
 					variant="outline"
-					size="icon"
+					size="icon-sm"
 					onClick={() => table.setPageIndex(table.getPageCount() - 1)}
 					disabled={!table.getCanNextPage()}
 				>

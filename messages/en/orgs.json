@@ -1,5 +1,6 @@
 {
 	"orgs": {
+		"all": "All organizations",
 		"descr_placeholder": "Add description of your organization",
 		"failed_load_many": "Failed to load organizations",
 		"failed_load_one": "Failed to load organization",

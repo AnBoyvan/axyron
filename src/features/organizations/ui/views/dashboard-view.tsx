@@ -6,14 +6,17 @@ import { CustomErrorBoundary } from '@/components/shared/custom-error-boundary';
 import { ViewWrapper } from '@/components/shared/view-wrapper';
 
 import {
+	DashboardUserTasksSection,
+	DashboardUserTasksSectionSkeleton,
+} from '../sections/dashboard-user-tasks-section';
+import {
 	OrgInfoSection,
 	OrgInfoSectionSkeleton,
 } from '../sections/org-info-section';
 import {
-	UserTasksSection,
-	UserTasksSectionSkeleton,
-} from '../sections/user-tasks-section';
-import { TodayMeetingsSection } from '../sections/today-meetings-section';
+	TodayMeetingsSection,
+	TodayMeetingsSectionSkeleton,
+} from '../sections/today-meetings-section';
 
 interface DashboardViewProps {
 	orgId: string;
@@ -29,12 +32,12 @@ export const DashboardView = ({ orgId }: DashboardViewProps) => {
 			</CustomErrorBoundary>
 			<div className="mt-4 grid grid-cols-1 gap-4 lg:mt-8 lg:grid-cols-3 lg:gap-8">
 				<CustomErrorBoundary>
-					<Suspense fallback={<UserTasksSectionSkeleton />}>
-						<UserTasksSection orgId={orgId} />
+					<Suspense fallback={<DashboardUserTasksSectionSkeleton />}>
+						<DashboardUserTasksSection orgId={orgId} />
 					</Suspense>
 				</CustomErrorBoundary>
 				<CustomErrorBoundary>
-					<Suspense fallback={<div />}>
+					<Suspense fallback={<TodayMeetingsSectionSkeleton />}>
 						<TodayMeetingsSection orgId={orgId} />
 					</Suspense>
 				</CustomErrorBoundary>

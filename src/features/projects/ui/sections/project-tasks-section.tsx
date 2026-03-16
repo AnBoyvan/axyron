@@ -10,6 +10,7 @@ import {
 } from '@/features/tasks/constants';
 import { useTasksByProject } from '@/features/tasks/hooks/use-tasks-by-projects';
 import { useTasksFilters } from '@/features/tasks/hooks/use-tasks-filter';
+import { MobileTasksFilter } from '@/features/tasks/ui/components/mobile-tasks-filter';
 import { TaskPreview } from '@/features/tasks/ui/components/task-preview';
 import {
 	TasksFilter,
@@ -31,7 +32,7 @@ export const ProjectTasksSection = ({
 }: ProjectTasksSectionProps) => {
 	const t = useTranslations();
 	const locale = useLocale();
-	const [filters] = useTasksFilters();
+	const { filters } = useTasksFilters();
 
 	const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
 
@@ -66,10 +67,19 @@ export const ProjectTasksSection = ({
 					visibility={project.visibility}
 					tab="tasks"
 				/>
-				<TasksFilter
-					projectId={projectId}
-					canCreate={permissions.canCreateTask}
-				/>
+				<div className="lg:hidden">
+					<MobileTasksFilter
+						projectId={projectId}
+						canCreate={permissions.canCreateTask}
+					/>
+				</div>
+				<div className="hidden lg:block">
+					<TasksFilter
+						projectId={projectId}
+						canCreate={permissions.canCreateTask}
+					/>
+				</div>
+
 				<DataTable
 					data={filteredTasks}
 					columns={columns}

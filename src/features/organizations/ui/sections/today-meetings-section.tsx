@@ -29,7 +29,7 @@ export const TodayMeetingsSection = ({ orgId }: TodayMeetingsSectionProps) => {
 			<CardHeader className="flex items-center justify-between">
 				<CardTitle className="text-lg">{t('meetings.today')}</CardTitle>
 			</CardHeader>
-			<CardContent className="lg:px-2">
+			<CardContent>
 				{data.length > 0 ? (
 					<div className="flex flex-col gap-4">
 						{data?.map(meeting => (
@@ -52,7 +52,7 @@ export const TodayMeetingsSectionSkeleton = () => {
 			<CardHeader className="flex items-center justify-between">
 				<Skeleton className="h-5 w-40" />
 			</CardHeader>
-			<CardContent className="lg:px-2">
+			<CardContent>
 				<div className="flex flex-col gap-4">
 					{Array.from({ length: 3 }).map((_, idx) => (
 						<MeetingCardSkeleton key={idx} />

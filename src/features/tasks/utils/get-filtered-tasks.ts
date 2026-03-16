@@ -7,9 +7,25 @@ interface GetFilteredTasksProps {
 }
 
 export const getFilteredTasks = ({ tasks, filters }: GetFilteredTasksProps) => {
-	const { search, status, priority, dueDateTo, assignee } = filters;
+	const {
+		search,
+		status,
+		priority,
+		dueDateTo,
+		assignee,
+		project,
+		organization,
+	} = filters;
 
 	let filtered = tasks;
+
+	if (project) {
+		filtered = filtered.filter(task => task.projectId === project);
+	}
+
+	if (organization) {
+		filtered = filtered.filter(task => task.organizationId === organization);
+	}
 
 	if (search) {
 		filtered = filtered.filter(task =>

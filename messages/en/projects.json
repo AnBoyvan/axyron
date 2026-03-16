@@ -1,5 +1,6 @@
 {
 	"projects": {
+		"all": "All projects",
 		"archive": "Archive Project",
 		"archived": "Archived",
 		"archive_confirm": "This action will make it inactive and remove it from active lists.",

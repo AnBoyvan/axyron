@@ -40,7 +40,7 @@ export const TasksAssigneeFilter = ({
 					<SelectValue placeholder={t('members.all')} />
 				</div>
 			</SelectTrigger>
-			<SelectContent align="center" position="popper">
+			<SelectContent align="center" position="popper" className="max-w-52">
 				{data ? (
 					<>
 						<SelectItem key="all" value="all">
@@ -48,12 +48,8 @@ export const TasksAssigneeFilter = ({
 						</SelectItem>
 						<SelectSeparator />
 						{data.map(member => (
-							<SelectItem
-								key={member.userId}
-								value={member.userId}
-								className="max-w-full truncate"
-							>
-								{member.name}
+							<SelectItem key={member.userId} value={member.userId}>
+								<span className="line-clamp-1">{member.name}</span>
 							</SelectItem>
 						))}
 					</>
