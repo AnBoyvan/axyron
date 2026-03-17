@@ -1,19 +1,14 @@
-import { useMeetingsByOrg } from '@/features/meetings/hooks/use-meetings-by-org';
+import { useMeetingsByUser } from '@/features/meetings/hooks/use-meetings-by-user';
 import { useMeetingsFilters } from '@/features/meetings/hooks/use-meetings-filter';
 import {
 	MeetingCard,
 	MeetingCardSkeleton,
 } from '@/features/meetings/ui/components/meeting-card';
 
-interface MeetingsSectionProps {
-	orgId: string;
-}
-
-export const MeetingsSection = ({ orgId }: MeetingsSectionProps) => {
+export const MeetingsSection = () => {
 	const [filters] = useMeetingsFilters();
 
-	const { data } = useMeetingsByOrg({
-		orgId,
+	const { data } = useMeetingsByUser({
 		dateFrom: filters.dateFrom,
 		dateTo: filters.dateTo,
 	});
@@ -21,7 +16,7 @@ export const MeetingsSection = ({ orgId }: MeetingsSectionProps) => {
 	return (
 		<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
 			{data?.map(meeting => (
-				<MeetingCard key={meeting.id} meeting={meeting} />
+				<MeetingCard key={meeting.id} meeting={meeting} showOrganization />
 			))}
 		</div>
 	);
@@ -31,7 +26,7 @@ export const MeetingsSectionSkeleton = () => {
 	return (
 		<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
 			{Array.from({ length: 6 }).map((_, idx) => (
-				<MeetingCardSkeleton key={idx} />
+				<MeetingCardSkeleton showOrganization key={idx} />
 			))}
 		</div>
 	);
