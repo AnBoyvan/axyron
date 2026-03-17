@@ -2,6 +2,7 @@ import { and, eq, getTableColumns, isNotNull, lt, or, sql } from 'drizzle-orm';
 import { alias } from 'drizzle-orm/pg-core';
 
 import { db } from '@/db';
+import { organizations } from '@/db/schema/organizations';
 import { projectMembers } from '@/db/schema/project-members';
 import { projects } from '@/db/schema/projects';
 import { tasks } from '@/db/schema/tasks';
@@ -13,7 +14,7 @@ const pm = alias(projectMembers, 'pm');
 const u = alias(user, 'u');
 
 interface BuildProjectsQueryParams {
-	organizationId: string;
+	organizationId?: string;
 	userId: string;
 	isAdmin: boolean;
 	archived: boolean;
@@ -28,6 +29,9 @@ export const buildProjectsQuery = async ({
 	const rows = await db
 		.select({
 			...getTableColumns(projects),
+			organization: {
+				...getTableColumns(organizations),
+			},
 			userAsMember: {
 				userId: projectMembers.userId,
 				projectId: projectMembers.projectId,
@@ -95,11 +99,14 @@ export const buildProjectsQuery = async ({
 				eq(projectMembers.userId, userId),
 			),
 		)
+		.innerJoin(organizations, eq(organizations.id, projects.organizationId))
 		.leftJoin(pm, eq(pm.projectId, projects.id))
 		.leftJoin(u, eq(u.id, pm.userId))
 		.where(
 			and(
-				eq(projects.organizationId, organizationId),
+				organizationId
+					? eq(projects.organizationId, organizationId)
+					: undefined,
 				eq(projects.archived, archived),
 				isAdmin
 					? undefined
@@ -111,6 +118,7 @@ export const buildProjectsQuery = async ({
 		)
 		.groupBy(
 			projects.id,
+			organizations.id,
 			projectMembers.userId,
 			projectMembers.projectId,
 			projectMembers.role,

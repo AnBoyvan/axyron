@@ -12,6 +12,9 @@ export type ProjectMemberDTO = {
 	phone?: string | null;
 };
 
+export type ProjectsByOrg =
+	inferRouterOutputs<AppRouter>['projects']['getByUser'][number];
+
 export type ProjectById = inferRouterOutputs<AppRouter>['projects']['getById'];
 
 export type ProjectPermissions =

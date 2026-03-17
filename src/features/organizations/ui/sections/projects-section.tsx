@@ -36,7 +36,7 @@ export const ProjectsSection = ({ orgId }: ProjectsProps) => {
 				}
 				return item;
 			}),
-		[data],
+		[data, search],
 	);
 
 	return (

@@ -26,7 +26,7 @@ export const UserNav = () => {
 					<SidebarMenuButton
 						asChild
 						tooltip={item.label}
-						isActive={item.link === pathname}
+						isActive={`/user${item.link}` === pathname}
 					>
 						<Link href={`/user${item.link}`}>
 							<item.icon />

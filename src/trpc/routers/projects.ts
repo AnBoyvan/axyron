@@ -4,6 +4,7 @@ import { getAnalytics } from '@/features/projects/procedures/get-analytics';
 import { getArchived } from '@/features/projects/procedures/get-archived';
 import { getById } from '@/features/projects/procedures/get-by-id';
 import { getByOrganization } from '@/features/projects/procedures/get-by-organization';
+import { getByUser } from '@/features/projects/procedures/get-by-user';
 import { getMembers } from '@/features/projects/procedures/get-members';
 import { remove } from '@/features/projects/procedures/remove';
 import { removeMember } from '@/features/projects/procedures/remove-member';
@@ -16,6 +17,7 @@ export const projectsRouter = createTRPCRouter({
 	create,
 	getById,
 	getByOrganization,
+	getByUser,
 	getArchived,
 	update,
 	remove,
