@@ -23,6 +23,7 @@ export const ProjectsSection = () => {
 
 	return (
 		<div className="flex flex-1 flex-col gap-4 lg:gap-8">
+			<h1 className="text-xl">{t('users.my_projects')}</h1>
 			<div className="flex justify-between">
 				<SearchFilter
 					value={search}
@@ -51,6 +52,9 @@ export const ProjectsSection = () => {
 export const ProjectsSectionSkeleton = () => {
 	return (
 		<div className="flex flex-1 flex-col gap-4 lg:gap-8">
+			<div className="flex h-7 items-center">
+				<Skeleton className="h-5 w-24" />
+			</div>
 			<SearchFilterSkeleton />
 			<div className="flex flex-col gap-4">
 				<div className="flex items-center gap-2">

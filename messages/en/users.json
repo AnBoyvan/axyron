@@ -2,6 +2,8 @@
 	"users": {
 		"deleted": "Deleted User",
 		"my_dashboard": "My dashboard",
+		"my_meetings": "My meetings",
+		"my_projects": "My projects",
 		"my_tasks": "My tasks",
 		"name": "Name",
 		"name_placeholder": "John Doe",
