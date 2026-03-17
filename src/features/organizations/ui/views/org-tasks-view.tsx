@@ -5,7 +5,10 @@ import { Suspense } from 'react';
 import { CustomErrorBoundary } from '@/components/shared/custom-error-boundary';
 import { ViewWrapper } from '@/components/shared/view-wrapper';
 
-import { UserTasksSection } from '../sections/user-tasks-section';
+import {
+	UserTasksSection,
+	UserTasksSectionSkeleton,
+} from '../sections/user-tasks-section';
 
 interface OrgTasksViewProps {
 	orgId: string;
@@ -15,7 +18,7 @@ export const OrgTasksView = ({ orgId }: OrgTasksViewProps) => {
 	return (
 		<ViewWrapper>
 			<CustomErrorBoundary>
-				<Suspense fallback={<div />}>
+				<Suspense fallback={<UserTasksSectionSkeleton />}>
 					<UserTasksSection orgId={orgId} />
 				</Suspense>
 			</CustomErrorBoundary>

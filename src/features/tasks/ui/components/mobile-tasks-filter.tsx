@@ -3,7 +3,10 @@ import { useState } from 'react';
 import { FilterIcon, FilterXIcon, PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import { SearchFilter } from '@/components/shared/search-filter';
+import {
+	SearchFilter,
+	SearchFilterSkeleton,
+} from '@/components/shared/search-filter';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
@@ -26,11 +29,11 @@ import { TasksAssigneeFilter } from './tasks-assignee-filter';
 import { TasksDueDateFilter } from './tasks-due-date-filter';
 import { TasksPriorityFilter } from './tasks-priority-filter';
 import { TasksStatusFilter } from './tasks-status-filter';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface MobileTasksFilterProps {
 	projectId?: string;
 	canCreate?: boolean;
-	className?: string;
 	showVariant?: boolean;
 	showProjects?: boolean;
 	showOrgs?: boolean;
@@ -41,7 +44,6 @@ interface MobileTasksFilterProps {
 export const MobileTasksFilter = ({
 	projectId,
 	canCreate = false,
-	className,
 	showVariant = false,
 	showProjects,
 	showOrgs,
@@ -110,7 +112,7 @@ export const MobileTasksFilter = ({
 							open={newOpen}
 							onOpenChange={setNewOpen}
 						/>
-						<Button onClick={() => setOpen(true)}>
+						<Button onClick={() => setNewOpen(true)}>
 							<PlusIcon />
 							{t('tasks.new')}
 						</Button>
@@ -206,6 +208,15 @@ export const MobileTasksFilter = ({
 					</SheetContent>
 				</Sheet>
 			</div>
+		</div>
+	);
+};
+
+export const MobileTasksFilterSkeleton = () => {
+	return (
+		<div className="flex flex-col gap-4 md:flex-row md:justify-between">
+			<SearchFilterSkeleton />
+			<Skeleton className="" />
 		</div>
 	);
 };

@@ -133,14 +133,27 @@ export const TasksFilter = ({
 	);
 };
 
-export const TasksFilterSkeleton = () => {
+export const TasksFilterSkeleton = ({
+	showProjects,
+	showOrgs,
+}: {
+	showProjects?: boolean;
+	showOrgs?: boolean;
+}) => {
 	return (
 		<div className="flex flex-col gap-4">
 			<SearchFilterSkeleton />
-			<div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-				{Array.from({ length: 4 }).map((_, idx) => (
-					<Skeleton key={idx} className="h-9 w-full" />
-				))}
+			<div
+				className={cn(
+					'grid grid-cols-4 gap-4',
+					showProjects && showOrgs && 'grid-cols-5',
+				)}
+			>
+				{Array.from({ length: showProjects && showOrgs ? 5 : 4 }).map(
+					(_, idx) => (
+						<Skeleton key={idx} className="h-9 w-full" />
+					),
+				)}
 			</div>
 		</div>
 	);
