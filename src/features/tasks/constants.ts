@@ -4,6 +4,8 @@ export const DEFAULT_TASKS_TABLE_PAGE_SIZE = 25;
 
 export const ORG_DASHBOARD_TASKS_LIMIT = 5;
 
+export const USER_DASHBOARD_TASKS_LIMIT = 5;
+
 export const TASK_STATUS_KEYS = [
 	'overdue',
 	'completed',

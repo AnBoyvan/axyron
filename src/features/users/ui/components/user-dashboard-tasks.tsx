@@ -6,24 +6,22 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ORG_DASHBOARD_TASKS_LIMIT } from '@/features/tasks/constants';
+import { USER_DASHBOARD_TASKS_LIMIT } from '@/features/tasks/constants';
 import type { Task } from '@/features/tasks/types';
 import {
 	DashboardTaskCard,
 	DashboardTaskCardSkeleton,
 } from '@/features/tasks/ui/components/dashboard-task-card';
 
-interface DashboardTasksProps {
+interface UserDashboardTasksProps {
 	tasks: Task[];
 	variant: 'assigned' | 'created';
-	orgId: string;
 }
 
-export const DashboardTasks = ({
+export const UserDashboardTasks = ({
 	tasks,
 	variant,
-	orgId,
-}: DashboardTasksProps) => {
+}: UserDashboardTasksProps) => {
 	const t = useTranslations();
 
 	return (
@@ -37,7 +35,7 @@ export const DashboardTasks = ({
 					)}
 				</CardTitle>
 				<Button size="sm" variant="ghost" asChild>
-					<Link href={`/org/${orgId}/tasks?variant=${variant}`}>
+					<Link href={`/user/tasks?variant=${variant}`}>
 						{t('actions.view_all')}
 						<ArrowRightIcon />
 					</Link>
@@ -49,6 +47,7 @@ export const DashboardTasks = ({
 						{tasks.map((task, idx) => (
 							<DashboardTaskCard
 								key={task.id}
+								showOrg
 								task={task}
 								isFirst={idx === 0}
 							/>
@@ -68,7 +67,7 @@ export const DashboardTasks = ({
 	);
 };
 
-export const DashboardTasksSkeleton = () => {
+export const UserDashboardTasksSkeleton = () => {
 	return (
 		<Card className="gap-2">
 			<CardHeader className="flex items-center justify-between">
@@ -77,7 +76,7 @@ export const DashboardTasksSkeleton = () => {
 			</CardHeader>
 			<CardContent>
 				<div className="flex flex-col">
-					{Array.from({ length: ORG_DASHBOARD_TASKS_LIMIT }).map((_, idx) => (
+					{Array.from({ length: USER_DASHBOARD_TASKS_LIMIT }).map((_, idx) => (
 						<DashboardTaskCardSkeleton key={idx} isFirst={idx === 0} />
 					))}
 				</div>

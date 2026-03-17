@@ -12,6 +12,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { OrgAvatar } from '@/features/organizations/ui/components/org-avatar';
 import { taskPriority } from '@/features/tasks/configs/task-priority-options';
 import { taskStatuses } from '@/features/tasks/configs/task-status-options';
 import type { Task } from '@/features/tasks/types';
@@ -21,11 +22,13 @@ import { fnsLocale } from '@/i18n/config';
 import { cn } from '@/lib/utils/cn';
 
 interface DashboardTaskCardProps {
+	showOrg?: boolean;
 	task: Task;
 	isFirst?: boolean;
 }
 
 export const DashboardTaskCard = ({
+	showOrg,
 	task,
 	isFirst,
 }: DashboardTaskCardProps) => {
@@ -70,6 +73,21 @@ export const DashboardTaskCard = ({
 							{t(priority.label)}
 						</Badge>
 					</div>
+					{showOrg && (
+						<Link
+							href={`org/${task.organizationId}/dashboard`}
+							className="flex w-fit cursor-pointer items-center gap-1 text-muted-foreground transition-colors hover:text-accent-foreground"
+						>
+							<OrgAvatar
+								size="xs"
+								imageUrl={task.organization.image}
+								name={task.organization.name}
+							/>
+							<span className="line-clamp-1 text-sm">
+								{task.organization.name}
+							</span>
+						</Link>
+					)}
 					<div className="flex items-center">
 						<Link
 							href={`org/${task.organizationId}/projects/${task.projectId}`}
@@ -93,10 +111,12 @@ export const DashboardTaskCard = ({
 
 interface DashboardTaskCardSkeletonProps {
 	isFirst?: boolean;
+	showOrg?: boolean;
 }
 
 export const DashboardTaskCardSkeleton = ({
 	isFirst,
+	showOrg,
 }: DashboardTaskCardSkeletonProps) => {
 	return (
 		<div className={cn('flex items-center gap-4 py-3', !isFirst && 'border-t')}>
@@ -106,6 +126,7 @@ export const DashboardTaskCardSkeleton = ({
 					<Skeleton className="h-4 w-48" />
 					<Skeleton className="h-5 w-16 rounded-full" />
 				</div>
+				{showOrg && <Skeleton className="h-3.5 w-24" />}
 				<div className="flex items-center gap-1">
 					<Skeleton className="h-3.5 w-24" />
 					<DotIcon className="size-4 shrink-0 text-muted-foreground" />
