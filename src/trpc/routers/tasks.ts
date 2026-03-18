@@ -4,6 +4,7 @@ import { create } from '@/features/tasks/procedures/create';
 import { getById } from '@/features/tasks/procedures/get-by-id';
 import { getByProject } from '@/features/tasks/procedures/get-by-project';
 import { getByUser } from '@/features/tasks/procedures/get-by-user';
+import { getForCalendar } from '@/features/tasks/procedures/get-for-calendar';
 import { remove } from '@/features/tasks/procedures/remove';
 import { removeAssignee } from '@/features/tasks/procedures/remove-assignee';
 import { removeSubtask } from '@/features/tasks/procedures/remove-subtask';
@@ -21,6 +22,7 @@ export const tasksRouter = createTRPCRouter({
 	getById,
 	getByProject,
 	getByUser,
+	getForCalendar,
 	addSubtask,
 	updateSubtask,
 	subtaskCompletedToggle,

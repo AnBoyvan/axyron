@@ -1,7 +1,7 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { Developing } from '@/components/shared/developing';
+import { CalendarView } from '@/features/organizations/ui/views/calendar-view';
 import { auth } from '@/lib/auth/auth';
 
 interface PageProps {
@@ -19,7 +19,7 @@ const Page = async ({ params }: PageProps) => {
 
 	const { orgId } = await params;
 
-	return <Developing />;
+	return <CalendarView orgId={orgId} />;
 };
 
 export default Page;

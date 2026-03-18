@@ -1,0 +1,70 @@
+/* calendar-reset.css */
+
+.rbc-reset .rbc-month-view {
+	border: none;
+	background: transparent;
+}
+
+.rbc-reset .rbc-header {
+	@apply border-b border-border p-0 font-normal;
+}
+
+.rbc-reset .rbc-header + .rbc-header {
+	@apply border-l border-border;
+}
+
+.rbc-reset .rbc-month-row {
+	@apply border-t border-border;
+}
+
+.rbc-reset .rbc-month-row + .rbc-month-row {
+	@apply border-t border-border;
+}
+
+.rbc-reset .rbc-day-bg + .rbc-day-bg {
+	@apply border-l border-border;
+}
+
+.rbc-reset .rbc-off-range-bg {
+	@apply bg-muted/30;
+}
+
+.rbc-reset .rbc-today {
+	@apply bg-primary/5;
+}
+
+.rbc-reset .rbc-event {
+	@apply rounded p-0;
+}
+
+.rbc-reset .rbc-event:focus {
+	@apply outline-none ring-2 ring-primary ring-offset-1;
+}
+
+.rbc-reset .rbc-event-content {
+	@apply overflow-hidden;
+}
+
+.rbc-reset .rbc-row-segment {
+	@apply pb-0.5 px-0.5;
+}
+
+.rbc-reset .rbc-show-more {
+	@apply bg-transparent text-primary text-xs font-medium px-1.5 hover:underline hover:bg-transparent;
+}
+
+.rbc-reset .rbc-overlay {
+	@apply z-50 rounded-lg border border-border bg-popover p-2 shadow-lg;
+}
+
+.rbc-reset .rbc-overlay-header {
+	@apply mb-1 border-b border-border pb-1 text-xs text-muted-foreground;
+}
+
+.rbc-reset .rbc-row-content {
+	@apply z-auto;
+}
+
+.rbc-reset .rbc-date-cell {
+	@apply p-0 text-right;
+}

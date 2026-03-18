@@ -1,7 +1,7 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { Developing } from '@/components/shared/developing';
+import { CalendarView } from '@/features/users/ui/views/calendar-view';
 import { auth } from '@/lib/auth/auth';
 
 const Page = async () => {
@@ -13,7 +13,7 @@ const Page = async () => {
 		redirect('/sign-in');
 	}
 
-	return <Developing />;
+	return <CalendarView />;
 };
 
 export default Page;
