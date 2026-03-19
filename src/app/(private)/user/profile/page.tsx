@@ -1,8 +1,9 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { Developing } from '@/components/shared/developing';
+import { ProfileView } from '@/features/users/ui/views/profile-view';
 import { auth } from '@/lib/auth/auth';
+import { HydrateClient, prefetch, trpc } from '@/trpc/server';
 
 const Page = async () => {
 	const session = await auth.api.getSession({
@@ -13,7 +14,13 @@ const Page = async () => {
 		redirect('/sign-in');
 	}
 
-	return <Developing />;
+	prefetch(trpc.user.getProfile.queryOptions());
+
+	return (
+		<HydrateClient>
+			<ProfileView />
+		</HydrateClient>
+	);
 };
 
 export default Page;

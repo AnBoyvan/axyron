@@ -1,11 +1,18 @@
 import { eq } from 'drizzle-orm';
 
 import { db } from '@/db';
+import { account } from '@/db/schema/account';
 import { user } from '@/db/schema/user';
 import { protectedProcedure } from '@/trpc/init';
 
 export const getProfile = protectedProcedure.query(async ({ ctx }) => {
 	const userId = ctx.auth.user.id;
+
+	const [passwordAccount] = await db
+		.select()
+		.from(account)
+		.where(eq(account.userId, userId))
+		.limit(1);
 
 	const [profile] = await db
 		.select({
@@ -22,5 +29,8 @@ export const getProfile = protectedProcedure.query(async ({ ctx }) => {
 		.where(eq(user.id, userId))
 		.limit(1);
 
-	return profile;
+	return {
+		...profile,
+		hasPassword: passwordAccount?.providerId === 'credential',
+	};
 });

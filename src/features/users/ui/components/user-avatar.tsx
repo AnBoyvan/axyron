@@ -82,7 +82,7 @@ export const UserAvatar = ({
 			onClick={onClick}
 		>
 			<AvatarImage
-				src={imageUrl ?? ''}
+				src={imageUrl ?? undefined}
 				alt={name}
 				className={cn(avatarVariants({ form, size }))}
 			/>
