@@ -28,7 +28,7 @@ export const DashboardTasks = ({
 
 	return (
 		<Card className="gap-2">
-			<CardHeader className="flex items-center justify-between">
+			<CardHeader className="flex flex-col items-center justify-between gap-4 md:flex-row">
 				<CardTitle className="text-lg">
 					{t(
 						variant === 'assigned'

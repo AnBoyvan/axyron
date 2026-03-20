@@ -22,7 +22,7 @@ export const TaskPreviewDates = ({
 	const dateLocale = fnsLocale[locale];
 
 	return (
-		<div className="flex gap-6">
+		<div className="flex flex-col gap-4">
 			{startDate && (
 				<div className="flex flex-col gap-0.5">
 					<div className="flex items-center gap-1.5 text-muted-foreground">

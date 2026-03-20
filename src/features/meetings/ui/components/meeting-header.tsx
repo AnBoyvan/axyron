@@ -1,11 +1,6 @@
 import Link from 'next/link';
 
-import {
-	ArrowLeftIcon,
-	CheckIcon,
-	CircleQuestionMarkIcon,
-	XIcon,
-} from 'lucide-react';
+import { ArrowLeftIcon, CheckIcon, XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
@@ -45,7 +40,7 @@ export const MeetingHeader = ({ meeting }: MeetingHeaderProps) => {
 				</Link>
 			</Button>
 			{userAsMember && (
-				<div className="mx-auto grid grid-cols-3 gap-2 md:gap-4">
+				<div className="mx-auto grid grid-cols-2 gap-4">
 					<Button
 						size={isMobile ? 'xs' : 'sm'}
 						variant="success"
@@ -54,15 +49,6 @@ export const MeetingHeader = ({ meeting }: MeetingHeaderProps) => {
 					>
 						<CheckIcon />
 						{t('actions.accept')}
-					</Button>
-					<Button
-						size={isMobile ? 'xs' : 'sm'}
-						variant="outline"
-						onClick={() => onStatusChange('pending')}
-						className="w-full"
-					>
-						<CircleQuestionMarkIcon />
-						{t('common.tentative')}
 					</Button>
 					<Button
 						size={isMobile ? 'xs' : 'sm'}

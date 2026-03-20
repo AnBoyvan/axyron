@@ -53,12 +53,16 @@
 	@apply bg-transparent text-primary text-xs font-medium px-1.5 hover:underline hover:bg-transparent;
 }
 
-.rbc-reset .rbc-overlay {
-	@apply z-50 rounded-lg border border-border bg-popover p-2 shadow-lg;
+.rbc-overlay {
+	@apply z-50 !rounded-lg !border !border-border !bg-popover !p-2 !shadow-lg !min-w-48;
 }
 
-.rbc-reset .rbc-overlay-header {
-	@apply mb-1 border-b border-border pb-1 text-xs text-muted-foreground;
+.rbc-overlay-header {
+	@apply !mb-2 !border-b !border-border !pb-2 !text-xs !font-medium !text-muted-foreground;
+}
+
+.rbc-overlay > .rbc-event {
+	@apply !mb-1;
 }
 
 .rbc-reset .rbc-row-content {

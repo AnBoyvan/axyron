@@ -4,7 +4,6 @@ import { format } from 'date-fns';
 import {
 	CalendarClockIcon,
 	CheckIcon,
-	CircleQuestionMarkIcon,
 	ClockIcon,
 	ExternalLinkIcon,
 	LinkIcon,
@@ -70,7 +69,7 @@ export const MeetingPreview = ({
 				<Separator />
 				{userAsMember && (
 					<>
-						<div className="grid grid-cols-3 gap-1 px-6 py-4 lg:gap-2">
+						<div className="grid grid-cols-2 gap-4 px-6 py-4">
 							<Button
 								size="xs"
 								variant="success"
@@ -80,15 +79,7 @@ export const MeetingPreview = ({
 								<CheckIcon />
 								{t('actions.accept')}
 							</Button>
-							<Button
-								size="xs"
-								variant="outline"
-								onClick={() => onStatusChange('pending')}
-								className="w-full"
-							>
-								<CircleQuestionMarkIcon />
-								{t('common.tentative')}
-							</Button>
+
 							<Button
 								size="xs"
 								variant="destructive"
@@ -102,7 +93,7 @@ export const MeetingPreview = ({
 						<Separator />
 					</>
 				)}
-				<div className="flex flex-col gap-2 px-6 py-4">
+				<div className="flex flex-col gap-2 px-6 py-4 text-sm">
 					<p className="text-lg">{meeting.title}</p>
 					<div className="flex items-center text-muted-foreground">
 						<CalendarClockIcon className="mr-2 size-4" />

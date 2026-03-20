@@ -126,6 +126,10 @@ export const Calendar = ({ organizationId }: CalendarProps) => {
 								event: EventComponent,
 							},
 						}}
+						popup
+						messages={{
+							showMore: count => `+${count}`,
+						}}
 					/>
 				</div>
 			</div>
