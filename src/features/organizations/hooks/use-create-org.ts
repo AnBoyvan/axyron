@@ -20,7 +20,7 @@ export const useCreateOrg = () => {
 					queryKey: trpc.organizations.getMany.queryKey(),
 				});
 
-				router.push(`/org/${data.id}`);
+				router.push(`/org/${data.id}/dashboard`);
 			},
 			onError: error => {
 				toast.error(getMessage(error.message, t));

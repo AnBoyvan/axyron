@@ -1,3 +1,23 @@
 {
-	"general": { "hello": "Привіт, Світ" }
+	"general": {
+		"app_name": "Axyron",
+		"in_development": "This page is under development.",
+		"locale": {
+			"current": "en",
+			"uk": "UA",
+			"en": "EN",
+			"label": "Language",
+			"uk_full": "Ukrainian",
+			"en_full": "English",
+			"locale": "enUS"
+		},
+		"theme": {
+			"label": "Theme",
+			"light": "Light",
+			"dark": "Dark",
+			"system": "System"
+		},
+		"privacy": "Privacy Policy",
+		"terms": "Terms of Service"
+	}
 }

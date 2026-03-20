@@ -1,0 +1,30 @@
+{
+	"orgs": {
+		"all": "All organizations",
+		"descr_placeholder": "Add description of your organization",
+		"failed_load_many": "Failed to load organizations",
+		"failed_load_one": "Failed to load organization",
+		"invite_accept": "Accept invitation",
+		"invite_already_member": "You are already a member of this organization. You can access it from your dashboard.",
+		"invite_message": "<b>{inviter}</b> invited you to join the organization <b>{organization}</b>.",
+		"invite_not_found": "This invitation link is no longer valid. Please request a new invitation.",
+		"invite_success": "You have successfully joined the organization.",
+		"members": "Organization members",
+		"name_placeholder": "Enter a name of your organization",
+		"name_required": "Organization name is required",
+		"new_org": "New organization",
+		"new_org_descr": "Create a new organization",
+		"not_found": "Organization not found",
+		"remove_member_alert": "Removing members will revoke their access to the organization and remove them from all projects and tasks.",
+		"reset_code": "Reset invite code",
+		"reset_code_success": "Code has been reset. The previous invitation link is no longer valid.",
+		"reset_code_warning": "Resetting the invitation code will invalidate all previously generated invitation links.",
+		"rules": {
+			"canInvite": "Invite new members",
+			"canCreateProject": "Create projects",
+			"canCreateMeeting": "Schedule meetings"
+		},
+		"rules_description": "Allowed to all organization members",
+		"updated": "Organization updated"
+	}
+}

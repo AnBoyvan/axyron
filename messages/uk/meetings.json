@@ -1,0 +1,27 @@
+{
+	"meetings": {
+		"already_accepted": "Already accepted",
+		"already_rejected": "Already rejected",
+		"description_placeholder": "Add meeting details...",
+		"details": "Meeting Details",
+		"invite_not_found": "Invite not found",
+		"link_placeholder": "Paste meeting link",
+		"member_status": {
+			"pending": "Pending",
+			"accepted": "Accepted",
+			"rejected": "Rejected"
+		},
+		"members_add_title": "Add members",
+		"members_add_description": "Choose members to add to this meeting.",
+		"new_title": "Schedule a new meeting",
+		"new_description": "Add the details below to achedule a meeting.",
+		"no_today": "No meetings scheduled for today.",
+		"not_found": "Meeting not found",
+		"not_member": "Access denied. You are not member of this meeting",
+		"schedule": "Schedule meeting",
+		"scheduled": "New meeting scheduled",
+		"title_placeholder": "Enter meeting title",
+		"today": "Today's meetings",
+		"updated": "Meeting updated"
+	}
+}

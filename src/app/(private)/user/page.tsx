@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { ORG_DASHBOARD_TASKS_LIMIT } from '@/features/tasks/constants';
 import { DashboardView } from '@/features/users/ui/views/dashboard-view';
 import { auth } from '@/lib/auth/auth';
+import { getCurrentDayRange } from '@/lib/utils/get-current-day-range';
 import { HydrateClient, prefetch, trpc } from '@/trpc/server';
 
 const Page = async () => {
@@ -14,6 +15,15 @@ const Page = async () => {
 	if (!session) {
 		redirect('/sign-in');
 	}
+
+	const { start: dateFrom, end: dateTo } = getCurrentDayRange();
+
+	prefetch(
+		trpc.meetings.getByUser.queryOptions({
+			dateFrom,
+			dateTo,
+		}),
+	);
 
 	prefetch(
 		trpc.tasks.getByUser.queryOptions({

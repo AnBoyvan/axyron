@@ -25,7 +25,12 @@ export const UserSidebar = () => {
 					href="/user"
 					className="flex items-center justify-center gap-2 px-2"
 				>
-					<Image src="/logo.svg" height={24} width={24} alt="SynthMeet" />
+					<Image
+						src="/logo.svg"
+						height={24}
+						width={24}
+						alt={t('general.app_name')}
+					/>
 					<p className="font-goldman font-semibold text-3xl">
 						{t('general.app_name')}
 					</p>

@@ -1,7 +1,7 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { Developing } from '@/components/shared/developing';
+import { HomeView } from '@/features/home/ui/views/home-view';
 import { auth } from '@/lib/auth/auth';
 
 const Page = async () => {
@@ -13,7 +13,7 @@ const Page = async () => {
 		redirect('/user');
 	}
 
-	return <Developing />;
+	return <HomeView />;
 };
 
 export default Page;

@@ -6,6 +6,7 @@ import activities from '@/messages/en/activities.json';
 import auth from '@/messages/en/auth.json';
 import common from '@/messages/en/common.json';
 import general from '@/messages/en/general.json';
+import home from '@/messages/en/home.json';
 import meetings from '@/messages/en/meetings.json';
 import members from '@/messages/en/members.json';
 import orgs from '@/messages/en/orgs.json';
@@ -19,6 +20,7 @@ export const messages = {
 	...auth,
 	...common,
 	...general,
+	...home,
 	...meetings,
 	...members,
 	...orgs,

@@ -1,0 +1,41 @@
+{
+	"home": {
+		"hero_title": "Organize Everything",
+		"hero_description": "Axyron is a task and project manager that helps teams stay focused and ship faster.",
+		"hero_cta": "Get Started for Free",
+		"hero_screenshot_alt": "Axyron Dashboard",
+		"features_title": "Everything your team needs",
+		"features_subtitle": "Powerful tools built for modern teams — from solo freelancers to enterprise organizations.",
+		"cta_label": "Start for Free",
+		"cta_title": "Ready to get organized?",
+		"cta_description": "Join thousands of teams already using Axyron to manage work and ship faster.",
+		"cta_button": "Start for free",
+		"footer_copyright": "© 2025 Axyron. All rights reserved.",
+		"features": {
+			"task_management": {
+				"title": "Task Management",
+				"description": "Create, assign, and prioritize tasks with deadlines, labels, and custom workflows."
+			},
+			"project_tracking": {
+				"title": "Project Tracking",
+				"description": "Track milestones, manage sprints, and visualize project progress from start to finish."
+			},
+			"calendar": {
+				"title": "Calendar View",
+				"description": "Plan your week and month with a unified calendar across all your projects and tasks."
+			},
+			"analytics": {
+				"title": "Analytics & Charts",
+				"description": "Get insights into team velocity, task completion rates, and project health over time."
+			},
+			"meetings": {
+				"title": "Meetings",
+				"description": "Schedule, organize, and manage team meetings with integrated calendars and reminders."
+			},
+			"multilang": {
+				"title": "Multi-language Support",
+				"description": "Work in your preferred language. Axyron supports multiple locales for global teams."
+			}
+		}
+	}
+}

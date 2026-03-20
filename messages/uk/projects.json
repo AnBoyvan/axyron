@@ -1,0 +1,42 @@
+{
+	"projects": {
+		"all": "All projects",
+		"archive": "Archive Project",
+		"archived": "Archived",
+		"archive_confirm": "This action will make it inactive and remove it from active lists.",
+		"archive_description": "Archiving this project will make it inactive and remove it from active lists. All data will be preserved and can be restored at any time.",
+		"description_empty": "No description added yet.",
+		"description_placeholder": "Describe the goal of this project…",
+		"edit_title": "Edit project",
+		"edit_description": "Modify the project details, status and visibility.",
+		"members_add_title": "Add members",
+		"members_add_description": "Choose members to add to this project.",
+		"name_placeholder": "Enter name of new project",
+		"name_required": "Project name is required",
+		"new_title": "New Project",
+		"new_description": "Create a new project to organize work, assign responsibilities, and track progress within your organization.",
+		"no_projects": "No projects yet.",
+		"not_found": "Project not found",
+		"private": "Private",
+		"private_description": "Only project members and organization admins can see this project",
+		"private_tooltip": "Private project",
+		"public": "Public",
+		"public_description": "All organization members can see this project",
+		"public_tooltip": "Public project",
+		"remove": "Remove Project",
+		"remove_confirm": "This action is permanent and cannot be undone.",
+		"remove_description": "Deleting is permanent and cannot be undone. All tasks, members, files, comments, activity logs, and other associated data will be permanently deleted and cannot be recovered.",
+		"remove_member_alert": "Removing members will revoke their access to the project and remove them from all tasks.",
+		"removed": "Project <b>{projectName}</b> removed",
+		"restore_title": "Restore project?",
+		"restore_message": "Project <b>{projectName}</b> will be moved back to active projects.",
+		"search_placeholder": "Enter project name...",
+		"statuses": {
+			"active": "Active",
+			"closed": "Closed",
+			"pending": "Pending"
+		},
+		"updated": "Project updated",
+		"visibility": "Visibility"
+	}
+}

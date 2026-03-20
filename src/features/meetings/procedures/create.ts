@@ -65,16 +65,14 @@ export const create = protectedProcedure
 			.returning();
 
 		await Promise.all(
-			input.memberIds
-				.filter(id => id !== userId)
-				.map(async id => {
-					await db.insert(meetingMembers).values({
-						userId: id,
-						meetingId: createdMeeting.id,
-						organizationId: data.org.id,
-						status: 'pending',
-					});
-				}),
+			input.memberIds.map(async id => {
+				await db.insert(meetingMembers).values({
+					userId: id,
+					meetingId: createdMeeting.id,
+					organizationId: data.org.id,
+					status: 'pending',
+				});
+			}),
 		);
 
 		return createdMeeting;
