@@ -1,3 +1,4 @@
+import { i18n } from '@better-auth/i18n';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 
@@ -6,6 +7,9 @@ import { account } from '@/db/schema/account';
 import { session } from '@/db/schema/session';
 import { user } from '@/db/schema/user';
 import { verification } from '@/db/schema/verification';
+import { LOCALE_COOKIE_NAME } from '@/i18n/config';
+
+import { translations } from './translations';
 
 export const auth = betterAuth({
 	emailAndPassword: {
@@ -26,4 +30,13 @@ export const auth = betterAuth({
 			verification,
 		},
 	}),
+	plugins: [
+		i18n({
+			detection: ['cookie', 'header'],
+			localeCookie: LOCALE_COOKIE_NAME,
+			translations: {
+				uk: translations.uk,
+			},
+		}),
+	],
 });

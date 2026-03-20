@@ -1,21 +1,21 @@
 {
 	"users": {
-		"avatar": "Avatar",
-		"deleted": "Deleted User",
-		"email_cannot_change": "Email address cannot be changed.",
-		"my_dashboard": "My dashboard",
-		"my_meetings": "My meetings",
-		"my_profile": "My profile",
-		"my_projects": "My projects",
-		"my_tasks": "My tasks",
-		"name": "Name",
-		"name_placeholder": "John Doe",
-		"name_required": "Name is required",
-		"password_oauth_hint": "Your account is linked with Google. Password change is not available.",
-		"personal": "Personal",
-		"phone": "Phone number",
-		"phone_placeholder": "+1 555 123 4567",
-		"profile": "Profile",
-		"updated": "Profile updated"
+		"avatar": "Аватар",
+		"deleted": "Видалений користувач",
+		"email_cannot_change": "Адресу електронної пошти не можна змінити.",
+		"my_dashboard": "Мій дашборд",
+		"my_meetings": "Мої зустрічі",
+		"my_profile": "Мій профіль",
+		"my_projects": "Мої проєкти",
+		"my_tasks": "Мої завдання",
+		"name": "Ім'я",
+		"name_placeholder": "Іван Іваненко",
+		"name_required": "Ім'я обов'язкове",
+		"password_oauth_hint": "Ваш обліковий запис пов'язано з Google. Зміна пароля недоступна.",
+		"personal": "Особисте",
+		"phone": "Номер телефону",
+		"phone_placeholder": "+38 050 123 4567",
+		"profile": "Профіль",
+		"updated": "Профіль оновлено"
 	}
 }

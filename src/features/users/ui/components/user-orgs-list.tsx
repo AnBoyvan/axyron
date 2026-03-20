@@ -28,7 +28,7 @@ export const UserOrgsList = () => {
 					className="text-primary"
 				>
 					<PlusIcon />
-					{t('common.new')}
+					{t('orgs.new')}
 				</Button>
 			</SidebarGroupLabel>
 			{data.map(org => (

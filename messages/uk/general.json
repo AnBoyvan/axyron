@@ -1,23 +1,23 @@
 {
 	"general": {
 		"app_name": "Axyron",
-		"in_development": "This page is under development.",
+		"in_development": "Ця сторінка знаходиться в розробці.",
 		"locale": {
-			"current": "en",
+			"current": "uk",
 			"uk": "UA",
 			"en": "EN",
-			"label": "Language",
-			"uk_full": "Ukrainian",
-			"en_full": "English",
-			"locale": "enUS"
+			"label": "Мова",
+			"uk_full": "Українська",
+			"en_full": "Англійська",
+			"locale": "ukUA"
 		},
 		"theme": {
-			"label": "Theme",
-			"light": "Light",
-			"dark": "Dark",
-			"system": "System"
+			"label": "Тема",
+			"light": "Світла",
+			"dark": "Темна",
+			"system": "Системна"
 		},
-		"privacy": "Privacy Policy",
-		"terms": "Terms of Service"
+		"privacy": "Політика конфіденційності",
+		"terms": "Умови використання"
 	}
 }

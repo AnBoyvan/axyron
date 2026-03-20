@@ -1,5 +1,6 @@
 import { BellIcon } from 'lucide-react';
 
+import { LocaleSwitcher } from '@/components/shared/locale-switcher';
 import { ThemeToggle } from '@/components/shared/theme-toggle';
 import { Separator } from '@/components/ui/separator';
 import { SidebarTrigger } from '@/components/ui/sidebar';
@@ -17,6 +18,7 @@ export const UserNavbar = () => {
 					<BellIcon className="size-4 shrink-0" />
 				</div>
 				<ThemeToggle />
+				<LocaleSwitcher />
 				<UserButton />
 			</div>
 		</header>

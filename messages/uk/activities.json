@@ -1,32 +1,32 @@
 {
 	"activities": {
 		"action": {
-			"archived": " archived this project",
-			"assigned": " assigned <b>{entityName}</b>",
-			"created": " created {entityType} <b>{entityName}</b>",
-			"date_due_changed": " changed due date from <b>{from}</b> to <b>{to}</b>",
-			"date_due_removed": " removed due date",
-			"date_due_set": " set due date to {to}",
-			"date_start_changed": " changed start date from <b>{from}</b> to <b>{to}</b>",
-			"date_start_removed": " removed start date",
-			"date_start_set": " set start date to {to}",
-			"deleted": " deleted {entityType} <b>{entityName}</b>",
-			"priority": " changed priority from <fromTag>{from}</fromTag> to <toTag>{to}</toTag>",
-			"restored": " restored this project",
-			"renamed": " renamed {entityType} <b>{from}</b> to <b>{to}</b>",
-			"status_project": " changed status from <fromTag>{from}</fromTag> to <toTag>{to}</toTag>",
-			"status_subtask": " marked subtask as <b>{status}</b>",
-			"status_task": " changed status from <fromTag>{from}</fromTag> to <toTag>{to}</toTag>",
-			"unassigned": " unassigned <b>{entityName}</b>",
-			"visibility": " changed visibility to <b>{to}</b>"
+			"archived": " архівував(ла) цей проєкт",
+			"assigned": " призначив(ла) <b>{entityName}</b>",
+			"created": " створив(ла) {entityType} <b>{entityName}</b>",
+			"date_due_changed": " змінив(ла) дату виконання з <b>{from}</b> на <b>{to}</b>",
+			"date_due_removed": " видалив(ла) дату виконання",
+			"date_due_set": " встановив(ла) дату виконання: {to}",
+			"date_start_changed": " змінив(ла) дату початку з <b>{from}</b> на <b>{to}</b>",
+			"date_start_removed": " видалив(ла) дату початку",
+			"date_start_set": " встановив(ла) дату початку: {to}",
+			"deleted": " видалив(ла) {entityType} <b>{entityName}</b>",
+			"priority": " змінив(ла) пріоритет з <fromTag>{from}</fromTag> на <toTag>{to}</toTag>",
+			"restored": " відновив(ла) цей проєкт",
+			"renamed": " перейменував(ла) {entityType} <b>{from}</b> на <b>{to}</b>",
+			"status_project": " змінив(ла) статус з <fromTag>{from}</fromTag> на <toTag>{to}</toTag>",
+			"status_subtask": " позначив(ла) підзавдання як <b>{status}</b>",
+			"status_task": " змінив(ла) статус з <fromTag>{from}</fromTag> на <toTag>{to}</toTag>",
+			"unassigned": " зняв(ла) призначення <b>{entityName}</b>",
+			"visibility": " змінив(ла) видимість на <b>{to}</b>"
 		},
 		"type": {
-			"user": "user",
-			"project": "project",
-			"task": "task",
-			"subtask": "subtask"
+			"user": "користувача",
+			"project": "проєкт",
+			"task": "завдання",
+			"subtask": "підзавдання"
 		},
-		"none": "none",
-		"empty": "No activity yet"
+		"none": "немає",
+		"empty": "Активності ще немає"
 	}
 }

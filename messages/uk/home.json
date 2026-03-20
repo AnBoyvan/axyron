@@ -1,40 +1,40 @@
 {
 	"home": {
-		"hero_title": "Organize Everything",
-		"hero_description": "Axyron is a task and project manager that helps teams stay focused and ship faster.",
-		"hero_cta": "Get Started for Free",
-		"hero_screenshot_alt": "Axyron Dashboard",
-		"features_title": "Everything your team needs",
-		"features_subtitle": "Powerful tools built for modern teams — from solo freelancers to enterprise organizations.",
-		"cta_label": "Start for Free",
-		"cta_title": "Ready to get organized?",
-		"cta_description": "Join thousands of teams already using Axyron to manage work and ship faster.",
-		"cta_button": "Start for free",
-		"footer_copyright": "© 2025 Axyron. All rights reserved.",
+		"hero_title": "Організуйте все",
+		"hero_description": "Axyron — менеджер завдань і проєктів, який допомагає командам зосередитись і працювати швидше.",
+		"hero_cta": "Почати безкоштовно",
+		"hero_screenshot_alt": "Дашборд Axyron",
+		"features_title": "Все, що потрібно вашій команді",
+		"features_subtitle": "Потужні інструменти для сучасних команд — від фрилансерів-одинаків до корпоративних організацій.",
+		"cta_label": "Почати безкоштовно",
+		"cta_title": "Готові навести лад?",
+		"cta_description": "Приєднуйтесь до тисяч команд, які вже використовують Axyron для управління роботою та прискорення процесів.",
+		"cta_button": "Почати безкоштовно",
+		"footer_copyright": "© 2025 Axyron. Усі права захищені.",
 		"features": {
 			"task_management": {
-				"title": "Task Management",
-				"description": "Create, assign, and prioritize tasks with deadlines, labels, and custom workflows."
+				"title": "Управління завданнями",
+				"description": "Створюйте, призначайте та пріоритезуйте завдання з дедлайнами, мітками та власними робочими процесами."
 			},
 			"project_tracking": {
-				"title": "Project Tracking",
-				"description": "Track milestones, manage sprints, and visualize project progress from start to finish."
+				"title": "Відстеження проєктів",
+				"description": "Відстежуйте етапи, керуйте спринтами та візуалізуйте прогрес проєкту від початку до кінця."
 			},
 			"calendar": {
-				"title": "Calendar View",
-				"description": "Plan your week and month with a unified calendar across all your projects and tasks."
+				"title": "Вигляд календаря",
+				"description": "Плануйте тиждень і місяць за допомогою єдиного календаря для всіх ваших проєктів і завдань."
 			},
 			"analytics": {
-				"title": "Analytics & Charts",
-				"description": "Get insights into team velocity, task completion rates, and project health over time."
+				"title": "Аналітика та графіки",
+				"description": "Отримуйте інформацію про швидкість команди, відсоток виконання завдань і стан проєктів з часом."
 			},
 			"meetings": {
-				"title": "Meetings",
-				"description": "Schedule, organize, and manage team meetings with integrated calendars and reminders."
+				"title": "Зустрічі",
+				"description": "Плануйте, організовуйте та керуйте командними зустрічами з інтегрованими календарями та нагадуваннями."
 			},
 			"multilang": {
-				"title": "Multi-language Support",
-				"description": "Work in your preferred language. Axyron supports multiple locales for global teams."
+				"title": "Підтримка кількох мов",
+				"description": "Працюйте рідною мовою. Axyron підтримує кілька мов для міжнародних команд."
 			}
 		}
 	}
