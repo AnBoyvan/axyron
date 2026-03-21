@@ -1,0 +1,17 @@
+{
+	"billing": {
+		"description": "Manage your organization subscription and billing.",
+		"current_plan": "Current plan",
+		"per_month": "mo",
+		"upgrade": "Upgrade",
+		"downgrade": "Downgrade",
+		"manage": "Manage subscription",
+		"members_limit": "{count} members",
+		"members_limit_unlimited": "Unlimited members",
+		"projects_limit": "{count} projects",
+		"projects_limit_unlimited": "Unlimited projects",
+		"member_limit_reached": "Member limit reached for your current plan. Upgrade to add more members.",
+		"project_limit_reached": "Project limit reached for your current plan. Upgrade to create more projects.",
+		"no_subscription": "No active subscription found."
+	}
+}

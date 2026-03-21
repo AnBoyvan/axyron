@@ -1,5 +1,4 @@
 import { CreditCardIcon } from 'lucide-react';
-import { useTranslations } from 'next-intl';
 
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -15,8 +14,6 @@ interface OrgInfoSectionProps {
 }
 
 export const OrgInfoSection = ({ orgId }: OrgInfoSectionProps) => {
-	const t = useTranslations();
-
 	const { data: org } = useOrgById(orgId);
 	const { data: members } = useOrgMembers(orgId);
 
@@ -29,10 +26,9 @@ export const OrgInfoSection = ({ orgId }: OrgInfoSectionProps) => {
 						<div className="flex w-full justify-between gap-4">
 							<div className="flex flex-col">
 								<h1 className="text-xl">{org.name}</h1>
-								{/* TODO: tier*/}
 								<div className="flex items-center gap-2">
 									<CreditCardIcon className="size-3" />
-									<p className="text-center text-sm">Free</p>
+									<p className="text-center text-sm capitalize">{org.plan}</p>
 								</div>
 							</div>
 							<div className="hidden gap-2 lg:flex">

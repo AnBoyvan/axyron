@@ -4,6 +4,7 @@ import type { Locale } from 'next-intl';
 import actions from '@/messages/en/actions.json';
 import activities from '@/messages/en/activities.json';
 import auth from '@/messages/en/auth.json';
+import billing from '@/messages/en/billing.json';
 import common from '@/messages/en/common.json';
 import general from '@/messages/en/general.json';
 import home from '@/messages/en/home.json';
@@ -18,6 +19,7 @@ export const messages = {
 	...actions,
 	...activities,
 	...auth,
+	...billing,
 	...common,
 	...general,
 	...home,

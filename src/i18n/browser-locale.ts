@@ -16,7 +16,5 @@ export async function getBrowserLocale(): Promise<Locale> {
 
 	const locale = match(languages, locales, defaultLocale) as Locale;
 
-	// return locale; TODO: change after setting all messages
-
-	return 'en';
+	return locale;
 }

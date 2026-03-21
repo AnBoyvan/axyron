@@ -1,10 +1,11 @@
 import { TRPCError } from '@trpc/server';
-import { and, eq, getTableColumns } from 'drizzle-orm';
+import { and, count, eq, getTableColumns } from 'drizzle-orm';
 import z from 'zod';
 
 import { db } from '@/db';
 import { organizationMembers } from '@/db/schema/organization-members';
 import { organizations } from '@/db/schema/organizations';
+import { projects } from '@/db/schema/projects';
 import { protectedProcedure } from '@/trpc/init';
 
 import { getOrgPermissions } from '../utils/get-org-permission';
@@ -36,6 +37,15 @@ export const getById = protectedProcedure
 				message: 'orgs.not_found',
 			});
 		}
+		const [membersResult] = await db
+			.select({ count: count() })
+			.from(organizationMembers)
+			.where(eq(organizationMembers.organizationId, input.id));
+
+		const [projectsResult] = await db
+			.select({ count: count() })
+			.from(projects)
+			.where(eq(projects.organizationId, input.id));
 
 		const permissions = getOrgPermissions({
 			org: row.org,
@@ -47,10 +57,14 @@ export const getById = protectedProcedure
 			name: row.org.name,
 			description: row.org.description,
 			image: row.org.image,
+			plan: row.org.plan,
+			polarSubscriptionId: row.org.polarSubscriptionId,
 			permissions,
 			member: row.member,
 			canInvite: row.org.canInvite,
 			canCreateProject: row.org.canCreateProject,
 			canCreateMeeting: row.org.canCreateMeeting,
+			membersCount: membersResult.count,
+			projectsCount: projectsResult.count,
 		};
 	});

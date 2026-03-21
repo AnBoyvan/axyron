@@ -1,5 +1,6 @@
 import { createTRPCRouter } from '../init';
 import { activitiesRouter } from './activities';
+import { billingRouter } from './billing';
 import { meetingCommentsRouter } from './meeting-comments';
 import { meetingsRouter } from './meetings';
 import { organizationsRouter } from './organizations';
@@ -17,6 +18,7 @@ export const appRouter = createTRPCRouter({
 	activities: activitiesRouter,
 	meetings: meetingsRouter,
 	meetingComments: meetingCommentsRouter,
+	billing: billingRouter,
 });
 
 export type AppRouter = typeof appRouter;

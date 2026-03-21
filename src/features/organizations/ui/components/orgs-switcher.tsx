@@ -51,8 +51,8 @@ export const OrgsSwitcher = ({ org }: OrgsSwitcherProps) => {
 									<OrgAvatar name={org.name} imageUrl={org.image} />
 									<div className="grid flex-1 text-left text-sidebar-foreground text-sm leading-tight">
 										<span className="truncate font-medium">{org.name}</span>
-										<span className="truncate text-muted-foreground text-xs">
-											Free
+										<span className="truncate text-muted-foreground text-xs capitalize">
+											{org.plan}
 										</span>
 									</div>
 									<ChevronsUpDown className="ml-auto" />

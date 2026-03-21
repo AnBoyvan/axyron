@@ -21,6 +21,11 @@ declare global {
 
 			// Polar
 			POLAR_ACCESS_TOKEN: string;
+			POLAR_WEBHOOK_SECRET: string;
+			POLAR_SERVER: 'sandbox' | 'production';
+			POLAR_WEBHOOK_SECRET: string;
+			POLAR_BASIC_PRODUCT_ID: string;
+			POLAR_PRO_PRODUCT_ID: string;
 
 			// R2
 			R2_ACCOUNT_ID: string;

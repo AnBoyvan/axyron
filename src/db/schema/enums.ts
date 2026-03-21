@@ -1,5 +1,11 @@
 import { pgEnum } from 'drizzle-orm/pg-core';
 
+export const organizationPlan = pgEnum('organization_plan', [
+	'free',
+	'basic',
+	'pro',
+]);
+
 export const memberRole = pgEnum('member_role', ['admin', 'member']);
 
 export const visibilityType = pgEnum('visibility_type', ['private', 'public']);

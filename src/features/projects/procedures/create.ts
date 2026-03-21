@@ -8,6 +8,7 @@ import { organizationMembers } from '@/db/schema/organization-members';
 import { organizations } from '@/db/schema/organizations';
 import { projectMembers } from '@/db/schema/project-members';
 import { projects } from '@/db/schema/projects';
+import { checkProjectLimit } from '@/features/billing/utils/check-project-limit';
 import { getOrgPermissions } from '@/features/organizations/utils/get-org-permission';
 import { protectedProcedure } from '@/trpc/init';
 
@@ -46,6 +47,8 @@ export const create = protectedProcedure
 				message: 'common.access_denied',
 			});
 		}
+
+		await checkProjectLimit(organizationId);
 
 		const [createdProject] = await db
 			.insert(projects)

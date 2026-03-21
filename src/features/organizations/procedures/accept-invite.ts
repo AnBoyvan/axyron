@@ -6,6 +6,7 @@ import z from 'zod';
 import { db } from '@/db';
 import { organizationMembers } from '@/db/schema/organization-members';
 import { organizations } from '@/db/schema/organizations';
+import { checkMemberLimit } from '@/features/billing/utils/check-member-limit';
 import { protectedProcedure } from '@/trpc/init';
 
 export const acceptInvite = protectedProcedure
@@ -48,6 +49,8 @@ export const acceptInvite = protectedProcedure
 				message: 'orgs.invite_not_found',
 			});
 		}
+
+		await checkMemberLimit(existedInvite.organizationId);
 
 		const [newMember] = await db
 			.insert(organizationMembers)

@@ -1,4 +1,4 @@
-import { between } from 'drizzle-orm';
+import { between, eq } from 'drizzle-orm';
 import z from 'zod';
 
 import { meetings } from '@/db/schema/meetings';
@@ -10,6 +10,7 @@ import { getMeetingQuery } from '../utils/get-meetings-query';
 export const getByUser = protectedProcedure
 	.input(
 		z.object({
+			orgaizationId: z.string().optional(),
 			dateFrom: z.coerce.date().optional(),
 			dateTo: z.coerce.date().optional(),
 		}),
@@ -19,9 +20,15 @@ export const getByUser = protectedProcedure
 
 		const { dateFrom, dateTo } = resolveDateRange(input.dateFrom, input.dateTo);
 
+		const conditions = [between(meetings.startTime, dateFrom, dateTo)];
+
+		if (input.orgaizationId) {
+			conditions.push(eq(meetings.organizationId, input.orgaizationId));
+		}
+
 		const data = await getMeetingQuery({
 			userId,
-			conditions: [between(meetings.startTime, dateFrom, dateTo)],
+			conditions,
 		});
 
 		return data;

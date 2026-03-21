@@ -4,6 +4,7 @@ import { createSelectSchema } from 'drizzle-zod';
 import { nanoid } from 'nanoid';
 import type z from 'zod';
 
+import { organizationPlan } from './enums';
 import { meetings } from './meetings';
 import { organizationMembers } from './organization-members';
 import { projects } from './projects';
@@ -16,6 +17,8 @@ export const organizations = pgTable('organizations', {
 	name: text('name').notNull(),
 	image: text('image'),
 	description: text('description'),
+	plan: organizationPlan('plan').notNull().default('free'),
+	polarSubscriptionId: text('polar_subscription_id'),
 	canInvite: boolean('can_invite').notNull().default(false),
 	canCreateProject: boolean('can_create_project').notNull().default(false),
 	canCreateMeeting: boolean('can_create_meeting').notNull().default(false),

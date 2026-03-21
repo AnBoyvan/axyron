@@ -33,6 +33,8 @@ export const getMany = protectedProcedure.query(async ({ ctx }) => {
 			name: org.name,
 			description: org.description,
 			image: org.image,
+			plan: org.plan,
+			polarSubscriptionId: org.polarSubscriptionId,
 			permissions,
 			member,
 		};

@@ -16,6 +16,7 @@ import {
 	SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
+import { PlanWidget } from '@/features/billing/ui/components/plan-widget';
 
 import { orgAdminsNav, orgMembersNav } from '../../configs/org-nav';
 import { useOrgById } from '../../hooks/use-org-by-id';
@@ -80,6 +81,12 @@ export const OrgSidebar = ({ orgId }: OrgSidebarProps) => {
 						))}
 					</SidebarGroup>
 				)}
+				<PlanWidget
+					orgId={orgId}
+					plan={data.plan}
+					membersCount={data.membersCount}
+					projectsCount={data.projectsCount}
+				/>
 			</SidebarContent>
 		</Sidebar>
 	);
